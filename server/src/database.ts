@@ -1,6 +1,5 @@
+import * as mongodb from "mongodb";
 import * as dotenv from "dotenv";
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const fs = require('fs');
 
 dotenv.config();
 const { ATLAS_URI } = process.env;
@@ -9,10 +8,10 @@ const credentials = '/home/talita/Documents/Repos/LearnBenchProject/db-certifica
 
 
 export async function connectToDatabase() {
-    const client = new MongoClient(ATLAS_URI, {
+    const client = new mongodb.MongoClient(ATLAS_URI, {
         sslKey: credentials,
         sslCert: credentials,
-        serverApi: ServerApiVersion.v1
+        serverApi: mongodb.ServerApiVersion.v1
     })
   try {
     await client.connect();
