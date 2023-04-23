@@ -5,15 +5,15 @@ const fs = require('fs');
 dotenv.config();
 const { ATLAS_URI } = process.env;
 
-const credentials = '../../db-certificate'
+const credentials = '/home/talita/Documents/Repos/LearnBenchProject/db-certificate/X509-cert-8261803058434215745.pem'
 
-const client = new MongoClient(ATLAS_URI, {
-    sslKey: credentials,
-    sslCert: credentials,
-    serverApi: ServerApiVersion.v1
-})
 
 export async function connectToDatabase() {
+    const client = new MongoClient(ATLAS_URI, {
+        sslKey: credentials,
+        sslCert: credentials,
+        serverApi: ServerApiVersion.v1
+    })
   try {
     await client.connect();
     const database = client.db("testDB");
