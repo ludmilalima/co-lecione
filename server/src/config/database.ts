@@ -19,14 +19,15 @@ export async function connectToDatabase() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 1 });
-    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    //Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
-    const database = client.db("testDB");
-    const collection = database.collection("testCol");
-    const docCount = await collection.countDocuments({});
-    console.log(docCount);
+    // const database = client.db("testDB");
+    // const collection = database.collection("testCol");
+    // const docCount = await collection.countDocuments({});
+    // console.log(docCount);
+
     // perform actions using client
   } finally {
     // Ensures that the client will close when you finish/error
@@ -34,4 +35,4 @@ export async function connectToDatabase() {
   }
 }
 
-connectToDatabase().catch(console.dir);
+//connectToDatabase().catch(console.dir);
