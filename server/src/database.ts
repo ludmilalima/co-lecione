@@ -1,20 +1,28 @@
-import * as mongodb from "mongodb";
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import * as dotenv from "dotenv";
 
 dotenv.config();
 const { ATLAS_URI } = process.env;
 
-const credentials = '/home/talita/Documents/Repos/LearnBenchProject/db-certificate/X509-cert-8261803058434215745.pem'
 
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(ATLAS_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
 export async function connectToDatabase() {
-    const client = new mongodb.MongoClient(ATLAS_URI, {
-        sslKey: credentials,
-        sslCert: credentials,
-        serverApi: mongodb.ServerApiVersion.v1
-    })
   try {
+    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    // Send a ping to confirm a successful connection
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
+
     const database = client.db("testDB");
     const collection = database.collection("testCol");
     const docCount = await collection.countDocuments({});
