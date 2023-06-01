@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import * as dotenv from "dotenv";
-import { User, UserModel } from '../server/models/user';
 
 dotenv.config();
 const { ATLAS_URI } = process.env;
