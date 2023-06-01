@@ -1,27 +1,22 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
 import * as dotenv from "dotenv";
+import { User, UserModel } from '../server/models/user';
 
 dotenv.config();
 const { ATLAS_URI } = process.env;
 
-
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(ATLAS_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
 export async function connectToDatabase() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    //Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    //Conectar cliente ao servidor
+    await mongoose
+      .connect(ATLAS_URI)
+      .then(() => {
+        console.log('Conexão com o MongoDB estabelecida com sucesso!');
+      }).catch((error) => {
+        console.error('Erro ao conectar com o MongoDB:', error);
+      });
+
+    
 
     // const database = client.db("testDB");
     // const collection = database.collection("testCol");
@@ -31,7 +26,7 @@ export async function connectToDatabase() {
     // perform actions using client
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.disconnect();
   }
 }
 
