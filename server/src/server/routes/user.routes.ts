@@ -3,10 +3,10 @@ import { User } from '../models/user';
 
 export const userRouter = express.Router();
 
-userRouter.get('/', async (req, res) => {
+userRouter.get('/', async (_req, res) => {
   try {
-    const Users = await User.find({});
-    res.status(200).json(Users);
+    const users = await User.find({});
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
