@@ -1,0 +1,14 @@
+<h1>Registro e Acesso</h1>
+
+<mat-form-field>
+  <input matInput placeholder="Email" [(ngModel)]="email">
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput placeholder="Senha" [(ngModel)]="senha" type="password">
+</mat-form-field>
+
+<mat-dialog-actions>
+  <button mat-button (click)="registrar()">Registre-se</button>
+  <button mat-button (click)="acessar()">Acessar</button>
+</mat-dialog-actions>
