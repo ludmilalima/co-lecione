@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+export class LoggedUser {
+  logged: boolean = false;
+  email?: string;
+};
+
 @Component({
   selector: 'app-root',
   template: `
@@ -10,5 +15,8 @@ import { Component } from '@angular/core';
   styles: []
 })
 export class AppComponent {
+  constructor(
+    public loggedUser: LoggedUser
+  ) {};
   title = 'LearnBench';
 }

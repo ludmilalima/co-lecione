@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from 'src/app/components/login/login.component';
 
 
 @Component({
@@ -10,14 +12,23 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
+
 export class NavigationComponent implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   iconPath: any;
 
-  constructor(private sanitizer: DomSanitizer) {};
+  constructor(
+    private sanitizer: DomSanitizer,
+    private dialogLogin: MatDialog
+  ) { };
 
   ngOnInit() {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/logo-title.png');
+  }
+
+  openLoginDialog(): void {
+    //Abrir dialog de login
+    this.dialogLogin.open(LoginComponent);
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
