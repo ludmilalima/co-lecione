@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Registro de usuário</h1>
+<div mat-dialog-content>
+  <div class="form-container">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Nome" [(ngModel)]="data.name"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="data.email" name="email"/>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field hintLabel="Mínimo 6 caracteres">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          name="password"
+          #newPass
+          minlength="6"
+          [(ngModel)]="data.password"
+          type="password"
+        />
+        <mat-hint align="end">{{ newPass.value.length }}/6</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button
+    class="custom-button"
+    mat-raised-button
+    color="secondary"
+    [mat-dialog-close]="true"
+  >
+    Cancelar
+  </button>
+  <button
+    class="custom-button"
+    mat
+    mat-raised-button
+    color="primary"
+    (click)="register()"
+  >
+    Registrar
+  </button>
+</div>
