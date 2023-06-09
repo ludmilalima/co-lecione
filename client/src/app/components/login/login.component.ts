@@ -1,29 +1,33 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { RegisterComponent } from '../register/register.component';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
+
 export class LoginComponent {
   email: string | undefined;
   senha: string | undefined;
 
   constructor(
-    public dialogRef: MatDialogRef<LoginComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogLoginRef: MatDialogRef<LoginComponent>,
+    private dialogRegister: MatDialog,
+  ) { };
 
-  registrar() {
-    // Lógica para registrar-se
-    // ...
-  }
+  openRegisterDialog(): void {
+    this.dialogRegister.open(RegisterComponent);
+  };
 
   acessar() {
     // Lógica para acessar
-    // ...
-  }
+
+    // Fechar dialog de login
+    this.dialogLoginRef.close();
+  };
 
 }

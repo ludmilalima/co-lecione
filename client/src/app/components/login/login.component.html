@@ -1,14 +1,49 @@
-<h1>Registro e Acesso</h1>
-
-<mat-form-field>
-  <input matInput placeholder="Email" [(ngModel)]="email">
-</mat-form-field>
-
-<mat-form-field>
-  <input matInput placeholder="Senha" [(ngModel)]="senha" type="password">
-</mat-form-field>
-
-<mat-dialog-actions>
-  <button mat-button (click)="registrar()">Registre-se</button>
-  <button mat-button (click)="acessar()">Acessar</button>
-</mat-dialog-actions>
+<h1 mat-dialog-title>Controle de acesso</h1>
+<div mat-dialog-content>
+  <mat-accordion multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Já possui uma conta? </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <div class="form-container">
+        <p>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="email" />
+          </mat-form-field>
+        </p>
+    
+        <p>
+          <mat-form-field hintLabel="Mínimo 6 caracteres">
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              #input
+              minlength="6"
+              [(ngModel)]="senha"
+              type="password"
+            />
+            <mat-hint align="end">{{ input.value.length }}/6</mat-hint>
+          </mat-form-field>
+        </p>
+      </div>
+      <p align="center">
+        <button mat-raised-button color="primary" (click)="acessar()">
+          Acessar
+        </button>
+      </p>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Ainda não possui uma conta? </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div align="center">
+        <button mat-raised-button color="primary" (click)="openRegisterDialog()">
+          Registrar-se
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
