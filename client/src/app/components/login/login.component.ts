@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
+import { User } from 'src/app/models/user';
 
 
 @Component({

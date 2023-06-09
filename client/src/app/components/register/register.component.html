@@ -4,13 +4,13 @@
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Nome</mat-label>
-        <input matInput placeholder="Nome" [(ngModel)]="data.name"/>
+        <input matInput [(ngModel)]="newUser.name" type="text"/>
       </mat-form-field>
     </p>
     <p>
       <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="data.email" name="email"/>
+        <input matInput [(ngModel)]="newUser.email" type="email"/>
       </mat-form-field>
     </p>
     <p>
@@ -18,10 +18,9 @@
         <mat-label>Senha</mat-label>
         <input
           matInput
-          name="password"
           #newPass
+          [(ngModel)]="newUser.password" type="password"
           minlength="6"
-          [(ngModel)]="data.password"
           type="password"
         />
         <mat-hint align="end">{{ newPass.value.length }}/6</mat-hint>
