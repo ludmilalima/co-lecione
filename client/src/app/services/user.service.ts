@@ -43,6 +43,10 @@ export class UserService {
     );
   }
 
+  checkEmail(email: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.apiUrl}/check-email/${email}`);
+  }
+
   createUser(user: User): Observable<string> {
     return this.httpClient.post(`${this.apiUrl}`, user, { responseType: 'text' }).pipe(
       catchError(this.handleError)
