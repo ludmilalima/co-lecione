@@ -18,6 +18,7 @@ import { RegisterComponent } from './components/register/register.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatListModule,
     MatDialogModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
   ],
   providers: [
     provideAnimations(),
