@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   providers: [
     provideAnimations(),
     provideHttpClient(),
-    importProvidersFrom(MatNativeDateModule)
+    importProvidersFrom(MatNativeDateModule),
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

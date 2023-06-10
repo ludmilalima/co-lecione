@@ -1,5 +1,6 @@
 import express from 'express';
 import UserModel from '../models/user';
+import bcrypt from 'bcrypt';
 
 export const userRouter = express.Router();
 
@@ -46,22 +47,55 @@ userRouter.get('/check-email/:email', async (req, res) => {
 userRouter.post('/', async (req, res) => {
   try {
     const userData = req.body;
-    const newUser = new UserModel(userData);
-    
-    await newUser.validate();
-    
+    // Criptografe a senha do usuário usando o bcrypt
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    // Crie um novo usuário com a senha criptografada
+    const newUser = new UserModel({
+      name: userData.name,
+      email: userData.email,
+      password: hashedPassword,
+    });
     const result = await newUser.save();
-    
+
     if (result) {
       res.status(201).send(`Created a new user: ID ${result._id}.`);
     } else {
       res.status(500).send('Failed to create a new user.');
     }
-    
+
     console.log('Usuário salvo com sucesso!');
   } catch (error) {
     console.error('Erro ao salvar o usuário:', error);
     res.status(400).send(error);
+  }
+});
+
+userRouter.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Encontre o usuário com o e-mail fornecido
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      // Usuário não encontrado
+      return res.status(404).send('Usuário não encontrado.');
+    }
+
+    // Verifique se a senha fornecida corresponde à senha armazenada no banco de dados
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      // Senha inválida
+      return res.status(401).send('Senha inválida.');
+    }
+
+    // Autenticação bem-sucedida
+    res.status(200).json({ message: 'Autenticação bem-sucedida.' });
+
+  } catch (error) {
+    console.error('Erro na autenticação:', error);
+    res.status(500).send(error);
   }
 });
 
@@ -97,7 +131,3 @@ userRouter.delete('/:id', async (req, res) => {
     res.status(400).send(error);
   }
 });
-function uuidv4(): any {
-  throw new Error('Function not implemented.');
-}
-

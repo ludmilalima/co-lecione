@@ -21,7 +21,7 @@ export class UserService {
       observer.complete();
     });
   }
-  
+
 
   private refreshUsers() {
     this.httpClient.get<User[]>(this.apiUrl)
@@ -49,6 +49,12 @@ export class UserService {
 
   createUser(user: User): Observable<string> {
     return this.httpClient.post(`${this.apiUrl}`, user, { responseType: 'text' }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  login(email: string, password: string): Observable<string> {
+    return this.httpClient.post(`${this.apiUrl}`, { email, password }, { responseType: 'text' }).pipe(
       catchError(this.handleError)
     );
   }

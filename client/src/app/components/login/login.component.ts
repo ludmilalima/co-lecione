@@ -26,7 +26,7 @@ export class LoginComponent {
 
   acessar() {
     // Lógica para acessar
-
+    
     // Fechar dialog de login
     this.dialogLoginRef.close();
   };
