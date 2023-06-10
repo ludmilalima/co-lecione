@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserModel } from '../models/user';
+import UserModel from '../models/user';
 
 export const userRouter = express.Router();
 
@@ -39,14 +39,19 @@ userRouter.get('/check-email/:email', async (req, res) => {
     res.json({ isEmailRegistered });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: `Erro ao verificar o e-mail - ${error}` });
+    res.status(500).send(error);
   }
 });
 
 userRouter.post('/', async (req, res) => {
   try {
     const userData = req.body;
-    const newUser = new UserModel(userData);
+    const newUser = new UserModel({
+      _id: uuidv4(),
+      name: userData.name,
+      email: userData.email,
+      password: userData.password
+    });
     const result = await newUser.save();
 
     if (result) {
@@ -56,7 +61,7 @@ userRouter.post('/', async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(400).send(error.message);
+    res.status(400).send(error);
   }
 });
 
@@ -72,8 +77,8 @@ userRouter.put('/:id', async (req, res) => {
       res.status(404).send(`Failed to find a user: ID ${id}`);
     }
   } catch (error) {
-    console.error(error.message);
-    res.status(400).send(error.message);
+    console.error(error);
+    res.status(400).send(error);
   }
 });
 
@@ -88,7 +93,11 @@ userRouter.delete('/:id', async (req, res) => {
       res.status(404).send(`Failed to find a user: ID ${id}`);
     }
   } catch (error) {
-    console.error(error.message);
-    res.status(400).send(error.message);
+    console.error(error);
+    res.status(400).send(error);
   }
 });
+function uuidv4(): any {
+  throw new Error('Function not implemented.');
+}
+
