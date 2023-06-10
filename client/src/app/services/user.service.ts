@@ -15,9 +15,9 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error);
+    console.error('An error occurred:', error.error);
     return new Observable<never>((observer) => {
-      observer.error('Something went wrong');
+      observer.error(error);
       observer.complete();
     });
   }
