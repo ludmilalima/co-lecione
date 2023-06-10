@@ -73,16 +73,34 @@ export class UserService {
 
   login(email: string, password: string): Observable<string> {
     return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
-      tap((token: string) => {
-        this.saveToken(token);
-        this.setToken(token);
-      }),
-      catchError(this.handleError)
+      tap({
+        next: (token: string) => {
+          this.saveToken(token);
+          this.setToken(token);
+        },
+        error: (error: any) => {
+          this.handleError(error);
+        }
+      })
     );
   }
+  
 
   getUserInfo(): Observable<User> {
-    return this.httpClient.get<User>(`${this.apiUrl}/me`).pipe(
+    const token = this.getToken();
+
+    if (!token) {
+      // Handle the case when the token is not available
+      // You can redirect the user to the login page or take appropriate action
+      // For now, let's throw an error
+      throw new Error('Token not found.');
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    return this.httpClient.get<User>(`${this.apiUrl}/me`, { headers }).pipe(
       catchError(this.handleError)
     );
   }

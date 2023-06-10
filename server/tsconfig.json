@@ -16,7 +16,6 @@
         }
     },
     "include": [
-        "./src/**/*",
-        "typings/*.d.ts"
+        "./src/**/*", "types/express.d.ts",
     ]
 }

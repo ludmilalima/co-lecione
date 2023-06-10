@@ -94,6 +94,7 @@ userRouter.post('/login', async (req, res) => {
 
     // Gere um token JWT com o ID do usuário como payload
     const token = jwt.sign({ userId: user._id }, 'secret_key', { expiresIn: '1h' });
+    console.log(token);
 
     // Retorne o token como resposta
     res.status(200).json({ token });
@@ -108,10 +109,22 @@ userRouter.post('/login', async (req, res) => {
 userRouter.post('/logout', logout);
 
 // Rota protegida para obter informações do usuário
-userRouter.get('/me', verifyToken, (req, res) => {
-  // Acessar o ID do usuário autenticado através de req.userId
-  // Realizar a lógica necessária para retornar as informações do usuário
-  res.status(200).json({ userId: req.userId, message: 'Informações do usuário.' });
+userRouter.get('/me', verifyToken, async (req, res) => {
+  try {
+    // Acessar o ID do usuário autenticado através de req.userId
+    const userId = req.userId; // Obtenha o ID do usuário autenticado
+    // Consulte o banco de dados ou faça qualquer outra lógica necessária para obter as informações do usuário com o ID fornecido
+    const user = await UserModel.findById(userId);
+    if (user) {
+      // Realizar a lógica necessária para retornar as informações do usuário
+      res.status(200).json({ userId: req.userId, message: 'Informações do usuário.' });
+    } else {
+      res.status(404).send('Usuário não encontrado.');
+    }
+  } catch (error) {
+    console.error('Erro ao obter informações do usuário:', error);
+    res.status(500).send(error);
+  }
 });
 
 userRouter.put('/:id', async (req, res) => {
