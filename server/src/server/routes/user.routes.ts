@@ -46,21 +46,21 @@ userRouter.get('/check-email/:email', async (req, res) => {
 userRouter.post('/', async (req, res) => {
   try {
     const userData = req.body;
-    const newUser = new UserModel({
-      _id: uuidv4(),
-      name: userData.name,
-      email: userData.email,
-      password: userData.password
-    });
+    const newUser = new UserModel(userData);
+    
+    await newUser.validate();
+    
     const result = await newUser.save();
-
+    
     if (result) {
       res.status(201).send(`Created a new user: ID ${result._id}.`);
     } else {
       res.status(500).send('Failed to create a new user.');
     }
+    
+    console.log('Usuário salvo com sucesso!');
   } catch (error) {
-    console.error(error);
+    console.error('Erro ao salvar o usuário:', error);
     res.status(400).send(error);
   }
 });

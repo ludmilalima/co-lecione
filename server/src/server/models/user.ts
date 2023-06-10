@@ -1,14 +1,12 @@
-import mongoose, { Document, ObjectId, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface User extends Document {
-    _id?: ObjectId;
     name: string;
     email: string;
     password: string;
 }
 
 const userSchema: Schema<User> = new Schema({
-    _id: { type: Schema.Types.ObjectId },
     name: {
         type: String,
         required: [true, 'O campo "name" é obrigatório.'],
