@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./database";
 import { userRouter } from "../server/routes/user.routes"
+import mongoose from "mongoose";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
@@ -16,13 +17,33 @@ if (!ATLAS_URI) {
 
 connectToDatabase()
     .then(() => {
+        // Criar instância do servidor Express
         const app = express();
+
+        // Middleware do CORS
         app.use(cors());
+
+        // Middleware para parsing do corpo das requisições
+        app.use(express.json());
+
+        // Rotas
+        app.use("/users", userRouter);
 
         // start the Express server
         app.listen(5200, () => {
-            app.use("/users", userRouter);
             console.log(`Server running at http://localhost:5200...`);
+        });
+
+        // Capture o sinal de interrupção e desconecte-se do banco de dados antes de encerrar o servidor
+        process.on('SIGINT', async () => {
+            try {
+                await mongoose.disconnect();
+                console.log('Desconectado do banco de dados.');
+                process.exit(0); // Encerre o processo Node.js com código de saída 0 (encerramento normal)
+            } catch (error) {
+                console.error('Erro ao desconectar do banco de dados:', error);
+                process.exit(1); // Encerre o processo Node.js com código de saída 1 (encerramento com erro)
+            }
         });
 
     })
