@@ -1,6 +1,8 @@
 import express from 'express';
 import UserModel from '../models/user';
 import bcrypt from 'bcrypt';
+import { logout, verifyToken } from '../controllers/session.controller';
+import jwt from 'jsonwebtoken';
 
 export const userRouter = express.Router();
 
@@ -90,13 +92,26 @@ userRouter.post('/login', async (req, res) => {
       return res.status(401).send('Senha inválida.');
     }
 
-    // Autenticação bem-sucedida
-    res.status(200).json({ message: 'Autenticação bem-sucedida.' });
+    // Gere um token JWT com o ID do usuário como payload
+    const token = jwt.sign({ userId: user._id }, 'secret_key', { expiresIn: '1h' });
+
+    // Retorne o token como resposta
+    res.status(200).json({ token });
 
   } catch (error) {
     console.error('Erro na autenticação:', error);
     res.status(500).send(error);
   }
+});
+
+// Rota para logout de usuário
+userRouter.post('/logout', logout);
+
+// Rota protegida para obter informações do usuário
+userRouter.get('/me', verifyToken, (req, res) => {
+  // Acessar o ID do usuário autenticado através de req.userId
+  // Realizar a lógica necessária para retornar as informações do usuário
+  res.status(200).json({ userId: req.userId, message: 'Informações do usuário.' });
 });
 
 userRouter.put('/:id', async (req, res) => {

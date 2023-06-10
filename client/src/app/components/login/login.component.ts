@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
-import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -11,13 +11,14 @@ import { User } from 'src/app/models/user';
 })
 
 export class LoginComponent {
-  email: string | undefined;
-  senha: string | undefined;
+  email!: string;
+  senha!: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogLoginRef: MatDialogRef<LoginComponent>,
     private dialogRegister: MatDialog,
+    private userService: UserService,
   ) { };
 
   openRegisterDialog(): void {
@@ -26,7 +27,12 @@ export class LoginComponent {
 
   acessar() {
     // Lógica para acessar
-    
+    this.userService.login(this.email, this.senha).subscribe( response => {
+      console.log(response);
+      const user = this.userService.getUserInfo().subscribe( response => {
+        console.log(response);
+      })
+    })
     // Fechar dialog de login
     this.dialogLoginRef.close();
   };

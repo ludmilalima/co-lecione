@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   private apiUrl = `${environment.baseUrl}/users`;
   private users$: Subject<User[]> = new Subject();
+  private token: string | null = null;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,6 +21,23 @@ export class UserService {
       observer.error(error);
       observer.complete();
     });
+  }
+
+  private setToken(token: string | null) {
+    this.token = token;
+  }
+
+  private getToken(): string | null {
+    return this.token;
+  }
+
+  private saveToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  private loadToken() {
+    const token = localStorage.getItem('token');
+    this.setToken(token);
   }
 
 
@@ -54,9 +72,25 @@ export class UserService {
   }
 
   login(email: string, password: string): Observable<string> {
-    return this.httpClient.post(`${this.apiUrl}`, { email, password }, { responseType: 'text' }).pipe(
+    return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
+      tap((token: string) => {
+        this.saveToken(token);
+        this.setToken(token);
+      }),
       catchError(this.handleError)
     );
+  }
+
+  getUserInfo(): Observable<User> {
+    return this.httpClient.get<User>(`${this.apiUrl}/me`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  logout() {
+    // Remova o token armazenado no cliente (por exemplo, localStorage)
+    localStorage.removeItem('token');
+    this.setToken(null);
   }
 
   updateUser(id: string, user: User): Observable<string> {
