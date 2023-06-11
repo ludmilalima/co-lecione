@@ -32,7 +32,9 @@ export class UserService {
   }
 
   private saveToken(token: string) {
+    console.log(token);
     localStorage.setItem('token', token);
+    console.log(localStorage.getItem('token'));
   }
 
   private loadToken() {
@@ -74,7 +76,9 @@ export class UserService {
   login(email: string, password: string): Observable<string> {
     return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
       tap({
-        next: (token: string) => {
+        next: (token: any) => {
+          console.log(token);
+          console.log(typeof(token))
           this.saveToken(token);
           this.setToken(token);
         },
