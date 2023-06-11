@@ -18,7 +18,7 @@ export class UserService {
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error.error);
     return new Observable<never>((observer) => {
-      observer.error(error);
+      observer.error(error.error);
       observer.complete();
     });
   }
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   getUser(id: string): Observable<User> {
-    return this.httpClient.get<User>(`${this.apiUrl}/${id}`).pipe(
+    return this.httpClient.get<User>(`${this.apiUrl}/id/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -79,14 +79,13 @@ export class UserService {
           this.setToken(token);
         },
         error: (error: any) => {
-          this.handleError(error);
+          this.handleError(error.error);
         }
       })
     );
   }
   
-
-  getUserInfo(): Observable<User> {
+  getUserInfo(): Observable<any> {
     const token = this.getToken();
 
     if (!token) {
@@ -99,8 +98,8 @@ export class UserService {
     const headers = {
       Authorization: `Bearer ${token}`
     };
-
-    return this.httpClient.get<User>(`${this.apiUrl}/me`, { headers }).pipe(
+    
+    return this.httpClient.get<any>(`${this.apiUrl}/currentUser`, { headers }).pipe(
       catchError(this.handleError)
     );
   }

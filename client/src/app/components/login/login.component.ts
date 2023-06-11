@@ -30,7 +30,6 @@ export class LoginComponent {
     this.userService.login(this.email, this.senha).subscribe( response => {
       console.log(response);
       const user = this.userService.getUserInfo().subscribe( response => {
-        console.log(response);
       })
     })
     // Fechar dialog de login
