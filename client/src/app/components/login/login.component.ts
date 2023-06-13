@@ -27,13 +27,10 @@ export class LoginComponent {
 
   acessar() {
     // Lógica para acessar
-    this.userService.login(this.email, this.senha).subscribe( response => {
-      console.log(response);
-      const user = this.userService.getUserInfo().subscribe( response => {
-      })
-    })
+    this.userService.login(this.email, this.senha).subscribe(() => {
+      this.userService.getUserInfo();
+    });
     // Fechar dialog de login
     this.dialogLoginRef.close();
   };
-
 }

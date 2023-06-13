@@ -32,14 +32,17 @@ export class UserService {
   }
 
   private saveToken(token: string) {
-    console.log(token);
     localStorage.setItem('token', token);
-    console.log(localStorage.getItem('token'));
   }
 
   private loadToken() {
     const token = localStorage.getItem('token');
     this.setToken(token);
+  }
+
+  private setUser(user: User) {
+    localStorage.setItem('name',user?.name);
+    localStorage.setItem('email',user?.email);
   }
 
 
@@ -77,8 +80,6 @@ export class UserService {
     return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
       tap({
         next: (token: any) => {
-          console.log(token);
-          console.log(typeof(token))
           this.saveToken(token);
           this.setToken(token);
         },
@@ -89,7 +90,7 @@ export class UserService {
     );
   }
   
-  getUserInfo(): Observable<any> {
+  getUserInfo(): Observable<User> {
     const token = this.getToken();
 
     if (!token) {
@@ -103,8 +104,15 @@ export class UserService {
       Authorization: `Bearer ${token}`
     };
     
-    return this.httpClient.get<any>(`${this.apiUrl}/currentUser`, { headers }).pipe(
-      catchError(this.handleError)
+   return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { headers }).pipe(
+      tap({
+        next: (user: any) => {
+          this.setUser(user);
+        },
+        error: (error: any) => {
+          this.handleError(error.error);
+        }
+      })
     );
   }
 

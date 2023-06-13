@@ -24,6 +24,12 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/logo-title.png');
+    window.addEventListener('storage', function(event) {
+      if (event.storageArea === localStorage) {
+        // Ação a ser executada quando houver alteração no localStorage
+        console.log('O localStorage foi alterado:', event.key, event.newValue);
+      }
+    });
   }
 
   openLoginDialog(): void {

@@ -2,7 +2,7 @@ import express from 'express';
 import UserModel, { User } from '../models/user';
 import bcrypt from 'bcrypt';
 import { logout, verifyToken } from '../controllers/session.controller';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const userRouter = express.Router();
 userRouter.use(express.json());
@@ -95,10 +95,9 @@ userRouter.post('/login', async (req, res) => {
 
     // Gere um token JWT com o ID do usuário como payload
     const token = jwt.sign({ userId: user._id }, 'secret_key', { expiresIn: '1h' });
-    console.log(token);
 
     // Retorne o token como resposta
-    res.status(200).send( token );
+    res.status(200).send(token);
 
   } catch (error) {
     console.error('Erro na autenticação:', error);
@@ -111,20 +110,16 @@ userRouter.post('/logout', logout);
 
 
 // Rota protegida para obter informações do usuário
-userRouter.get('/currentUser', verifyToken, function (req, res, next) {
-  console.log(req.body.userId);
-  next();
-}, async (req, res) => {
+userRouter.get('/currentUser', verifyToken, async (req, res) => {
   // Acessar o ID do usuário autenticado através de req.userId
   const userId = req.body.userId; // Obtenha o ID do usuário autenticado
-  console.log(userId);
   try {
 
     // Consulte o banco de dados ou faça qualquer outra lógica necessária para obter as informações do usuário com o ID fornecido
     const user: User = await UserModel.findById(userId);
     if (user) {
       // Realizar a lógica necessária para retornar as informações do usuário
-      res.status(200).send(user);
+      res.status(200).json(user);
     } else {
       res.status(404).send('Usuário não encontrado.');
     }
@@ -132,14 +127,7 @@ userRouter.get('/currentUser', verifyToken, function (req, res, next) {
     console.error('Erro ao obter informações do usuário:', error);
     res.status(500).send(error);
   }
-}
-);
-
-// Rota protegida para obter informações do usuário
-
-// userRouter.get('/currentUser', async (req,res) => {
-//   res.json({ req });
-// });
+});
 
 userRouter.put('/:id', async (req, res) => {
   try {
