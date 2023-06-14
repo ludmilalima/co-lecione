@@ -20,15 +20,19 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from './services/user.service';
+import { CommonModule } from '@angular/common';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogoutComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

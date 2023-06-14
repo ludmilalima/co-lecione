@@ -24,7 +24,7 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span><img [src]="iconPath" alt="Ícone">&nbsp;</span>
+      <span><img [src]="iconPath" alt="Ícone" />&nbsp;</span>
       <span class="project-title">&nbsp;LearnBench&nbsp;</span>
       <span class="fill-remaining-space"></span>
       <span>
@@ -36,13 +36,24 @@
         >
           <mat-icon>notifications</mat-icon>
         </button>
+      </span>
+      <span *ngIf="isLoggedIn == true">
+        <button mat-stroked-button color="accent" disabled>
+          <mat-icon>account_circle</mat-icon>{{ loggedUser }}
+        </button>
+      </span>
+      <span *ngIf="isLoggedIn == true">
         <button
-          type="button"
-          aria-label="Login"
-          mat-icon-button
-          (click)="openLoginDialog()"
+          mat-raised-button
+          color="secondary"
+          (click)="openLogoutDialog()"
         >
-          <mat-icon>account_circle</mat-icon>
+          Logout
+        </button>
+      </span>
+      <span *ngIf="isLoggedIn == false">
+        <button mat-raised-button color="secondary" (click)="openLoginDialog()">
+          Login
         </button>
       </span>
     </mat-toolbar>

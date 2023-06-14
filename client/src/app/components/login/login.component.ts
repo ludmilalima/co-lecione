@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
 import { UserService } from 'src/app/services/user.service';
+import { NavigationComponent } from 'src/app/pages/navigation/navigation.component';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogLoginRef: MatDialogRef<LoginComponent>,
+    public dialogLoginRef: MatDialogRef<LoginComponent, boolean>,
     private dialogRegister: MatDialog,
     private userService: UserService,
   ) { };
@@ -29,8 +30,11 @@ export class LoginComponent {
     // Lógica para acessar
     this.userService.login(this.email, this.senha).subscribe(() => {
       this.userService.getUserInfo();
+      if (localStorage.getItem('token') != null) {
+        this.dialogLoginRef.close(true);
+      } else {
+        this.dialogLoginRef.close(false);
+      }
     });
-    // Fechar dialog de login
-    this.dialogLoginRef.close();
   };
 }
