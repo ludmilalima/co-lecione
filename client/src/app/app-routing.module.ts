@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NavigationComponent } from './pages/navigation/navigation.component';
+import { MeanComponent } from './components/mean/mean.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'navigation', pathMatch: 'full' },
-  { path: 'navigation', component: NavigationComponent },
- ];
+  //{ path: '', redirectTo: 'navigation', pathMatch: 'full' },
+  { path: 'mean', component: MeanComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

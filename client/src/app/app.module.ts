@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from './services/user.service';
 import { CommonModule } from '@angular/common';
 import { LogoutComponent } from './components/logout/logout.component';
+import { MeanComponent } from './components/mean/mean.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     NavigationComponent,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    MeanComponent
   ],
   imports: [
     CommonModule,

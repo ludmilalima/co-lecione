@@ -31,6 +31,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../../assets/logo-title.png');
     this.isLoggedIn = (localStorage.getItem('token') != null);
+    this.loggedUser = (localStorage.getItem('name'));
   }
 
 
