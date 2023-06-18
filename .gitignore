@@ -1,0 +1,37 @@
+# Ignorar diretório node_modules
+**/node_modules/
+
+# Ignorar diretório dist do Angular
+**/dist/
+
+# Ignorar diretório data do MongoDB
+# **/data/
+
+# Ignorar arquivos de configuração
+**/*.env
+**/*.env.*
+**/.env.local
+**/.env.development
+**/.env.test
+**/.env.prod
+
+# Ignorar arquivos de log
+**/*.log
+
+# Ignorar arquivos de cache
+**/*.cache
+
+# Ignorar arquivos temporários
+**/*.tmp
+**/*.swp
+**/*~
+
+# Ignorar arquivos gerados pelo IDE ou editor de código
+**/.idea/
+**/.vscode/
+**/*.sublime-*
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw?
