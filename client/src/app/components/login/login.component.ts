@@ -29,12 +29,13 @@ export class LoginComponent {
   acessar() {
     // Lógica para acessar
     this.userService.login(this.email, this.senha).subscribe(() => {
-      this.userService.getUserInfo();
-      if (localStorage.getItem('token') != null) {
-        this.dialogLoginRef.close(true);
-      } else {
-        this.dialogLoginRef.close(false);
-      }
+      this.userService.getUserInfo().subscribe(response => {
+        if (localStorage.getItem('token') != null) {
+          this.dialogLoginRef.close(true);
+        } else {
+          this.dialogLoginRef.close(false);
+        }
+      });
     });
   };
 }
