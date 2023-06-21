@@ -5,6 +5,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, map, shareReplay } from 'rxjs';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +18,15 @@ export class AppComponent implements OnInit{
   iconPath: any;
   dialogLoginRef: MatDialogRef<LoginComponent, boolean>;
   dialogLogoutRef: MatDialogRef<LogoutComponent, boolean>;
+  dialogUserDetailsRef: MatDialogRef<UserDetailsComponent>;
   isLoggedIn: boolean;
   loggedUser: string;
 
   constructor(
     private sanitizer: DomSanitizer,
     private dialogLogin: MatDialog,
-    private dialogLogout: MatDialog
+    private dialogLogout: MatDialog,
+    private dialogUserDetails: MatDialog
   ) { };
 
   ngOnInit() {
@@ -61,6 +64,10 @@ export class AppComponent implements OnInit{
       // Lógica a ser executada quando o diálogo for fechado
       this.isLoggedIn = result;
     });
+  }
+
+  openUserDetailsDialog() {
+    this.dialogUserDetails.open(UserDetailsComponent);
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

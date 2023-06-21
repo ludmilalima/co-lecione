@@ -23,6 +23,7 @@ import { UserService } from './services/user.service';
 import { CommonModule } from '@angular/common';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MeanComponent } from './components/mean/mean.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MeanComponent } from './components/mean/mean.component';
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
-    MeanComponent
+    MeanComponent,
+    UserDetailsComponent
   ],
   imports: [
     CommonModule,

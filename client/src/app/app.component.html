@@ -42,7 +42,7 @@
           </button>
         </span>
         <span *ngIf="isLoggedIn == true">
-          <button mat-stroked-button color="accent">
+          <button mat-stroked-button color="accent" (click)="openUserDetailsDialog()">
             <mat-icon>account_circle</mat-icon>{{ loggedUser }}
           </button>
         </span>

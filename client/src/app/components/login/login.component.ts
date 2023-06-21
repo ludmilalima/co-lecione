@@ -16,7 +16,6 @@ export class LoginComponent {
   senha!: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogLoginRef: MatDialogRef<LoginComponent, boolean>,
     private dialogRegister: MatDialog,
     private userService: UserService,
