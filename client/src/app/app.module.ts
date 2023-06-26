@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MeanComponent } from './components/mean/mean.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { MongoComponent } from './components/mongo/mongo.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     RegisterComponent,
     LogoutComponent,
     MeanComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    MongoComponent
   ],
   imports: [
     CommonModule,
