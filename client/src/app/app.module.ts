@@ -24,7 +24,11 @@ import { CommonModule } from '@angular/common';
 import { LogoutComponent } from './components/logout/logout.component';
 import { MeanComponent } from './components/mean/mean.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { MongoComponent } from './components/mongo/mongo.component';
+import { TableComponent } from './components/reusable/table/table.component';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { DataPropertyGetterPipe } from './components/reusable/table/data-property-getter.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { MongoComponent } from './components/mongo/mongo.component';
     LogoutComponent,
     MeanComponent,
     UserDetailsComponent,
-    MongoComponent
+    TableComponent,
+    DataPropertyGetterPipe
   ],
   imports: [
     CommonModule,
@@ -55,6 +60,9 @@ import { MongoComponent } from './components/mongo/mongo.component';
     MatCardModule,
     MatExpansionModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     provideAnimations(),
