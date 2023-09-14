@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import * as dotenv from "dotenv";
+import dotenv from 'dotenv';
+
 import { disconnect } from 'process';
 
 dotenv.config();
