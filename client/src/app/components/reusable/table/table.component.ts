@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { TableColumn } from './TableColumn';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'custom-table',

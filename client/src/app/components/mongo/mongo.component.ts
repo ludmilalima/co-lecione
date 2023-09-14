@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
 import { TableComponent } from '../reusable/table/table.component';
+import { TableColumn } from '../reusable/table/TableColumn';
 
 @Component({
   selector: 'app-mongo',
   templateUrl: './mongo.component.html',
   styleUrls: ['./mongo.component.css']
 })
-
-interface Employee {
-  name: string;
-  age: number;
-  position: string;
-}
 
 export class MongoComponent {
   table = new TableComponent();
@@ -22,5 +17,25 @@ export class MongoComponent {
     { name: 'Pedro', age: 28, position: 'Analista' }
   ];
 
-  tableColumns: string[] = ['name', 'age', 'position'];
+  tableColumns: TableColumn[] = 
+    [
+      {
+        name:'name',
+        dataKey:'name'
+      },
+      {
+        name: 'age',
+        dataKey: 'age'
+      },
+      {
+        name: 'position',
+        dataKey: 'position'
+      }
+    ];
+}
+
+interface Employee {
+  name: string;
+  age: number;
+  position: string;
 }

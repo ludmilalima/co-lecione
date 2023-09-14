@@ -25,10 +25,11 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { MeanComponent } from './components/mean/mean.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { TableComponent } from './components/reusable/table/table.component';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DataPropertyGetterPipe } from './components/reusable/table/data-property-getter.pipe';
+import { MongoComponent } from './components/mongo/mongo.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DataPropertyGetterPipe } from './components/reusable/table/data-propert
     MeanComponent,
     UserDetailsComponent,
     TableComponent,
-    DataPropertyGetterPipe
+    DataPropertyGetterPipe,
+    MongoComponent
   ],
   imports: [
     CommonModule,
