@@ -13,8 +13,8 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   public tableDataSource = new MatTableDataSource([]);
   public displayedColumns: string[];
-  @ViewChild(MatPaginator) matPaginator: MatPaginator;
-  @ViewChild(MatSort) matSort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) matPaginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) matSort: MatSort;
 
   @Input() isPageable = false;
   @Input() isSortable = false;
