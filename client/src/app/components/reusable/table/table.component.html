@@ -3,7 +3,7 @@
   <ng-container *ngIf="isFilterable" [matColumnDef]="this.rowActionIcon">
     <mat-form-field>
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="filter" />
+      <input matInput (keyup)="applyFilter($event)" placeholder="filter" #input>
     </mat-form-field>
   </ng-container>
 
@@ -34,11 +34,7 @@
     >
       <!-- if sortable column header -->
       <ng-container *ngIf="tableColumn.isSortable; else notSortable">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-        >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ tableColumn.name }}
         </th>
       </ng-container>
@@ -64,6 +60,12 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+        No data matching the filter.
+      </td>
+    </tr>
   </table>
 
   <!-- Pagination -->
