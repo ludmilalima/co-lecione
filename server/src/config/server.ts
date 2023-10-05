@@ -49,4 +49,4 @@ connectToDatabase()
     })
     .catch(error => console.error(error));
 
-    //npx ts-node server.ts
+    //npx ts-node src/config/server.ts
