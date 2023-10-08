@@ -30,6 +30,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { DataPropertyGetterPipe } from './components/reusable/table/data-property-getter.pipe';
 import { MongoComponent } from './components/mongo/mongo.component';
+import { AngularJSComponent } from './components/angular-js/angular-js.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { MongoComponent } from './components/mongo/mongo.component';
     UserDetailsComponent,
     TableComponent,
     DataPropertyGetterPipe,
-    MongoComponent
+    MongoComponent,
+    AngularJSComponent
   ],
   imports: [
     CommonModule,
@@ -65,6 +68,7 @@ import { MongoComponent } from './components/mongo/mongo.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTabsModule
   ],
   providers: [
     provideAnimations(),
