@@ -6,7 +6,7 @@ import { Sort } from "@angular/material/sort";
 @Component({
   selector: "app-mongo",
   templateUrl: "./mongo.component.html",
-  styleUrls: ["./mongo.component.css"],
+  styleUrls: ["./mongo.component.scss"],
 })
 export class MongoComponent {
   table = new TableComponent();

@@ -1,5 +1,50 @@
-<mat-tab-group [color]="accent" [backgroundColor]="primary">
-  <mat-tab label="First">Content 1</mat-tab>
-  <mat-tab label="Second">Content 2</mat-tab>
-  <mat-tab label="Third">Content 3</mat-tab>
-</mat-tab-group>
+<body class="body-wrapper">
+  <mat-card class="card-container">
+    <mat-card-header>
+      <mat-card-title>Angular</mat-card-title>
+      <mat-card-subtitle>Framework de desenvolvimento web</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        O Angular é um framework de desenvolvimento web criado pelo Google e usado para construir aplicativos web robustos e dinâmicos.
+      </p>
+      <p>
+        Utiliza TypeScript como linguagem principal e oferece uma arquitetura baseada em componentes, onde os aplicativos são divididos em componentes reutilizáveis.
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card-container">
+    <mat-card-header>
+      <mat-card-title>Angular</mat-card-title>
+      <mat-card-subtitle>Plataforma de desenvolvimento web</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Trata-se de um framework de desenvolvimento web de código aberto cujas principais características são:
+      </p>
+      <mat-list>
+        <mat-list-item lines="5">
+          <span matListItemTitle>Aplicação de página única (Single-Page Application - SPA)</span>
+          <span>Consiste em uma aplicação baseada em JavaScript que interage com o usuário através de uma página única que é carregada somente uma vez. Os demais recursos são carregados dinamicamente e adicionados à página em resposta às ações do usuário.</span>
+        </mat-list-item>
+        <mat-list-item lines="5">
+          <span matListItemTitle>Aplicação de página única (Single-Page Application - SPA)</span>
+          <span>Consiste em uma aplicação baseada em JavaScript que interage com o usuário através de uma página única que é carregada somente uma vez. Os demais recursos são carregados dinamicamente e adicionadso à página em resposta às ações do usuário.</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a [href]="'https://angular.io/guide/what-is-angular'" target="_blank"><button mat-button>Conheça mais!</button></a>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="card-container">
+    <mat-card-content>
+      <mat-tab-group [color]="accent" [backgroundColor]="primary">
+        <mat-tab label="First">Content 1</mat-tab>
+        <mat-tab label="Second">Content 2</mat-tab>
+        <mat-tab label="Third">Content 3</mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</body>
+

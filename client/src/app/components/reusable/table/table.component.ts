@@ -7,7 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'custom-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit {
 
