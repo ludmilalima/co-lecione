@@ -32,6 +32,9 @@ import { DataPropertyGetterPipe } from './components/reusable/table/data-propert
 import { MongoComponent } from './components/mongo/mongo.component';
 import { AngularComponent } from './components/angular-js/angular-js.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { JavascriptComponent } from './components/javascript/javascript.component';
+import { CornellComponent } from './components/reusable/cornell/cornell.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     TableComponent,
     DataPropertyGetterPipe,
     MongoComponent,
-    AngularComponent
+    AngularComponent,
+    JavascriptComponent,
+    CornellComponent
   ],
   imports: [
     CommonModule,
@@ -68,7 +73,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule
   ],
   providers: [
     provideAnimations(),

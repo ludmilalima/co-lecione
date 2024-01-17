@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { TableComponent } from "../reusable/table/table.component";
 import { TableColumn } from "../reusable/table/TableColumn";
 import { Sort } from "@angular/material/sort";
+import { Row } from "../reusable/cornell/Row";
 
 @Component({
   selector: "app-mongo",
@@ -30,6 +31,12 @@ export class MongoComponent {
     { name: "João", age: 30, position: "Desenvolvedor" },
     { name: "Maria", age: 35, position: "Gerente" },
     { name: "Pedro", age: 28, position: "Analista" },
+  ];
+
+  cornellData: Row[] = [
+    {position: 3, cue: "CCCC", note: "BBBBB"},
+    {position: 2, cue: "BBBB", note: "BBBBB"},
+    {position: 1, cue: "AAAA", note: "BBBBB"},
   ];
 
   tableColumns: TableColumn[] = [
