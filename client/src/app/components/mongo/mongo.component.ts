@@ -12,7 +12,7 @@ import { Row } from "../reusable/cornell/Row";
 export class MongoComponent {
   table = new TableComponent();
 
-  employees: Employee[] = [
+  employees = [
     { name: "João", age: 30, position: "Desenvolvedor" },
     { name: "Maria", age: 35, position: "Gerente" },
     { name: "Pedro", age: 28, position: "Analista" },
@@ -60,11 +60,11 @@ export class MongoComponent {
   sortData(sortParameters: Sort) {
     const keyName = sortParameters.active;
     if (sortParameters.direction === "asc") {
-      this.employees = this.employees.sort((a: Employee, b: Employee) =>
+      this.employees = this.employees.sort((a: any, b: any) =>
         a[keyName].localeCompare(b[keyName])
       );
     } else if (sortParameters.direction === "desc") {
-      this.employees = this.employees.sort((a: Employee, b: Employee) =>
+      this.employees = this.employees.sort((a: any, b: any) =>
         b[keyName].localeCompare(a[keyName])
       );
     } else {
@@ -72,7 +72,7 @@ export class MongoComponent {
     }
   }
 
-  removeOrder(employee: Employee) {
+  removeOrder(employee: any) {
     this.employees = this.employees.filter(item => item.name !== employee.name);
   }
 
@@ -100,8 +100,3 @@ export class MongoComponent {
   }
 }
 
-interface Employee {
-  name: string;
-  age: number;
-  position: string;
-}

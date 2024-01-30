@@ -1,20 +1,24 @@
-<body class="body-wrapper">
-  <custom-table
-    [tableData]="employees"
-    [tableColumns]="tableColumns"
-    [isFilterable]="true"
-    [isPageable]="true"
-    [paginationSizes]="[2, 4, 6]"
-    [defaultPageSize]="4"
-    (sort)="sortData($event)"
-    [rowActionIcon]="'remove_shopping_cart'"
-    (rowAction)="removeOrder($event)"
-  >
-  </custom-table>
-
-  <cornell 
-  [title]="'Titulo Teste'"
-  [summary]="'Resumo aqui...'"
-  [rowData]="cornellData"
-  ></cornell>
-</body>
+<ng-container>
+  <body class="body-wrapper">
+    <custom-table
+      [tableData]="employees"
+      [tableColumns]="tableColumns"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[2, 4, 6]"
+      [defaultPageSize]="4"
+      (sort)="sortData($event)"
+      [rowActionIcon]="'remove_shopping_cart'"
+      (rowAction)="removeOrder($event)"
+    >
+    </custom-table>
+    <br>
+    <cornell
+      [title]="'Titulo Teste'"
+      [summary]="'Resumo aqui...'"
+      [rowData]="cornellData"
+    ></cornell>
+    <br>
+    <alternative-question></alternative-question>
+  </body>
+</ng-container>

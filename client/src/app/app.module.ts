@@ -35,6 +35,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { JavascriptComponent } from './components/javascript/javascript.component';
 import { CornellComponent } from './components/reusable/cornell/cornell.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
+import { AlternativeQuestionComponent } from './components/reusable/alternative-question/alternative-question.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MongoComponent,
     AngularComponent,
     JavascriptComponent,
-    CornellComponent
+    CornellComponent,
+    AlternativeQuestionComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +77,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatPaginatorModule,
     MatSortModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatRadioModule,
   ],
   providers: [
     provideAnimations(),
