@@ -1,6 +1,6 @@
 <ng-container>
   <body class="body-wrapper">
-    <custom-table
+    <custom-table *ngIf="employees != undefined"
       [tableData]="employees"
       [tableColumns]="tableColumns"
       [isFilterable]="true"
@@ -20,5 +20,7 @@
     ></cornell>
     <br>
     <alternative-question></alternative-question>
+    <br>
+    <button mat-raised-button (click)="getTables(2)">Basic</button>
   </body>
 </ng-container>

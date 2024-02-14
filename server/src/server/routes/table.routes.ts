@@ -1,14 +1,14 @@
 import express from "express";
-import TableContentModel from "../models/tableContent";
+import TableContentModel from "../models/table";
 
-export const tableRouter = express.Router();
-tableRouter.use(express.json());
+export const tablesRouter = express.Router();
+tablesRouter.use(express.json());
 
-tableRouter.get("/", async (_req,res) => {
+tablesRouter.get('/', async (_req,res) => {
     try {
         const tableContents = await TableContentModel.find({});
-        res.status(200).send(tableContents);
+        res.status(200).json(tableContents);
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ error: error.message });
     }
 });

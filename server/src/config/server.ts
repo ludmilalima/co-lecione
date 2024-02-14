@@ -4,7 +4,7 @@ import express from "express";
 import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import { userRouter } from "../server/routes/user.routes";
-import { tableRouter } from "../server/routes/table.routes";
+import { tablesRouter } from "../server/routes/table.routes";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
@@ -28,8 +28,9 @@ connectToDatabase()
         app.use(express.json());
 
         // Rotas
+        app.use("/tableContents", tablesRouter);
         app.use("/users", userRouter);
-        app.use("/table", tableRouter);
+        
 
         // start the Express server
         app.listen(5200, () => {
