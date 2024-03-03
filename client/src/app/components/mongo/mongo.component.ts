@@ -21,7 +21,7 @@ export class MongoComponent {
   employees: any = undefined;
 
   ngOnInit() {
-    this.employees = this.getEmployees(2);
+    this.getEmployees(2);
   }
 
   cornellData: Row[] = [
@@ -50,7 +50,6 @@ export class MongoComponent {
 
   sortData(sortParameters: Sort) {
     const keyName = sortParameters.active;
-    console.log(sortParameters);
     if (sortParameters.direction === "asc") {
       this.employees = this.employees.sort((a: any, b: any) =>
         a[keyName].localeCompare(b[keyName])
@@ -68,42 +67,48 @@ export class MongoComponent {
     this.employees = this.employees.filter(item => item.name !== employee.name);
   }
 
-  getEmployees(index: number) {
-    let content = this.getTables(index);
-    console.log(content);
-    return this.getTables(index);
-    return [
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-      { name: "João", age: 30, position: "Desenvolvedor" },
-      { name: "Maria", age: 35, position: "Gerente" },
-      { name: "Pedro", age: 28, position: "Analista" },
-    ];
+  async getEmployees(index: number) {
+    await this.getTables(index)
+      .then(table => {
+        const lista: string[] = table
+          .replace(/\\/g, '')
+          .split('\n')
+          .map(item => item.trim());
+
+        let objList: any[] = [];
+
+        lista.forEach(item => {
+          // Verifica se o último caractere é uma vírgula
+          if (item.charAt(item.length - 1) === ',') {
+            // Remove a última vírgula usando slice
+            item = item.slice(0, -1);
+          }
+          let obj = JSON.parse(item);
+          objList.push(obj);
+        });
+
+        this.employees = objList;
+      }).catch(error => {
+        console.log(error);
+      });
   }
 
-  getTables(index: number): any {
-    this.tableService.getTables().subscribe(
-      response => {
-        console.log(response.find(item => item.contentId == index).content);
-        return response.find(item => item.contentId == index).content;
-        
-        // console.log(this.employees);
-        // this.table.tableData = [this.employees];
-        // console.log(this.table.tableData);
-      }
-    );
+  async getTables(index: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.tableService.getTables().subscribe(
+        response => {
+          const table = response.find(item => item.contentId == index);
+          if (table) {
+            resolve(table.content);
+          } else {
+            reject(new Error('Índice não encontrado'));
+          }
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
   }
+
 }

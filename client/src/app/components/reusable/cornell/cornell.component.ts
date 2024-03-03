@@ -26,7 +26,6 @@ export class CornellComponent{
   // ];
 
   setRowData(data: Row[]){
-    console.log("SetRowData()")
     this.tiles.push({text: this.title, cols: 4, rows: 1, color: 'lightpink'});
     data.sort((a, b) => a.position - b.position).forEach(element => {
       this.tiles.push(
