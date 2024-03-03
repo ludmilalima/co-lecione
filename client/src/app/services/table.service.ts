@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, tap } from 'rxjs';
+import { Observable, Subject, catchError, finalize, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TableContent } from '../models/table';
 import { HttpClient } from '@angular/common/http';
@@ -21,14 +21,50 @@ export class TableService {
     });
   }
 
-  getTables(): Subject<TableContent[]> {
+  // Método para buscar todas as tabelas
+  getTables(): Observable<TableContent[]> {
+    const tables$ = new Subject<TableContent[]>();
+
     this.httpClient.get<TableContent[]>(this.apiUrl)
-    .pipe(
-      tap(tables => this.tables$.next(tables)),
-      catchError(this.handleError),
-    )
-    .subscribe();
-    
-    return this.tables$;
+      .pipe(
+        tap(tables => tables$.next(tables)),
+        catchError(error => {
+          this.handleError(error);
+          return throwError(error);
+        }),
+        finalize(() => {
+          // Desinscrever do observable após a primeira requisição
+          tables$.complete();
+        }),
+        shareReplay(1) // Compartilhar os resultados da requisição entre múltiplas subscrições
+      )
+      .subscribe();
+
+    return tables$;
   }
+
+  // Método para buscar tabelas filtradas por ID
+  getTablesById(tableId: number): Observable<TableContent[]> {
+    const filteredTables$ = new Subject<TableContent[]>();
+
+    console.log(`${this.apiUrl}?id=${tableId}`);
+
+    this.httpClient.get<TableContent[]>(`${this.apiUrl}?id=${tableId}`)
+      .pipe(
+        tap(tables => filteredTables$.next(tables)),
+        catchError(error => {
+          this.handleError(error);
+          return throwError(error);
+        }),
+        finalize(() => {
+          // Desinscrever do observable após a primeira requisição
+          filteredTables$.complete();
+        }),
+        shareReplay(1) // Compartilhar os resultados da requisição entre múltiplas subscrições
+      )
+      .subscribe();
+
+    return filteredTables$;
+  }
+
 }

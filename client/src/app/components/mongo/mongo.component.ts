@@ -21,7 +21,7 @@ export class MongoComponent {
   employees: any = undefined;
 
   ngOnInit() {
-    this.getEmployees(2);
+    this.getEmployees(0);
   }
 
   cornellData: Row[] = [
@@ -51,17 +51,26 @@ export class MongoComponent {
   sortData(sortParameters: Sort) {
     const keyName = sortParameters.active;
     if (sortParameters.direction === "asc") {
-      this.employees = this.employees.sort((a: any, b: any) =>
-        a[keyName].localeCompare(b[keyName])
-      );
+      this.employees = this.employees.sort((a: any, b: any) => {
+        if (typeof a[keyName] === 'number' && typeof b[keyName] === 'number') {
+          return a[keyName] - b[keyName];
+        } else {
+          return a[keyName].localeCompare(b[keyName]);
+        }
+      });
     } else if (sortParameters.direction === "desc") {
-      this.employees = this.employees.sort((a: any, b: any) =>
-        b[keyName].localeCompare(a[keyName])
-      );
+      this.employees = this.employees.sort((a: any, b: any) => {
+        if (typeof a[keyName] === 'number' && typeof b[keyName] === 'number') {
+          return b[keyName] - a[keyName];
+        } else {
+          return b[keyName].localeCompare(a[keyName]);
+        }
+      });
     } else {
       this.getEmployees(2);
     }
   }
+
 
   removeOrder(employee: any) {
     this.employees = this.employees.filter(item => item.name !== employee.name);
@@ -89,13 +98,13 @@ export class MongoComponent {
 
         this.employees = objList;
       }).catch(error => {
-        console.log(error);
+        console.log(`Erro: ${error}\nChecar a formatação do conteúdo da tabela com id=${index}.`);
       });
   }
 
   async getTables(index: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.tableService.getTables().subscribe(
+      this.tableService.getTablesById(index).subscribe(
         response => {
           const table = response.find(item => item.contentId == index);
           if (table) {
