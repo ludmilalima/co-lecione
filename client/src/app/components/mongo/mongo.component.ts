@@ -98,7 +98,7 @@ export class MongoComponent {
 
         this.employees = objList;
       }).catch(error => {
-        console.log(`Erro: ${error}\nChecar a formatação do conteúdo da tabela com id=${index}.`);
+        console.log(`Erro: ${error}\n\nChecar a formatação do conteúdo da tabela com id=${index}.`);
       });
   }
 
