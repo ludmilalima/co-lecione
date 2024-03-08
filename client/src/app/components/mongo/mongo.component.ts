@@ -1,9 +1,6 @@
 import { Component } from "@angular/core";
-import { TableComponent } from "../reusable/table/table.component";
-import { TableColumn } from "../reusable/table/TableColumn";
 import { Sort } from "@angular/material/sort";
 import { Row } from "../reusable/cornell/Row";
-import { TableContent } from "src/app/models/table";
 import { TableService } from "src/app/services/table.service";
 
 @Component({
@@ -17,11 +14,11 @@ export class MongoComponent {
     private tableService: TableService,
   ) { }
 
-  table = new TableComponent();
+  //table = new TableComponent();
   employees: any = undefined;
 
   ngOnInit() {
-    this.getEmployees(0);
+    this.getEmployees(2);
   }
 
   cornellData: Row[] = [
@@ -30,7 +27,7 @@ export class MongoComponent {
     { position: 1, cue: "AAAA", note: "BBBBB" },
   ];
 
-  tableColumns: TableColumn[] = [
+  tableColumns: any[] = [
     {
       name: "name",
       dataKey: "name",

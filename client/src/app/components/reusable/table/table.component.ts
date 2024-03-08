@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { TableColumn } from './TableColumn';
+import { TableColumn } from './TableColumn.interface';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
+
 export class TableComponent implements OnInit, AfterViewInit {
 
   public tableDataSource = new MatTableDataSource([]);

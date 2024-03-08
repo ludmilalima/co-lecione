@@ -15,8 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './components/register/register.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from './services/user.service';
@@ -34,9 +34,10 @@ import { AngularComponent } from './components/angular-js/angular-js.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { JavascriptComponent } from './components/javascript/javascript.component';
 import { CornellComponent } from './components/reusable/cornell/cornell.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
 import { AlternativeQuestionComponent } from './components/reusable/alternative-question/alternative-question.component';
+import { CardsComponent } from './components/reusable/cards/cards.component';
 
 @NgModule({
   declarations: [
@@ -53,17 +54,18 @@ import { AlternativeQuestionComponent } from './components/reusable/alternative-
     AngularComponent,
     JavascriptComponent,
     CornellComponent,
-    AlternativeQuestionComponent
+    AlternativeQuestionComponent,
+    CardsComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -79,6 +81,12 @@ import { AlternativeQuestionComponent } from './components/reusable/alternative-
     MatTabsModule,
     MatGridListModule,
     MatRadioModule,
+  ],
+  exports: [
+    CardsComponent,
+    CornellComponent,
+    AlternativeQuestionComponent,
+    TableComponent,
   ],
   providers: [
     provideAnimations(),

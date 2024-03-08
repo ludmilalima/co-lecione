@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list';
 import { Tile } from './Tile';
 import { Row } from './Row';
 

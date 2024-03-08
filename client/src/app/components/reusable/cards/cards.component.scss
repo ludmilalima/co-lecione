@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.image-wrapper {
+  max-width: 100%; /* Garante que a imagem não ultrapasse a largura do card */
+  overflow: hidden; /* Esconde qualquer parte da imagem que ultrapasse a largura do card */
+}
+
+.image-wrapper img {
+  width: 100%; /* Define a largura da imagem como 100% da largura do seu contêiner (o card) */
+  height: auto; /* Mantém a proporção original da imagem */
+}
