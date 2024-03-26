@@ -71,7 +71,7 @@ export class UserService {
   }
 
   createUser(user: User): Observable<string> {
-    return this.httpClient.post(`${this.apiUrl}`, user, { responseType: 'text' }).pipe(
+    return this.httpClient.post(`${this.apiUrl}/register`, user, { responseType: 'text' }).pipe(
       catchError(this.handleError)
     );
   }

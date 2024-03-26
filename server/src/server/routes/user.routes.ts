@@ -47,7 +47,7 @@ userRouter.get('/check-email/:email', async (req, res) => {
   }
 });
 
-userRouter.post('/', async (req, res) => {
+userRouter.post('/register', async (req, res) => {
   try {
     const userData = req.body;
     // Criptografe a senha do usuário usando o bcrypt
