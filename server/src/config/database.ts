@@ -12,7 +12,7 @@ export async function connectToDatabase() {
     await mongoose
       .connect(ATLAS_URI)
       .then(() => {
-        console.log('Conexão com o MongoDB estabelecida com sucesso!');
+        console.info('Conexão com o MongoDB estabelecida com sucesso!');
         // Exemplo de uso do modelo UserModel para executar operações na coleção de usuários
 
 

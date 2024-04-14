@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Row } from "../reusable/cornell/Row";
 import { TableService } from "src/app/services/table.service";
+import { NotificationsService } from "src/app/services/notifications.service";
 
 @Component({
   selector: "app-mongo",
@@ -12,13 +13,14 @@ export class MongoComponent {
 
   constructor(
     private tableService: TableService,
+    private _notificationService: NotificationsService,
   ) { }
 
   //table = new TableComponent();
   employees: any = undefined;
 
   ngOnInit() {
-    this.getEmployees(2);
+    this.getEmployees(1);
   }
 
   cornellData: Row[] = [
@@ -95,7 +97,8 @@ export class MongoComponent {
 
         this.employees = objList;
       }).catch(error => {
-        console.log(`Erro: ${error}\n\nChecar a formatação do conteúdo da tabela com id=${index}.`);
+        console.error('Erro na recuperação de dados da tabela\n', error);
+        this._notificationService.error(`Erro na recuperação de dados da tabela`, `Checar o documento da tabela id=${index} (verifique mais detalhes do erro no console).`);
       });
   }
 

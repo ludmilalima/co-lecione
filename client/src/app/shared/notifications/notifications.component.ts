@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Notifications, NotificationsType } from 'src/app/models/notifications';
 import { NotificationsService } from 'src/app/services/notifications.service';
@@ -35,11 +35,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     this.notifications.push(notification);
-    console.log(this.notifications);
 
-    // if (notification.timeout !== 0) {
-    //   window.setTimeout(() => this.close(notification), notification.timeout);
-    // }
+    if (notification.timeout !== 0) {
+      window.setTimeout(() => this.close(notification), notification.timeout);
+    }
   }
 
   close(notification: Notifications) {

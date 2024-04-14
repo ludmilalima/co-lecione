@@ -23,7 +23,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   editar(){
-    console.log("editar()");
+    
   }
 
   alterarNome(){

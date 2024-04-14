@@ -34,14 +34,14 @@ connectToDatabase()
 
         // start the Express server
         app.listen(5200, () => {
-            console.log(`Server running at http://localhost:5200...`);
+            console.info(`Server running at http://localhost:5200...`);
         });
 
         // Capture o sinal de interrupção e desconecte-se do banco de dados antes de encerrar o servidor
         process.on('SIGINT', async () => {
             try {
                 await mongoose.disconnect();
-                console.log('Desconectado do banco de dados.');
+                console.info('Desconectado do banco de dados.');
                 process.exit(0); // Encerre o processo Node.js com código de saída 0 (encerramento normal)
             } catch (error) {
                 console.error('Erro ao desconectar do banco de dados:', error);

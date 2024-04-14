@@ -47,8 +47,6 @@ export class TableService {
   getTablesById(tableId: number): Observable<TableContent[]> {
     const filteredTables$ = new Subject<TableContent[]>();
 
-    console.log(`${this.apiUrl}?id=${tableId}`);
-
     this.httpClient.get<TableContent[]>(`${this.apiUrl}?id=${tableId}`)
       .pipe(
         tap(tables => filteredTables$.next(tables)),
