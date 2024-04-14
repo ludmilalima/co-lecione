@@ -1,8 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
 import { UserService } from 'src/app/services/user.service';
-import { NavigationComponent } from 'src/app/pages/navigation/navigation.component';
 
 
 @Component({

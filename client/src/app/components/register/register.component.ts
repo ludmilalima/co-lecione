@@ -2,59 +2,74 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { switchMap, EMPTY, tap, catchError, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+/**
+ * Represents the RegisterComponent class.
+ * This component is responsible for registering new users.
+ */
 export class RegisterComponent {
   newUser: User = { name: '', email: '', password: '' };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRegisterRef: MatDialogRef<RegisterComponent>,
-    private _snackBar: MatSnackBar,
     public userService: UserService,
+    private _notificationService: NotificationsService,
   ) { }
 
+  /**
+   * Registers a new user.
+   * 
+   * @remarks
+   * This method checks if the email is already registered. If not, it creates a new user using the provided information.
+   * 
+   * @param this - The context of the component.
+   */
   register(this: any) {
-
-    try {
-      // Código que pode gerar uma exceção
-      this.userService.checkEmail(this.newUser.email).subscribe((response: any) => {
-        if (response.isEmailRegistered == true) {
-          console.log('O e-mail já está cadastrado.');
+    this.userService.checkEmail(this.newUser.email).pipe(
+      switchMap((response: any) => {
+        if (response.isEmailRegistered) {
           this.openSnackBar('O e-mail já está cadastrado.');
+          // Retorna um observable vazio para encerrar a cadeia
+          return EMPTY;
         } else {
-          this.userService.createUser(<User>this.newUser)
-            .subscribe({
-              next: () => {
-                console.log('Usuário registrado com sucesso!');
-                // Implemente o que você deseja fazer após o registro do usuário
-              },
-              error: (error: any) => {
-                // Implemente o tratamento de erro adequado
-                this.openSnackBar(error.error);
-              },
-              complete: () => {
-                // Função vazia, já que não precisamos dela neste caso
-              }
-            });
+          return this.userService.createUser(<User>this.newUser);
         }
+      }),
+      tap(() => {
+        this._notificationService.success('Usuário registrado', 'Usuário registrado com sucesso!');
+      }),
+      catchError((error: any) => {
+        if (error.errors) {
+          for (const key in error.errors) {
+            if (error.errors.hasOwnProperty(key)) {
+              this._notificationService.error('Erro ao registrar usuário', error.errors[key].message);
+            }
+          }
+        } else {
+          this._notificationService.error('Erro ao registrar usuário', 'Erro ao registrar usuário. Mais detalhes no console.');
+          console.error(error);
+        }
+        // Retorna um observable vazio para que o erro seja tratado e a cadeia continue
+        return EMPTY;
+      }),
+      finalize(() => {
+        this.closeRegisterDialog();
       })
-    } catch (error) {
-      // Lidar com o erro
-      console.error('Ocorreu um erro na verificação do email:', error);
-      this.openSnackBar(`Ocorreu um erro na verificação do email: ${error}`);
-    }
+    ).subscribe();
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message, 'Ok', {
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
+  /**
+   * Closes the register dialog.
+   */
+  closeRegisterDialog() {
+    this.dialogRegisterRef.close();
   }
 }

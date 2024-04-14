@@ -61,14 +61,11 @@ userRouter.post('/register', async (req, res) => {
     const result = await newUser.save();
 
     if (result) {
-      res.status(201).send(`Created a new user: ID ${result._id}.`);
+      res.status(201).json({ userId: result._id });
     } else {
-      res.status(500).send('Failed to create a new user.');
+      throw new Error("Falha ao criar usuário!");
     }
-
-    console.log('Usuário salvo com sucesso!');
   } catch (error) {
-    console.error('Erro ao salvar o usuário:', error);
     res.status(400).send(error);
   }
 });

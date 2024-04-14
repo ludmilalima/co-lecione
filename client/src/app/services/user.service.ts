@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,16 @@ export class UserService {
   private users$: Subject<User[]> = new Subject();
   private token: string | null = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor
+    (
+      private httpClient: HttpClient,
+      private notificationsService: NotificationsService
+    ) { }
+
 
   private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error.error);
-    return new Observable<never>((observer) => {
-      observer.error(error.error);
-      observer.complete();
-    });
+    console.error('UserService error: ', error);
+    return throwError(() => error.error);
   }
 
   private setToken(token: string | null) {
@@ -41,8 +44,8 @@ export class UserService {
   }
 
   private setUser(user: User) {
-    localStorage.setItem('name',user?.name);
-    localStorage.setItem('email',user?.email);
+    localStorage.setItem('name', user?.name);
+    localStorage.setItem('email', user?.email);
   }
 
 
@@ -70,9 +73,12 @@ export class UserService {
     return this.httpClient.get<boolean>(`${this.apiUrl}/check-email/${email}`);
   }
 
-  createUser(user: User): Observable<string> {
-    return this.httpClient.post(`${this.apiUrl}/register`, user, { responseType: 'text' }).pipe(
-      catchError(this.handleError)
+  createUser(user: User): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.post<any>(`${this.apiUrl}/register`, user, { headers }).pipe(
+      catchError(this.handleError.bind(this))
     );
   }
 
@@ -89,7 +95,7 @@ export class UserService {
       })
     );
   }
-  
+
   getUserInfo(): Observable<User> {
     const token = this.getToken();
 
@@ -103,8 +109,8 @@ export class UserService {
     const headers = {
       Authorization: `Bearer ${token}`
     };
-    
-   return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { headers }).pipe(
+
+    return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { headers }).pipe(
       tap({
         next: (user: any) => {
           this.setUser(user);

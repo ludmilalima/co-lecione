@@ -1,0 +1,62 @@
+.notifications {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  z-index: 10000;
+  min-width: 400px;
+  max-width: 400px;
+
+  .notification {
+    margin: 5px;
+    border-radius: 5px;
+    color: #fff;
+    overflow: hidden;
+
+    .title {
+      padding-left: 10px;
+      font-weight: bold;
+    }
+
+    .message {
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    &.info {
+      .title {
+        background-color: rgba(56, 176, 222, 0.9);
+      } // Azul claro para informações
+      .message {
+        background-color: rgba(56, 176, 222, 0.7);
+      } // Azul claro para informações
+    }
+
+    &.success {
+      .title {
+        background-color: rgba(40, 167, 69, 0.9);
+      } // Verde para sucesso
+      .message {
+        background-color: rgba(40, 167, 69, 0.7);
+      } // Verde para sucesso
+    }
+
+    &.warning {
+      .title {
+        background-color: rgba(255, 193, 7, 0.9);
+      } // Amarelo para avisos
+      .message {
+        background-color: rgba(255, 193, 7, 0.7);
+      } // Amarelo para avisos
+    }
+
+    &.error {
+      .title {
+        background-color: rgba(220, 53, 69, 0.9);
+      } // Vermelho para erros
+      .message {
+        background-color: rgba(220, 53, 69, 0.7);
+      } // Vermelho para erros
+    }
+  }
+}

@@ -9,7 +9,7 @@ export interface User extends Document {
 const userSchema: Schema<User> = new Schema({
     name: {
         type: String,
-        required: [true, 'O campo "name" é obrigatório.'],
+        required: [true, 'O campo "nome" é obrigatório.'],
         minlength: [3, 'O campo "name" deve conter no mínimo 3 caracteres.'],
         match: [/^[A-Za-z\s]+$/, 'O campo "name" deve conter apenas letras e espaços.']
     },
@@ -21,8 +21,8 @@ const userSchema: Schema<User> = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'O campo "password" é obrigatório.'],
-        minlength: [6, 'O campo "password" deve conter no mínimo 6 caracteres.']
+        required: [true, 'O campo "senha" é obrigatório.'],
+        minlength: [6, 'O campo "senha" deve conter no mínimo 6 caracteres.']
     }
 });
 
