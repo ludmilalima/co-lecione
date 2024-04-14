@@ -30,12 +30,13 @@ export class UserService {
     this.token = token;
   }
 
-  private getToken(): string | null {
+  getToken(): string | null {
     return this.token;
   }
 
   private saveToken(token: string) {
     localStorage.setItem('token', token);
+    this.setToken(token);
   }
 
   private loadToken() {
@@ -87,7 +88,6 @@ export class UserService {
       tap({
         next: (token: any) => {
           this.saveToken(token);
-          this.setToken(token);
         },
         error: (error: any) => {
           this.handleError(error.error);

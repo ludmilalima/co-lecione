@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { NavigationComponent } from './pages/navigation/navigation.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -44,7 +43,6 @@ import { NotificationsModule } from './shared/notifications/notifications.module
 @NgModule({
     declarations: [
         AppComponent,
-        NavigationComponent,
         LoginComponent,
         RegisterComponent,
         LogoutComponent,

@@ -36,7 +36,7 @@ export class RegisterComponent {
     this.userService.checkEmail(this.newUser.email).pipe(
       switchMap((response: any) => {
         if (response.isEmailRegistered) {
-          this.openSnackBar('O e-mail já está cadastrado.');
+          this._notificationService.info('Email indisponível para cadastro', 'Este e-mail consta no cadastro de outro usuário.');
           // Retorna um observable vazio para encerrar a cadeia
           return EMPTY;
         } else {
