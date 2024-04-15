@@ -10,7 +10,7 @@
         <p>
           <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="email" />
+            <input matInput [(ngModel)]="email" aria-label="email"/>
           </mat-form-field>
         </p>
     
@@ -23,6 +23,7 @@
               minlength="6"
               [(ngModel)]="senha"
               type="password"
+              aria-label="senha"
             />
             <mat-hint align="end">{{ input.value.length }}/6</mat-hint>
           </mat-form-field>

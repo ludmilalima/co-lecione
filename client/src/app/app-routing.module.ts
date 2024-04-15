@@ -7,7 +7,6 @@ import { JavascriptComponent } from './components/javascript/javascript.componen
 import { CornellComponent } from './components/reusable/cornell/cornell.component';
 
 const routes: Routes = [
-  //{ path: '', redirectTo: 'navigation', pathMatch: 'full' },
   { path: 'mean', component: MeanComponent },
   { path: 'mongo', component: MongoComponent },
   { path: 'angular', component: AngularComponent },
