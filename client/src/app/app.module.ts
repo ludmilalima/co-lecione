@@ -39,6 +39,7 @@ import { AlternativeQuestionComponent } from './components/reusable/alternative-
 import { CardsComponent } from './components/reusable/cards/cards.component';
 import { NotificationsService } from './services/notifications.service';
 import { NotificationsModule } from './shared/notifications/notifications.module';
+import { ExploreComponent } from './pages/explore/explore.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { NotificationsModule } from './shared/notifications/notifications.module
         JavascriptComponent,
         CornellComponent,
         AlternativeQuestionComponent,
-        CardsComponent
+        CardsComponent,
+        ExploreComponent
     ],
     exports: [
         CardsComponent,
