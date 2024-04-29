@@ -7,6 +7,15 @@ import jwt from 'jsonwebtoken';
 export const userRouter = express.Router();
 userRouter.use(express.json());
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Retrieve a list of users
+ *     responses:
+ *       200:
+ *         description: A list of users.
+ */
 userRouter.get('/', async (_req, res) => {
   try {
     const users = await UserModel.find({});
@@ -16,6 +25,23 @@ userRouter.get('/', async (_req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/id/{id}:
+ *   get:
+ *     summary: Retrieve a user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A user object.
+ *       404:
+ *         description: User not found.
+ */
 userRouter.get('/id/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -31,6 +57,21 @@ userRouter.get('/id/:id', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/check-email/{email}:
+ *   get:
+ *     summary: Check if an email is registered
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A boolean indicating if the email is registered.
+ */
 userRouter.get('/check-email/:email', async (req, res) => {
   try {
     const email = req.params.email;
@@ -47,6 +88,28 @@ userRouter.get('/check-email/:email', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: The ID of the created user.
+ */
 userRouter.post('/register', async (req, res) => {
   try {
     const userData = req.body;
@@ -70,6 +133,26 @@ userRouter.post('/register', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Log in a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: A JWT token.
+ */
 userRouter.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -102,10 +185,27 @@ userRouter.post('/login', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/logout:
+ *   post:
+ *     summary: Log out a user
+ *     responses:
+ *       200:
+ *         description: Successfully logged out.
+ */
 // Rota para logout de usuário
 userRouter.post('/logout', logout);
 
-
+/**
+ * @swagger
+ * /users/currentUser:
+ *   get:
+ *     summary: Retrieve the currently logged in user
+ *     responses:
+ *       200:
+ *         description: A user object.
+ */
 // Rota protegida para obter informações do usuário
 userRouter.get('/currentUser', verifyToken, async (req, res) => {
   // Acessar o ID do usuário autenticado através de req.userId
@@ -126,6 +226,34 @@ userRouter.get('/currentUser', verifyToken, async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update a user
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successfully updated the user.
+ */
 userRouter.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -143,6 +271,21 @@ userRouter.put('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete a user
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       202:
+ *         description: Successfully deleted the user.
+ */
 userRouter.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id;

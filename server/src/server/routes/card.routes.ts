@@ -1,12 +1,61 @@
 import express from "express";
 import CardModel from "../models/card";
+import { Console } from "console";
 
 export const cardRouter = express.Router();
 cardRouter.use(express.json());
 
-// POST: Create a new card
-cardRouter.post('/', async (req, res) => {
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Card:
+ *       type: object
+ *       properties:
+ *         avatarSrc:
+ *           type: string
+ *           description: The source of the avatar image
+ *         headerImageSrc:
+ *           type: string
+ *           description: The source of the header image
+ *         title:
+ *           type: string
+ *           description: The title of the card
+ *         subtitle:
+ *           type: string
+ *           description: The subtitle of the card
+ *         content:
+ *           type: string
+ *           description: The content of the card
+ *         action:
+ *           type: string
+ *           description: The action of the card
+ *         metadata:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: string
+ * /cards/create:
+ *   post:
+ *     summary: Create a new card
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Card'
+ *     responses:
+ *       201:
+ *         description: A card object.
+ */
+cardRouter.post('/create', async (req, res) => {
+    console.log(req.body);
     const card = new CardModel(req.body);
+    console.log(card);
     try {
         const savedCard = await card.save();
         res.status(201).json(savedCard);
@@ -15,7 +64,17 @@ cardRouter.post('/', async (req, res) => {
     }
 });
 
-// GET: Retrieve all cards
+/**
+ * @swagger
+ * /cards:
+ *   get:
+ *     summary: Get all cards
+ *     responses:
+ *       200:
+ *         description: An array of card objects.
+ *       500:
+ *         description: Error message.
+ */
 cardRouter.get('/', async (req, res) => {
     try {
         const cards = await CardModel.find();
@@ -25,7 +84,26 @@ cardRouter.get('/', async (req, res) => {
     }
 });
 
-// GET: Retrieve a specific card by ID
+/**
+ * @swagger
+ * /cards/{id}:
+ *   get:
+ *     summary: Get a card by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The card ID.
+ *     responses:
+ *       200:
+ *         description: A card object.
+ *       404:
+ *         description: The card was not found.
+ *       500:
+ *         description: Error message.
+ */
 cardRouter.get('/:id', async (req, res) => {
     try {
         const card = await CardModel.findById(req.params.id);
@@ -39,7 +117,64 @@ cardRouter.get('/:id', async (req, res) => {
     }
 });
 
-// PUT: Update a specific card
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Card:
+ *       type: object
+ *       properties:
+ *         avatarSrc:
+ *           type: string
+ *           description: The source of the avatar image
+ *         headerImageSrc:
+ *           type: string
+ *           description: The source of the header image
+ *         title:
+ *           type: string
+ *           description: The title of the card
+ *         subtitle:
+ *           type: string
+ *           description: The subtitle of the card
+ *         content:
+ *           type: string
+ *           description: The content of the card
+ *         action:
+ *           type: string
+ *           description: The action of the card
+ *         metadata:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               key:
+ *                 type: string
+ *               value:
+ *                 type: string
+ * /cards/{id}:
+ *   put:
+ *     summary: Update a card by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The card ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Card'
+ *     responses:
+ *       200:
+ *         description: The updated card object.
+ *       404:
+ *         description: The card was not found.
+ *       500:
+ *         description: Error message.
+ */
 cardRouter.put('/:id', async (req, res) => {
     try {
         const updatedCard = await CardModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -49,7 +184,26 @@ cardRouter.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE: Delete a specific card
+/**
+ * @swagger
+ * /cards/{id}:
+ *   delete:
+ *     summary: Delete a card by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The card ID.
+ *     responses:
+ *       200:
+ *         description: The card was deleted successfully.
+ *       404:
+ *         description: The card was not found.
+ *       500:
+ *         description: Error message.
+ */
 cardRouter.delete('/:id', async (req, res) => {
     try {
         const deletedCard = await CardModel.findByIdAndDelete(req.params.id);

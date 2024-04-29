@@ -7,6 +7,7 @@ export interface Card extends mongoose.Document {
     subtitle?: string;
     content?: string;
     action?: string;
+    resourceType: string;
     metadata: { key: string, value: string }[];
 }
 
@@ -34,6 +35,10 @@ const CardSchema: Schema<Card> = new mongoose.Schema({
     action: {
         type: String,
         required: false
+    },
+    resourceType: {
+        type: String,
+        required: true
     },
     metadata: [{
         key: {
