@@ -3,6 +3,9 @@ import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+import path from 'path';
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { cardRouter } from "../server/routes/card.routes";
@@ -27,6 +30,26 @@ connectToDatabase()
 
         // Middleware para parsing do corpo das requisições
         app.use(express.json());
+
+        // Middleware do Swagger
+        const swaggerOptions = {
+            definition: {
+              openapi: '3.0.0',
+              info: {
+                title: 'Express API with Swagger',
+                version: '1.0.0',
+                description: 'A simple Express API',
+              },
+              servers: [
+                {
+                  url: 'http://localhost:5200',
+                },
+              ],
+            },
+            apis: ['src/server/routes/*.routes.ts'],
+          };
+        const swaggerSpec = swaggerJsdoc(swaggerOptions);
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
         // Rotas
         app.use("/tableContents", tablesRouter);
