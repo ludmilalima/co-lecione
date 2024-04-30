@@ -53,8 +53,15 @@ cardRouter.use(express.json());
  *         description: A card object.
  */
 cardRouter.post('/create', async (req, res) => {
-    console.log(req.body);
-    const card = new CardModel(req.body);
+    const cardData = req.body;
+
+    // Check if a card with the same content already exists
+    const existingCard = await CardModel.findOne(cardData);
+    if (existingCard) {
+        return res.status(409).json({ error: 'A card with the same content already exists' });
+    }
+
+    const card = new CardModel(cardData);
     console.log(card);
     try {
         const savedCard = await card.save();
