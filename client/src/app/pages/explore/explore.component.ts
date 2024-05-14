@@ -34,10 +34,6 @@ export class ExploreComponent implements OnInit {
       ]
     };
 
-    this.objectsService.createCard(newObject).subscribe(response => {
-      console.log(response);
-    });
-
     this.objectsService.getCards().subscribe(response => {
       this.cards = response;
       console.log(response);

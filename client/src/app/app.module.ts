@@ -40,6 +40,7 @@ import { CardsComponent } from './components/reusable/cards/cards.component';
 import { NotificationsService } from './services/notifications.service';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 import { ExploreComponent } from './pages/explore/explore.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
     declarations: [
@@ -97,7 +98,8 @@ import { ExploreComponent } from './pages/explore/explore.component';
       MatTabsModule,
       MatGridListModule,
       MatRadioModule,
-      NotificationsModule
+      NotificationsModule,
+      MarkdownModule.forRoot()
     ]
 })
 export class AppModule { }
