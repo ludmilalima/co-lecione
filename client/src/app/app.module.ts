@@ -41,6 +41,7 @@ import { NotificationsService } from './services/notifications.service';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 import { ExploreComponent } from './pages/explore/explore.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { CreateComponent } from './pages/create/create.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { MarkdownModule } from 'ngx-markdown';
         CornellComponent,
         AlternativeQuestionComponent,
         CardsComponent,
-        ExploreComponent
+        ExploreComponent,
+        CreateComponent
     ],
     exports: [
         CardsComponent,
