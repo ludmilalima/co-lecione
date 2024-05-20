@@ -5,10 +5,10 @@ import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
-import path from 'path';
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { cardRouter } from "../server/routes/card.routes";
+import { objectRouter } from "../server/routes/object.routes";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
@@ -55,6 +55,7 @@ connectToDatabase()
         app.use("/tableContents", tablesRouter);
         app.use("/users", userRouter);
         app.use("/cards", cardRouter);
+        app.use("/objects", objectRouter);
         
 
         // start the Express server
