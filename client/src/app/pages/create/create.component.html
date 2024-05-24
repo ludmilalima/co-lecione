@@ -1,0 +1,31 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Cartão </mat-panel-title>
+      <mat-panel-description>
+        Título, subtítulo, avatar, imagem e texto.</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <app-cards
+      class="object-container"
+      [avatarSrc]="card.avatarSrc"
+      [headerImageSrc]="card.headerImageSrc"
+      [title]="card.title"
+      [subtitle]="card.subtitle"
+      [content]="card.content"
+      [action]="card.action"
+    >
+    </app-cards>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Questão </mat-panel-title>
+      <mat-panel-description>
+        Assunto, imagem, anúncio, alternativas ou editor de
+        texto.</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <alternative-question></alternative-question>
+  </mat-expansion-panel>
+</mat-accordion>

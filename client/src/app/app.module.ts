@@ -42,6 +42,9 @@ import { NotificationsModule } from './shared/notifications/notifications.module
 import { ExploreComponent } from './pages/explore/explore.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { CreateComponent } from './pages/create/create.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { CreateObjectComponent } from './pages/create/create-object/create-object.component';
+import { CreateItineraryComponent } from './pages/create/create-itinerary/create-itinerary.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +63,9 @@ import { CreateComponent } from './pages/create/create.component';
         AlternativeQuestionComponent,
         CardsComponent,
         ExploreComponent,
-        CreateComponent
+        CreateComponent,
+        CreateObjectComponent,
+        CreateItineraryComponent
     ],
     exports: [
         CardsComponent,
@@ -101,7 +106,8 @@ import { CreateComponent } from './pages/create/create.component';
       MatGridListModule,
       MatRadioModule,
       NotificationsModule,
-      MarkdownModule.forRoot()
+      MarkdownModule.forRoot(),
+      NgxEditorModule
     ]
 })
 export class AppModule { }
