@@ -594,7 +594,6 @@ export class CreateComponent implements OnInit {
     ]
   };
 
-
   card: any = {
     avatarSrc: 'https://www.happyway.com.au/cdn/shop/articles/Healthy-Eating-Tips.jpg?v=1674535125',
     headerImageSrc: 'https://imageio.forbes.com/specials-images/imageserve/63b6dbc1b64d967f5ee8003d/Healthy-eating--exercising--weight-and-blood-pressure-control/960x0.jpg?format=jpg&width=960',
@@ -747,46 +746,7 @@ export class CreateComponent implements OnInit {
                             }
                         }
                     ],
-                    "text": "Um dos fatores para avaliar o desempenho mensal da empresa é verificar qual é o menor montante diário V"
-                },
-                {
-                    "type": "text",
-                    "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
-                        },
-                        {
-                            "type": "sub"
-                        }
-                    ],
-                    "text": "0"
-                },
-                {
-                    "type": "text",
-                    "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
-                        }
-                    ],
-                    "text": " arrecadado ao longo do mês e classificar o desempenho conforme as categorias apresentadas a seguir, em que as quantidades estão expressas em milhar de real."
+                    "text": "Um dos fatores para avaliar o desempenho mensal da empresa é verificar qual é o menor montante diário V0 arrecadado ao longo do mês e classificar o desempenho conforme as categorias apresentadas a seguir, em que as quantidades estão expressas em milhar de real."
                 }
             ]
         },
@@ -819,46 +779,7 @@ export class CreateComponent implements OnInit {
                                             }
                                         }
                                     ],
-                                    "text": "Ótimo: V"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        },
-                                        {
-                                            "type": "sub"
-                                        }
-                                    ],
-                                    "text": "0"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": " ≥  24"
+                                    "text": "Ótimo: V0 ≥  24"
                                 }
                             ]
                         }
@@ -890,46 +811,7 @@ export class CreateComponent implements OnInit {
                                             }
                                         }
                                     ],
-                                    "text": "Bom: 20 ≤ V"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        },
-                                        {
-                                            "type": "sub"
-                                        }
-                                    ],
-                                    "text": "0"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": " < 24"
+                                    "text": "Bom: 20 ≤ V0 < 24"
                                 }
                             ]
                         }
@@ -961,46 +843,7 @@ export class CreateComponent implements OnInit {
                                             }
                                         }
                                     ],
-                                    "text": "Normal: 10 ≤ V"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        },
-                                        {
-                                            "type": "sub"
-                                        }
-                                    ],
-                                    "text": "0"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": " < 20"
+                                    "text": "Normal: 10 ≤ V0 < 20"
                                 }
                             ]
                         }
@@ -1032,46 +875,7 @@ export class CreateComponent implements OnInit {
                                             }
                                         }
                                     ],
-                                    "text": "Ruim: 4 ≤ V"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        },
-                                        {
-                                            "type": "sub"
-                                        }
-                                    ],
-                                    "text": "0"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": " < 10"
+                                    "text": "Ruim: 4 ≤ V0 < 10"
                                 }
                             ]
                         }
@@ -1108,46 +912,7 @@ export class CreateComponent implements OnInit {
                                             }
                                         }
                                     ],
-                                    "text": "Péssimo: V"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        },
-                                        {
-                                            "type": "sub"
-                                        }
-                                    ],
-                                    "text": "0"
-                                },
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": " < 4"
+                                    "text": "Péssimo: V0 < 4"
                                 }
                             ]
                         }
@@ -1205,6 +970,5 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
   }
 }

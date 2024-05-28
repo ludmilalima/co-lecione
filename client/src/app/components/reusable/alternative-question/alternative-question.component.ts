@@ -32,7 +32,7 @@ export class AlternativeQuestionComponent implements AfterViewInit {
 
   formQuestion = new FormGroup({
     editorQ: new FormControl(
-      { value: 'Carregando...', disabled: true },
+      { value: '', disabled: true, },
       Validators.required()
     ),
   });
@@ -45,11 +45,11 @@ export class AlternativeQuestionComponent implements AfterViewInit {
   });
 
   constructor() {
-    this.editorQuestion = new Editor();
-    this.editorAnswer = new Editor();
   };
 
   ngOnInit(): void {
+    this.editorQuestion = new Editor();
+    this.editorAnswer = new Editor();
   };
 
   ngAfterViewInit(): void {
