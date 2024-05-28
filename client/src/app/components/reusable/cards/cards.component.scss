@@ -12,6 +12,10 @@
   height: auto; /* Mantém a proporção original da imagem */
 }
 
+.header-container {
+  padding-block-end: 8px;
+}
+
 .image-wrapper {
   max-width: 100%; /* Garante que a imagem não ultrapasse a largura do card */
   overflow: hidden; /* Esconde qualquer parte da imagem que ultrapasse a largura do card */

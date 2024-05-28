@@ -40,7 +40,6 @@ import { CardsComponent } from './components/reusable/cards/cards.component';
 import { NotificationsService } from './services/notifications.service';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 import { ExploreComponent } from './pages/explore/explore.component';
-import { MarkdownModule } from 'ngx-markdown';
 import { CreateComponent } from './pages/create/create.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CreateObjectComponent } from './pages/create/create-object/create-object.component';
@@ -87,6 +86,7 @@ import { CreateItineraryComponent } from './pages/create/create-itinerary/create
       AppRoutingModule,
       FormsModule,
       ReactiveFormsModule,
+      NgxEditorModule,
       BrowserAnimationsModule,
       MatButtonModule,
       MatInputModule,
@@ -105,9 +105,7 @@ import { CreateItineraryComponent } from './pages/create/create-itinerary/create
       MatTabsModule,
       MatGridListModule,
       MatRadioModule,
-      NotificationsModule,
-      MarkdownModule.forRoot(),
-      NgxEditorModule
+      NotificationsModule
     ]
 })
 export class AppModule { }

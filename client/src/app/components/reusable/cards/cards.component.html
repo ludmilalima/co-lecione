@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-header *ngIf="avatarSrc || title || subtitle" style="padding-block-end: 8px;">
+  <mat-card-header *ngIf="avatarSrc || title || subtitle" class="header-container">
     <div mat-card-avatar class="avatar" *ngIf="avatarSrc">
       <div class="avatar-wrapper">
         <img [src]="avatarSrc" alt="Avatar do Card" />

@@ -1,21 +1,50 @@
 <ng-container>
   <mat-card>
+    <mat-card-header *ngIf="topic || note" class="header-container">
+      <mat-card-title *ngIf="topic">{{ topic }}</mat-card-title>
+      <mat-card-subtitle *ngIf="note">{{ note }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="image-wrapper img" *ngIf="figureSrc">
+      <img [src]="figureSrc" alt="Imagem do Header" />
+    </div>
+
     <mat-card-content>
-      <label id="example-radio-group-label">Pick your favorite season</label>
+      <form [formGroup]="formQuestion" *ngIf="statement">
+        <div class="editor">
+          <ngx-editor
+            [editor]="editorQuestion"
+            formControlName="editorQ"
+          >
+          </ngx-editor>
+        </div>
+      </form>
+
       <mat-radio-group
+        *ngIf="alternatives"
         aria-labelledby="example-radio-group-label"
         class="example-radio-group"
-        [(ngModel)]="favoriteSeason"
       >
         <mat-radio-button
           class="example-radio-button"
-          *ngFor="let season of seasons"
-          [value]="season"
+          *ngFor="let alt of alternatives"
+          [value]="alt"
         >
-          {{ season }}
+          {{ alt }}
         </mat-radio-button>
       </mat-radio-group>
-      <div>Your favorite season is: {{ favoriteSeason }}</div>
+
+      <form [formGroup]="formAnswer" *ngIf="discursive">
+        <div class="editor">
+          <ngx-editor-menu [editor]="editorAnswer" [toolbar]="toolbarAnswer">
+          </ngx-editor-menu>
+          <ngx-editor [editor]="editorAnswer" formControlName="editorA">
+          </ngx-editor>
+        </div>
+      </form>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" type="button">Corrigir!</button>
+    </mat-card-actions>
   </mat-card>
 </ng-container>

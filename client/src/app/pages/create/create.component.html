@@ -7,7 +7,6 @@
       >
     </mat-expansion-panel-header>
     <app-cards
-      class="object-container"
       [avatarSrc]="card.avatarSrc"
       [headerImageSrc]="card.headerImageSrc"
       [title]="card.title"
@@ -22,10 +21,18 @@
     <mat-expansion-panel-header>
       <mat-panel-title> Questão </mat-panel-title>
       <mat-panel-description>
-        Assunto, imagem, anúncio, alternativas ou editor de
+        Assunto, observação, imagem, enunciado, alternativas e/ou editor de
         texto.</mat-panel-description
       >
     </mat-expansion-panel-header>
-    <alternative-question></alternative-question>
+    <alternative-question
+      [topic]="question.topic"
+      [note]="question.note"
+      [figureSrc]="question.figureSrc"
+      [statement]="question.statement"
+      [alternatives]="question.alternatives"
+      [discursive]="question.discursive"
+    >
+    </alternative-question>
   </mat-expansion-panel>
 </mat-accordion>
