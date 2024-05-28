@@ -1,11 +1,11 @@
-.example-radio-group {
+.radio-group {
     display: block;
     flex-direction: column;
     margin: 15px 0;
     align-items: flex-start;
   }
   
-  .example-radio-button {
+  .radio-button {
     margin: 5px;
   }
 
@@ -30,7 +30,7 @@
   .image-wrapper {
     max-width: 100%; /* Garante que a imagem não ultrapasse a largura do card */
     overflow: hidden; /* Esconde qualquer parte da imagem que ultrapasse a largura do card */
-    padding-inline: 8px;
+    padding: 8px;
     align-self: center;
   }
   
@@ -45,6 +45,7 @@
   }
   
   .editor {
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
   
     .NgxEditor__MenuBar {
@@ -69,4 +70,3 @@
       }
     }
   }
-  
