@@ -8,19 +8,12 @@ import { ObjectsService } from 'src/app/services/objects.service';
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.scss']
 })
-export class ExploreComponent implements OnInit, AfterViewInit {
+export class ExploreComponent implements OnInit {
   objects: any[] = [];
 
   constructor(private _objectsService: ObjectsService) { }
 
   ngOnInit(): void {
-    // this._objectsService.getAllObjects().subscribe(response => {
-    //   this.objects = response;
-    //   console.log('Objects:', this.objects);
-    // });
-  }
-
-  ngAfterViewInit(): void {
     this._objectsService.getAllObjects().subscribe(response => {
       this.objects = response.map((object: any) => {
         return {
@@ -39,24 +32,6 @@ export class ExploreComponent implements OnInit, AfterViewInit {
           }, {}),
         };
       });
-
-      var locObj = response.map((object: any) => {
-        return  {
-          type: object.type,
-          content: object.content.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: curr.value,
-            };
-          }, {}),
-          metadata: object.metadata.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: curr.value,
-            };
-          }, {}),
-        };
-      });
     });
-  };
+  }
 }

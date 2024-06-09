@@ -90,7 +90,6 @@ export class NewCardComponent implements AfterViewInit, OnDestroy {
   async submit(): Promise<void> {
     for (const key in this.objForm.controls) {
       if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
-        console.log(key, this.objForm.get(key).value);
         // Adiciona ao array 'card' um objeto com a chave e o valor do controle atual
         if (key === 'content') {
           var strContent = JSON.stringify(this.objForm.get(key).value);
@@ -107,9 +106,7 @@ export class NewCardComponent implements AfterViewInit, OnDestroy {
         this.card,
         this.metadata
       );
-      console.log(obj);
       (await this._objectsService.createObject(obj)).subscribe(response => {
-        console.log(response);
       });
     }
   }
