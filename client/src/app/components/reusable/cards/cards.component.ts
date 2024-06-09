@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Editor, Validators } from 'ngx-editor';
 
@@ -8,19 +8,20 @@ import { Editor, Validators } from 'ngx-editor';
     styleUrls: ['./cards.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CardsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
     @Input() avatarSrc?: string;
     @Input() headerImageSrc?: string;
     @Input() title?: string;
     @Input() subtitle?: string;
     @Input() content?: string;
-    @Input() action?: string;
+    @Input() actionTitle?: string;
+    @Input() actionLink?: string;
 
     editor: Editor;
 
     form = new FormGroup({
         editorContent: new FormControl(
-            { value: 'Carregando...', disabled: true },
+            { value: null, disabled: true },
             Validators.required()
         ),
     });
@@ -32,11 +33,25 @@ export class CardsComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['content']) {
+            this.form.get('editorContent').setValue(changes['content'].currentValue);
+        }
+    }
+
     ngAfterViewInit(): void {
-        this.editor.setContent(this.content);
+        this.editor.setContent(JSON.parse(this.content));
     }
 
     ngOnDestroy(): void {
         this.editor.destroy();
+    }
+
+    openLink(): void {
+        if (this.actionLink && (this.actionLink.startsWith('http://') || this.actionLink.startsWith('https://'))) {
+            window.open(this.actionLink, '_blank');
+        } else {
+            window.open('https://' + this.actionLink, '_blank');
+        }
     }
 }

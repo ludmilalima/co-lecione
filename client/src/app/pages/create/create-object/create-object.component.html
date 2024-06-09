@@ -1,1 +1,57 @@
-<p>create-object works!</p>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Cartão </mat-panel-title>
+      <mat-panel-description>
+        Título, subtítulo, avatar, imagem e texto.</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <app-cards
+      [avatarSrc]="card.avatarSrc"
+      [headerImageSrc]="card.headerImageSrc"
+      [title]="card.title"
+      [subtitle]="card.subtitle"
+      [content]="card.content"
+      [actionTitle]="card.action"
+    >
+    </app-cards>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Questão </mat-panel-title>
+      <mat-panel-description>
+        Assunto, observação, imagem, enunciado, alternativas e/ou editor de
+        texto.</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <alternative-question
+      [topic]="question.topic"
+      [note]="question.note"
+      [figureSrc]="question.figureSrc"
+      [statement]="question.statement"
+      [alternatives]="question.alternatives"
+      [discursive]="question.discursive"
+    >
+    </alternative-question>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Tabela </mat-panel-title>
+      <mat-panel-description> Completar...</mat-panel-description>
+    </mat-expansion-panel-header>
+    <custom-table
+      *ngIf="employees != undefined"
+      [tableData]="employees"
+      [tableColumns]="tableColumns"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[2, 4, 6]"
+      [defaultPageSize]="4"
+      (sort)="sortData($event)"
+      [rowActionIcon]="'remove_shopping_cart'"
+      (rowAction)="removeOrder($event)"
+    >
+    </custom-table>
+  </mat-expansion-panel>
+</mat-accordion>

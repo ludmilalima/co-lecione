@@ -17,12 +17,12 @@
   <mat-card-content *ngIf="content" class="editor-container">
     <form [formGroup]="form">
       <div class="editor">
-        <ngx-editor [editor]="editor" formControlName="editorContent">
+        <ngx-editor [editor]="editor" [placeholder]="'Conteúdo'" formControlName="editorContent">
         </ngx-editor>
       </div>
     </form>
   </mat-card-content>
-  <mat-card-actions *ngIf="action">
-    <button mat-raised-button color="accent">{{ action }}</button>
+  <mat-card-actions *ngIf="actionTitle && actionLink">
+    <button mat-raised-button color="accent" (click)="openLink()">{{ actionTitle }}</button>
   </mat-card-actions>
 </mat-card>

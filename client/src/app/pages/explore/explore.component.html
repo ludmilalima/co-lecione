@@ -1,16 +1,20 @@
 <ng-container>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Objetos">
-      <div *ngFor="let card of cards">
-        <app-cards class="object-container"
-          [avatarSrc]="card.avatarSrc"
-          [headerImageSrc]="card.headerImageSrc"
-          [title]="card.title"
-          [subtitle]="card.subtitle"
-          [content]="card.content"
-          [action]="card.action"
-        >
-        </app-cards>
+      <div *ngFor="let item of objects">
+        <div *ngIf="item.type == 'card'">
+          <app-cards
+            class="object-container"
+            [avatarSrc]="item.content.avatarSrc"
+            [headerImageSrc]="item.content.headerImageSrc"
+            [title]="item.content.title"
+            [subtitle]="item.content.subtitle"
+            [content]="item.content.content"
+            [actionTitle]="item.content.actionTitle"
+            [actionLink]="item.content.actionLink"
+          >
+          </app-cards>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Roteiros"></mat-tab>

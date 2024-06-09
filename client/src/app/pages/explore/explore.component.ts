@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { on } from 'events';
+import { Objects } from 'src/app/models/objects';
 import { ObjectsService } from 'src/app/services/objects.service';
 
 @Component({
@@ -6,37 +8,55 @@ import { ObjectsService } from 'src/app/services/objects.service';
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.scss']
 })
-export class ExploreComponent implements OnInit {
-  cards: any[] = [];
+export class ExploreComponent implements OnInit, AfterViewInit {
+  objects: any[] = [];
 
-  constructor(
-    public objectsService: ObjectsService,
-  ) { }
+  constructor(private _objectsService: ObjectsService) { }
 
   ngOnInit(): void {
-    var newObject = {
-      "avatarSrc": "https://example.com/avatar.jpg",
-      "headerImageSrc": "https://example.com/header.jpg",
-      "title": "Example Title",
-      "subtitle": "Example Subtitle",
-      "content": "Example content",
-      "action": "Example action",
-      "resourceType": "Card",
-      "metadata": [
-        {
-          "key": "exampleKey1",
-          "value": "exampleValue1"
-        },
-        {
-          "key": "exampleKey2",
-          "value": "exampleValue2"
-        }
-      ]
-    };
-
-    this.objectsService.getCards().subscribe(response => {
-      this.cards = response;
-      console.log(response);
-    });
+    // this._objectsService.getAllObjects().subscribe(response => {
+    //   this.objects = response;
+    //   console.log('Objects:', this.objects);
+    // });
   }
+
+  ngAfterViewInit(): void {
+    this._objectsService.getAllObjects().subscribe(response => {
+      this.objects = response.map((object: any) => {
+        return {
+          type: object.type,
+          content: object.content.reduce((acc: any, curr: any) => {
+            return {
+              ...acc,
+              [curr.key]: curr.value,
+            };
+          }, {}),
+          metadata: object.metadata.reduce((acc: any, curr: any) => {
+            return {
+              ...acc,
+              [curr.key]: curr.value,
+            };
+          }, {}),
+        };
+      });
+
+      var locObj = response.map((object: any) => {
+        return  {
+          type: object.type,
+          content: object.content.reduce((acc: any, curr: any) => {
+            return {
+              ...acc,
+              [curr.key]: curr.value,
+            };
+          }, {}),
+          metadata: object.metadata.reduce((acc: any, curr: any) => {
+            return {
+              ...acc,
+              [curr.key]: curr.value,
+            };
+          }, {}),
+        };
+      });
+    });
+  };
 }

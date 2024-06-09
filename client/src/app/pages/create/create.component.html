@@ -1,38 +1,15 @@
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Cartão </mat-panel-title>
-      <mat-panel-description>
-        Título, subtítulo, avatar, imagem e texto.</mat-panel-description
-      >
-    </mat-expansion-panel-header>
-    <app-cards
-      [avatarSrc]="card.avatarSrc"
-      [headerImageSrc]="card.headerImageSrc"
-      [title]="card.title"
-      [subtitle]="card.subtitle"
-      [content]="card.content"
-      [action]="card.action"
-    >
-    </app-cards>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Questão </mat-panel-title>
-      <mat-panel-description>
-        Assunto, observação, imagem, enunciado, alternativas e/ou editor de
-        texto.</mat-panel-description
-      >
-    </mat-expansion-panel-header>
-    <alternative-question
-      [topic]="question.topic"
-      [note]="question.note"
-      [figureSrc]="question.figureSrc"
-      [statement]="question.statement"
-      [alternatives]="question.alternatives"
-      [discursive]="question.discursive"
-    >
-    </alternative-question>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Objeto">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayout.lt-md="column" fxLayoutGap="8px" class="wrapper container">
+      <div fxFlex="30" class="container">
+        <h2>Objetos disponíveis</h2>
+        <app-create-object></app-create-object>
+      </div>
+      <div fxFlex="70" class="container">
+        <h2>Objeto em desenvolvimento</h2>
+        <app-new-card></app-new-card>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Roteiro"></mat-tab>
+</mat-tab-group>

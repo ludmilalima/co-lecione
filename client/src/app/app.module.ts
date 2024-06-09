@@ -44,6 +44,10 @@ import { CreateComponent } from './pages/create/create.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CreateObjectComponent } from './pages/create/create-object/create-object.component';
 import { CreateItineraryComponent } from './pages/create/create-itinerary/create-itinerary.component';
+import { NewCardComponent } from './components/new-card/new-card.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatStepperModule} from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
     declarations: [
@@ -59,12 +63,14 @@ import { CreateItineraryComponent } from './pages/create/create-itinerary/create
         AngularComponent,
         JavascriptComponent,
         CornellComponent,
+
         AlternativeQuestionComponent,
         CardsComponent,
         ExploreComponent,
         CreateComponent,
         CreateObjectComponent,
-        CreateItineraryComponent
+        CreateItineraryComponent,
+        NewCardComponent
     ],
     exports: [
         CardsComponent,
@@ -105,7 +111,10 @@ import { CreateItineraryComponent } from './pages/create/create-itinerary/create
       MatTabsModule,
       MatGridListModule,
       MatRadioModule,
-      NotificationsModule
+      NotificationsModule,
+      FlexLayoutModule,
+      MatStepperModule,
+      MatFormFieldModule
     ]
 })
 export class AppModule { }

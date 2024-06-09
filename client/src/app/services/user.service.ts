@@ -17,7 +17,6 @@ export class UserService {
   constructor
     (
       private httpClient: HttpClient,
-      private notificationsService: NotificationsService
     ) { }
 
 

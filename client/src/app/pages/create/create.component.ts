@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ObjectsService } from 'src/app/services/objects.service';
+import { CardsService } from 'src/app/services/cards.service';
 
 @Component({
   selector: 'app-create',
@@ -594,22 +594,32 @@ export class CreateComponent implements OnInit {
     ]
   };
 
+  encoder = new TextEncoder();
+
+  stringContent = JSON.stringify(this.contentCard);
+
+  buffer = this.encoder.encode(this.stringContent);
+
+  binaryStr = this.buffer.toString();
+
+  contentCard2 = JSON.parse(this.stringContent);
+
   card: any = {
-    avatarSrc: 'https://www.happyway.com.au/cdn/shop/articles/Healthy-Eating-Tips.jpg?v=1674535125',
-    headerImageSrc: 'https://imageio.forbes.com/specials-images/imageserve/63b6dbc1b64d967f5ee8003d/Healthy-eating--exercising--weight-and-blood-pressure-control/960x0.jpg?format=jpg&width=960',
-    title: 'Este será o título do card!',
-    subtitle: 'Este será o subtítulo do card.',
-    content: this.contentCard,
-    action: 'Criar!',
-    resourceType: 'Card',
+    avatarSrc: "https://www.happyway.com.au/cdn/shop/articles/Healthy-Eating-Tips.jpg?v=1674535125",
+    headerImageSrc: "https://imageio.forbes.com/specials-images/imageserve/63b6dbc1b64d967f5ee8003d/Healthy-eating--exercising--weight-and-blood-pressure-control/960x0.jpg?format=jpg&width=960",
+    title: "Este será o título do card!",
+    subtitle: "Este será o subtítulo do card.",
+    content: this.contentCard2,
+    action: "Criar!",
+    resourceType: "Card",
     metadata: [
       {
-        key: 'Author',
-        value: 'Talita'
+        key: "Author",
+        value: "Talita"
       },
       {
-        key: 'CreationDate',
-        value: '2024-05-01'
+        key: "CreationDate",
+        value: ""
       }
     ]
   };
@@ -617,338 +627,338 @@ export class CreateComponent implements OnInit {
   contentQuestion = {
     "type": "doc",
     "content": [
-        {
+      {
+        "type": "paragraph",
+        "attrs": {
+          "align": null,
+          "indent": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "text_color",
+                "attrs": {
+                  "color": "rgb(52, 58, 64)"
+                }
+              },
+              {
+                "type": "text_background_color",
+                "attrs": {
+                  "backgroundColor": "rgb(255, 255, 255)"
+                }
+              }
+            ],
+            "text": "Analisando as vendas de uma empresa, o gerente concluiu que o montante diário arrecadado, em milhar de real, poderia ser calculado pela expressão:"
+          }
+        ]
+      },
+      {
+        "type": "blockquote",
+        "attrs": {
+          "indent": null
+        },
+        "content": [
+          {
             "type": "paragraph",
             "attrs": {
-                "align": null,
-                "indent": null
+              "align": null,
+              "indent": null
             },
             "content": [
-                {
-                    "type": "text",
-                    "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
-                        }
-                    ],
-                    "text": "Analisando as vendas de uma empresa, o gerente concluiu que o montante diário arrecadado, em milhar de real, poderia ser calculado pela expressão:"
-                }
-            ]
-        },
-        {
-            "type": "blockquote",
-            "attrs": {
-                "indent": null
-            },
-            "content": [
-                {
-                    "type": "paragraph",
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "text_color",
                     "attrs": {
-                        "align": null,
-                        "indent": null
-                    },
-                    "content": [
-                        {
-                            "type": "text",
-                            "marks": [
-                                {
-                                    "type": "text_color",
-                                    "attrs": {
-                                        "color": "rgb(52, 58, 64)"
-                                    }
-                                },
-                                {
-                                    "type": "text_background_color",
-                                    "attrs": {
-                                        "backgroundColor": "rgb(255, 255, 255)"
-                                    }
-                                }
-                            ],
-                            "text": "V(x) = x^2/4 - 10x + 105,  "
-                        }
-                    ]
-                }
+                      "color": "rgb(52, 58, 64)"
+                    }
+                  },
+                  {
+                    "type": "text_background_color",
+                    "attrs": {
+                      "backgroundColor": "rgb(255, 255, 255)"
+                    }
+                  }
+                ],
+                "text": "V(x) = x^2/4 - 10x + 105,  "
+              }
             ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "align": null,
+          "indent": null
         },
-        {
-            "type": "paragraph",
-            "attrs": {
-                "align": null,
-                "indent": null
-            },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "text_color",
+                "attrs": {
+                  "color": "rgb(52, 58, 64)"
+                }
+              },
+              {
+                "type": "text_background_color",
+                "attrs": {
+                  "backgroundColor": "rgb(255, 255, 255)"
+                }
+              }
+            ],
+            "text": "na qual os valores de x representam os dias do mês, variando de 1 a 30."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "align": null,
+          "indent": null
+        },
+        "content": [
+          {
+            "type": "hard_break",
+            "marks": [
+              {
+                "type": "text_color",
+                "attrs": {
+                  "color": "rgb(52, 58, 64)"
+                }
+              },
+              {
+                "type": "text_background_color",
+                "attrs": {
+                  "backgroundColor": "rgb(255, 255, 255)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "text_color",
+                "attrs": {
+                  "color": "rgb(52, 58, 64)"
+                }
+              },
+              {
+                "type": "text_background_color",
+                "attrs": {
+                  "backgroundColor": "rgb(255, 255, 255)"
+                }
+              }
+            ],
+            "text": "Um dos fatores para avaliar o desempenho mensal da empresa é verificar qual é o menor montante diário V0 arrecadado ao longo do mês e classificar o desempenho conforme as categorias apresentadas a seguir, em que as quantidades estão expressas em milhar de real."
+          }
+        ]
+      },
+      {
+        "type": "bullet_list",
+        "content": [
+          {
+            "type": "list_item",
             "content": [
-                {
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "align": null,
+                  "indent": null
+                },
+                "content": [
+                  {
                     "type": "text",
                     "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
+                      {
+                        "type": "text_color",
+                        "attrs": {
+                          "color": "rgb(52, 58, 64)"
                         }
+                      },
+                      {
+                        "type": "text_background_color",
+                        "attrs": {
+                          "backgroundColor": "rgb(255, 255, 255)"
+                        }
+                      }
                     ],
-                    "text": "na qual os valores de x representam os dias do mês, variando de 1 a 30."
-                }
+                    "text": "Ótimo: V0 ≥  24"
+                  }
+                ]
+              }
             ]
-        },
-        {
-            "type": "paragraph",
-            "attrs": {
-                "align": null,
-                "indent": null
-            },
+          },
+          {
+            "type": "list_item",
             "content": [
-                {
-                    "type": "hard_break",
-                    "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
-                        }
-                    ]
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "align": null,
+                  "indent": null
                 },
-                {
+                "content": [
+                  {
                     "type": "text",
                     "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
+                      {
+                        "type": "text_color",
+                        "attrs": {
+                          "color": "rgb(52, 58, 64)"
                         }
+                      },
+                      {
+                        "type": "text_background_color",
+                        "attrs": {
+                          "backgroundColor": "rgb(255, 255, 255)"
+                        }
+                      }
                     ],
-                    "text": "Um dos fatores para avaliar o desempenho mensal da empresa é verificar qual é o menor montante diário V0 arrecadado ao longo do mês e classificar o desempenho conforme as categorias apresentadas a seguir, em que as quantidades estão expressas em milhar de real."
-                }
+                    "text": "Bom: 20 ≤ V0 < 24"
+                  }
+                ]
+              }
             ]
-        },
-        {
-            "type": "bullet_list",
+          },
+          {
+            "type": "list_item",
             "content": [
-                {
-                    "type": "list_item",
-                    "content": [
-                        {
-                            "type": "paragraph",
-                            "attrs": {
-                                "align": null,
-                                "indent": null
-                            },
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": "Ótimo: V0 ≥  24"
-                                }
-                            ]
-                        }
-                    ]
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "align": null,
+                  "indent": null
                 },
-                {
-                    "type": "list_item",
-                    "content": [
-                        {
-                            "type": "paragraph",
-                            "attrs": {
-                                "align": null,
-                                "indent": null
-                            },
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": "Bom: 20 ≤ V0 < 24"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "list_item",
-                    "content": [
-                        {
-                            "type": "paragraph",
-                            "attrs": {
-                                "align": null,
-                                "indent": null
-                            },
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": "Normal: 10 ≤ V0 < 20"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "list_item",
-                    "content": [
-                        {
-                            "type": "paragraph",
-                            "attrs": {
-                                "align": null,
-                                "indent": null
-                            },
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": "Ruim: 4 ≤ V0 < 10"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "bullet_list",
-            "content": [
-                {
-                    "type": "list_item",
-                    "content": [
-                        {
-                            "type": "paragraph",
-                            "attrs": {
-                                "align": null,
-                                "indent": null
-                            },
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "marks": [
-                                        {
-                                            "type": "text_color",
-                                            "attrs": {
-                                                "color": "rgb(52, 58, 64)"
-                                            }
-                                        },
-                                        {
-                                            "type": "text_background_color",
-                                            "attrs": {
-                                                "backgroundColor": "rgb(255, 255, 255)"
-                                            }
-                                        }
-                                    ],
-                                    "text": "Péssimo: V0 < 4"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "paragraph",
-            "attrs": {
-                "align": null,
-                "indent": null
-            },
-            "content": [
-                {
+                "content": [
+                  {
                     "type": "text",
                     "marks": [
-                        {
-                            "type": "text_color",
-                            "attrs": {
-                                "color": "rgb(52, 58, 64)"
-                            }
-                        },
-                        {
-                            "type": "text_background_color",
-                            "attrs": {
-                                "backgroundColor": "rgb(255, 255, 255)"
-                            }
+                      {
+                        "type": "text_color",
+                        "attrs": {
+                          "color": "rgb(52, 58, 64)"
                         }
+                      },
+                      {
+                        "type": "text_background_color",
+                        "attrs": {
+                          "backgroundColor": "rgb(255, 255, 255)"
+                        }
+                      }
                     ],
-                    "text": "No caso analisado, qual seria a classificação do desempenho da empresa? Justifique sua resposta."
-                }
+                    "text": "Normal: 10 ≤ V0 < 20"
+                  }
+                ]
+              }
             ]
-        }
+          },
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "align": null,
+                  "indent": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "text_color",
+                        "attrs": {
+                          "color": "rgb(52, 58, 64)"
+                        }
+                      },
+                      {
+                        "type": "text_background_color",
+                        "attrs": {
+                          "backgroundColor": "rgb(255, 255, 255)"
+                        }
+                      }
+                    ],
+                    "text": "Ruim: 4 ≤ V0 < 10"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "bullet_list",
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {
+                  "align": null,
+                  "indent": null
+                },
+                "content": [
+                  {
+                    "type": "text",
+                    "marks": [
+                      {
+                        "type": "text_color",
+                        "attrs": {
+                          "color": "rgb(52, 58, 64)"
+                        }
+                      },
+                      {
+                        "type": "text_background_color",
+                        "attrs": {
+                          "backgroundColor": "rgb(255, 255, 255)"
+                        }
+                      }
+                    ],
+                    "text": "Péssimo: V0 < 4"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "align": null,
+          "indent": null
+        },
+        "content": [
+          {
+            "type": "text",
+            "marks": [
+              {
+                "type": "text_color",
+                "attrs": {
+                  "color": "rgb(52, 58, 64)"
+                }
+              },
+              {
+                "type": "text_background_color",
+                "attrs": {
+                  "backgroundColor": "rgb(255, 255, 255)"
+                }
+              }
+            ],
+            "text": "No caso analisado, qual seria a classificação do desempenho da empresa? Justifique sua resposta."
+          }
+        ]
+      }
     ]
-};
+  };
 
   question: any = {
     topic: 'Equação do segundo grau',
@@ -965,10 +975,13 @@ export class CreateComponent implements OnInit {
     discursive: true,
   };
 
-  constructor(
-    public objectsService: ObjectsService,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
+    console.log('json: ' + this.contentCard);
+    console.log('string: ' + this.stringContent);
+    console.log('encoded: ' + this.buffer);
+    console.log('string: ' + this.binaryStr);
+    console.log('json: ' + this.contentCard2);
   }
 }

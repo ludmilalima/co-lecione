@@ -1,48 +1,58 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, Subject, throwError } from 'rxjs';
+import { Objects } from '../models/objects';
+import { from, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObjectsService {
-  private apiUrl = `${environment.baseUrl}`;
-  private users$: Subject<User[]> = new Subject();
-  private token: string | null = null;
 
-  constructor(
-    private httpClient: HttpClient,
-  ) { }
+  baseUrl = environment.baseUrl;
+
+  constructor() { }
 
   private handleError(error: any): Observable<never> {
-    console.error('ObjectsService error: ', error);
+    console.error('UserService error: ', error);
     return throwError(() => error.error);
   }
 
-  
-  createCard(cardData: any): Observable<any> {
-    const url = `${this.apiUrl}/cards/create`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-  
-    return this.httpClient.post(url, cardData, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
+  createObject(object: Objects): Observable<any> {
+    console.log('Creating object:', object);
+    return from(fetch(this.baseUrl + '/objects/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(object)
+    }).then(response => {
+      if (!response.ok) {
+        this.handleError(response);
+        throw new Error('Failed to create object');
+      }
+      return response.json();
+    }).catch(error => {
+      this.handleError(error);
+      throw error;
+    }));
   }
 
-  getCards(): Observable<any> {
-    const url = `${this.apiUrl}/cards/`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-  
-    return this.httpClient.get(url, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
+
+  getAllObjects(): Observable<any> {
+    return from(fetch(this.baseUrl + '/objects/list-all', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (!response.ok) {
+        this.handleError(response);
+        throw new Error('Failed to get objects');
+      }
+      return response.json();
+    }).catch(error => {
+      this.handleError(error);
+      throw error;
+    }));
   }
 }

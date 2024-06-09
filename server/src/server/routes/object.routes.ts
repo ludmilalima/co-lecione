@@ -138,6 +138,7 @@ objectRouter.use(express.json());
  */
 
 objectRouter.post('/create', async (req, res) => {
+    console.log('Creating object:', req.body);
     try {
         const objectData = req.body;
 
