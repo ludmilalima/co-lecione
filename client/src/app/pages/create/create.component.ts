@@ -978,10 +978,5 @@ export class CreateComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('json: ' + this.contentCard);
-    console.log('string: ' + this.stringContent);
-    console.log('encoded: ' + this.buffer);
-    console.log('string: ' + this.binaryStr);
-    console.log('json: ' + this.contentCard2);
   }
 }
