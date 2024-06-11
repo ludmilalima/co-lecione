@@ -1,14 +1,27 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Editor, Validators } from 'ngx-editor';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { Editor, NgxEditorModule, Validators } from 'ngx-editor';
 
 @Component({
     selector: 'app-cards',
     templateUrl: './cards.component.html',
     styleUrls: ['./cards.component.scss'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatButtonModule,
+        NgxEditorModule,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [Editor],
 })
-export class CardsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class CardsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() avatarSrc?: string;
     @Input() headerImageSrc?: string;
     @Input() title?: string;
@@ -17,8 +30,6 @@ export class CardsComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
     @Input() actionTitle?: string;
     @Input() actionLink?: string;
 
-    editor: Editor;
-
     form = new FormGroup({
         editorContent: new FormControl(
             { value: null, disabled: true },
@@ -26,11 +37,14 @@ export class CardsComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
         ),
     });
 
-    constructor() {
-        this.editor = new Editor();
+    constructor(
+        public _editor: Editor
+    ) {
+        this._editor = new Editor();
     }
 
     ngOnInit(): void {
+        this.form.get('editorContent').setValue(JSON.parse(this.content));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -39,12 +53,8 @@ export class CardsComponent implements OnInit, AfterViewInit, OnChanges, OnDestr
         }
     }
 
-    ngAfterViewInit(): void {
-        this.editor.setContent(JSON.parse(this.content));
-    }
-
     ngOnDestroy(): void {
-        this.editor.destroy();
+        this._editor.destroy();
     }
 
     openLink(): void {

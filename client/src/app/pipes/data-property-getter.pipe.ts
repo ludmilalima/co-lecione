@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'dataPropertyGetter'
+  name: 'dataPropertyGetter',
+  standalone: true
 })
 export class DataPropertyGetterPipe implements PipeTransform {
 

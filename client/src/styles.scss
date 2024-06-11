@@ -1,38 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.custom-button {
-    margin: 8px;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.form-container{
-    margin: 8px;
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.custom-button {
+  margin: 8px;
+}
+
+.form-container {
+  margin: 8px;
 }
 
 .body-wrapper {
-    margin: 20px;
-    padding: 20px;
-    height: auto;
-    width: auto;
-  }
+  margin: 20px;
+  padding: 20px;
+  height: auto;
+  width: auto;
+}
 
 .content-wrapper {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
 
 .card-container {
   margin: 8px;
 }
 
-.wrapper{
+.wrapper {
   margin: 8px;
 }
 

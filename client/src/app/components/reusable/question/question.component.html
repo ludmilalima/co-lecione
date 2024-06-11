@@ -12,7 +12,7 @@
     <mat-card-content>
       <form [formGroup]="formQuestion" *ngIf="statement">
         <div class="editor">
-          <ngx-editor [editor]="editorQuestion" formControlName="editorQ">
+          <ngx-editor [editor]="_editorQuestion" formControlName="editorQ">
           </ngx-editor>
         </div>
       </form>
@@ -33,9 +33,13 @@
 
       <form [formGroup]="formAnswer" *ngIf="discursive">
         <div class="editor">
-          <ngx-editor-menu [editor]="editorAnswer" [toolbar]="toolbarAnswer">
+          <ngx-editor-menu [editor]="_editorAnswer" [toolbar]="toolbarAnswer">
           </ngx-editor-menu>
-          <ngx-editor [editor]="editorAnswer" formControlName="editorA">
+          <ngx-editor
+            [editor]="_editorAnswer"
+            formControlName="editorA"
+            [placeholder]="'Insira sua resposta aqui...'"
+          >
           </ngx-editor>
         </div>
       </form>

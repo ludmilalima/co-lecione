@@ -1,13 +1,29 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TableColumn } from './TableColumn.interface';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { DataPropertyGetterPipe } from '../../../pipes/data-property-getter.pipe';
 
 @Component({
   selector: 'custom-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    DataPropertyGetterPipe,
+  ],
 })
 
 export class TableComponent implements OnInit, AfterViewInit {
@@ -69,4 +85,51 @@ export class TableComponent implements OnInit, AfterViewInit {
   emitRowAction(row: any) {
     this.rowAction.emit(row);
   }
+
+k
+
+  // async getEmployees(index: number) {
+  //   await this.getTables(index)
+  //     .then(table => {
+  //       const lista: string[] = table
+  //         .replace(/\\/g, '')
+  //         .split('\n')
+  //         .map(item => item.trim());
+
+  //       let objList: any[] = [];
+
+  //       lista.forEach(item => {
+  //         // Verifica se o último caractere é uma vírgula
+  //         if (item.charAt(item.length - 1) === ',') {
+  //           // Remove a última vírgula usando slice
+  //           item = item.slice(0, -1);
+  //         }
+  //         let obj = JSON.parse(item);
+  //         objList.push(obj);
+  //       });
+
+  //       this.employees = objList;
+  //     }).catch(error => {
+  //       console.error('Erro na recuperação de dados da tabela\n', error);
+  //       this._notificationService.error(`Erro na recuperação de dados da tabela`, `Checar o documento da tabela id=${index} (verifique mais detalhes do erro no console).`);
+  //     });
+  // }
+
+  // async getTables(index: number): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.tableService.getTablesById(index).subscribe(
+  //       response => {
+  //         const table = response.find(item => item.contentId == index);
+  //         if (table) {
+  //           resolve(table.content);
+  //         } else {
+  //           reject(new Error('Índice não encontrado'));
+  //         }
+  //       },
+  //       error => {
+  //         reject(error);
+  //       }
+  //     );
+  //   });
+  // }
 }

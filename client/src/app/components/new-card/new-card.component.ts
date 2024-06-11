@@ -1,14 +1,34 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Editor, Toolbar, Validators } from 'ngx-editor';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { Objects } from 'src/app/models/objects';
 import { ObjectsService } from 'src/app/services/objects.service';
+import { CardsComponent } from '../reusable/cards/cards.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-new-card',
   templateUrl: './new-card.component.html',
-  styleUrls: ['./new-card.component.scss']
+  styleUrls: ['./new-card.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatStepperModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CardsComponent,
+    NgxEditorModule,
+  ]
 })
 export class NewCardComponent implements AfterViewInit, OnDestroy {
   @ViewChild('metadataTable', { static: false }) metadataTable: any;
@@ -52,7 +72,7 @@ export class NewCardComponent implements AfterViewInit, OnDestroy {
     valor: new FormControl('')
   },);
 
-  constructor( private _objectsService: ObjectsService) {
+  constructor(private _objectsService: ObjectsService) {
     this.editor = new Editor();
   }
 

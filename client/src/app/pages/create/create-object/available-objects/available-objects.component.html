@@ -1,0 +1,78 @@
+<mat-accordion>
+    <!-- card -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Cartão </mat-panel-title>
+        <mat-panel-description>
+          Título, subtítulo, avatar, imagem e texto.</mat-panel-description
+        >
+      </mat-expansion-panel-header>
+      <app-cards
+        [avatarSrc]="card.avatarSrc"
+        [headerImageSrc]="card.headerImageSrc"
+        [title]="card.title"
+        [subtitle]="card.subtitle"
+        [content]="card.content"
+        [actionTitle]="card.actionTitle"
+        [actionLink]="card.actionLink"
+      >
+      </app-cards>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="setObjectType('card')">
+          Criar
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <!-- question -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Questão </mat-panel-title>
+        <mat-panel-description>
+          Assunto, observação, imagem, enunciado, alternativas e/ou editor de
+          texto.</mat-panel-description
+        >
+      </mat-expansion-panel-header>
+      <question
+        [topic]="question.topic"
+        [note]="question.note"
+        [figureSrc]="question.figureSrc"
+        [statement]="question.statement"
+        [alternatives]="question.alternatives"
+        [discursive]="question.discursive"
+      >
+      </question>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="setObjectType('question')">
+          Criar
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <!-- table -->
+    <!-- <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Tabela </mat-panel-title>
+        <mat-panel-description> Completar...</mat-panel-description>
+      </mat-expansion-panel-header>
+      <custom-table
+        *ngIf="employees != undefined"
+        [tableData]="employees"
+        [tableColumns]="tableColumns"
+        [isFilterable]="true"
+        [isPageable]="true"
+        [paginationSizes]="[2, 4, 6]"
+        [defaultPageSize]="4"
+        (sort)="sortData($event)"
+        [rowActionIcon]="'remove_shopping_cart'"
+        (rowAction)="removeOrder($event)"
+      >
+      </custom-table>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="setObjectType('table')">
+          Criar
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel> -->
+  </mat-accordion>
+  

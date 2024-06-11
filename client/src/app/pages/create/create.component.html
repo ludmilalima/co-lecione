@@ -1,13 +1,28 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Objeto">
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayout.lt-md="column" fxLayoutGap="8px" class="wrapper container">
+    <div
+      fxLayout="row"
+      fxLayout.lt-sm="column"
+      fxLayout.lt-md="column"
+      fxLayoutGap="8px"
+      class="wrapper container"
+    >
       <div fxFlex="30" class="container">
         <h2>Objetos disponíveis</h2>
-        <app-create-object></app-create-object>
+        <app-available-objects (objectTypeChange)="handleObjectTypeChange($event)"></app-available-objects>
       </div>
       <div fxFlex="70" class="container">
         <h2>Objeto em desenvolvimento</h2>
-        <app-new-card></app-new-card>
+        <!-- <ng-container *ngIf="newObjectType == 'card'">
+          <app-new-card></app-new-card>
+        </ng-container>
+        <ng-container *ngIf="newObjectType == 'question'">
+          <app-new-question></app-new-question>
+        </ng-container>
+        <ng-container *ngIf="newObjectType == 'table'">
+          
+        </ng-container> -->
+        <app-create-object></app-create-object>
       </div>
     </div>
   </mat-tab>

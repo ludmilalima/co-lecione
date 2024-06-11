@@ -1,5 +1,8 @@
 <mat-card>
-  <mat-card-header *ngIf="avatarSrc || title || subtitle" class="header-container">
+  <mat-card-header
+    *ngIf="avatarSrc || title || subtitle"
+    class="header-container"
+  >
     <div mat-card-avatar class="avatar" *ngIf="avatarSrc">
       <div class="avatar-wrapper">
         <img [src]="avatarSrc" alt="Avatar do Card" />
@@ -8,21 +11,24 @@
     <mat-card-title *ngIf="title">{{ title }}</mat-card-title>
     <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
   </mat-card-header>
-  <div
-    class="image-wrapper img"
-    *ngIf="headerImageSrc"
-  >
+  <div class="image-wrapper img" *ngIf="headerImageSrc">
     <img [src]="headerImageSrc" alt="Imagem do Header" />
   </div>
   <mat-card-content *ngIf="content" class="editor-container">
     <form [formGroup]="form">
       <div class="editor">
-        <ngx-editor [editor]="editor" [placeholder]="'Conteúdo'" formControlName="editorContent">
+        <ngx-editor
+          [editor]="_editor"
+          [placeholder]="'Conteúdo'"
+          formControlName="editorContent"
+        >
         </ngx-editor>
       </div>
     </form>
   </mat-card-content>
   <mat-card-actions *ngIf="actionTitle && actionLink">
-    <button mat-raised-button color="accent" (click)="openLink()">{{ actionTitle }}</button>
+    <button mat-raised-button color="accent" (click)="openLink()">
+      {{ actionTitle }}
+    </button>
   </mat-card-actions>
 </mat-card>

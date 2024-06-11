@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { Sort } from "@angular/material/sort";
-import { Row } from "../reusable/cornell/Row";
 import { TableService } from "src/app/services/table.service";
 import { NotificationsService } from "src/app/services/notifications.service";
 
@@ -22,12 +21,6 @@ export class MongoComponent {
   ngOnInit() {
     this.getEmployees(1);
   }
-
-  cornellData: Row[] = [
-    { position: 3, cue: "CCCC", note: "BBBBB" },
-    { position: 2, cue: "BBBB", note: "BBBBB" },
-    { position: 1, cue: "AAAA", note: "BBBBB" },
-  ];
 
   tableColumns: any[] = [
     {

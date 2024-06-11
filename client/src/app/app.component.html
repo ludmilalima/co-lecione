@@ -1,13 +1,11 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container>
   <mat-sidenav
     #drawer
-    class="sidenav"
-    fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar class="nav-toolbar"></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/criar">Criar</a>
       <a mat-list-item routerLink="/explorar">Explorar</a>
@@ -20,46 +18,47 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        color="accent"
         (click)="drawer.toggle()"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="project-title" color="accent">&nbsp;LearnBench&nbsp;</span>
-      <span>&nbsp;<img [src]="iconPath" alt="Ícone" />&nbsp;</span>
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+        <span fxFlex class="project-title">LearnBench</span>
+        <span fxFlex><img [src]="iconPath" alt="Ícone" /></span>
+      </div>
       <span class="fill-remaining-space"></span>
-      <span>
-        <button
-          type="button"
-          color="accent"
-          aria-label="Notifications"
-          mat-icon-button
-          (click)="drawer.toggle()"
-        >
-          <mat-icon>notifications</mat-icon>
-        </button>
-      </span>
-      <span *ngIf="isLoggedIn == true">
-        <button
-          mat-stroked-button
-          color="accent"
-          (click)="openUserDetailsDialog()"
-        >
-          <mat-icon>account_circle</mat-icon>{{ loggedUser }}
-        </button>
-      </span>
-      <span *ngIf="isLoggedIn == true">
-        <button mat-raised-button color="accent" (click)="openLogoutDialog()">
-          Logout
-        </button>
-      </span>
-      <span *ngIf="isLoggedIn == false">
-        <button mat-raised-button color="accent" (click)="openLoginDialog()">
-          Login
-        </button>
-      </span>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span fxFlex>
+          <button
+            aria-label="Notifications"
+            mat-icon-button
+            (click)="drawer.toggle()"
+          >
+            <mat-icon>notifications</mat-icon>
+          </button>
+        </span>
+        <span fxFlex *ngIf="isLoggedIn == true">
+          <button
+            aria-label="UserInfo"
+            mat-icon-button
+            (click)="openUserDetailsDialog()"
+          >
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </span>
+        <span fxFlex *ngIf="isLoggedIn == true">
+          <button mat-icon-button (click)="openLogoutDialog()">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </span>
+        <span fxFlex *ngIf="isLoggedIn == false">
+          <button mat-icon-button (click)="openLoginDialog()">
+            <mat-icon>login</mat-icon>
+          </button>
+        </span>
+      </div>
     </mat-toolbar>
-    <div class="router-container">
+    <div>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
