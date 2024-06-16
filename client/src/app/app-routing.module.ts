@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExploreComponent } from './pages/explore/explore.component';
-import { CreateComponent } from './pages/create/create.component';
-import { ResumeComponent } from './pages/resume/resume.component';
+import { CreateComponent } from './features/create/create.component';
+import { ExploreComponent } from './features/explore/explore.component';
+import { ResumeComponent } from './features/resume/resume.component';
 
 const routes: Routes = [
   { path: 'explorar', component: ExploreComponent },

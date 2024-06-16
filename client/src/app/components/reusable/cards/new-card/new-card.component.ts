@@ -9,8 +9,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Objects } from 'src/app/pages/create/objects/objects.model';
-import { ObjectsService } from 'src/app/pages/create/objects/objects.service';
+import { ObjectsService } from 'src/app/features/create/objects/objects.service';
+import { Objects } from 'src/app/features/create/objects/objects.model';
 
 @Component({
   selector: 'app-new-card',
