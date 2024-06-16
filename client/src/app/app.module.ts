@@ -16,20 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSortModule } from '@angular/material/sort';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { NgxEditorModule } from 'ngx-editor';
 import { NotificationsService } from './shared/notifications/notifications.service';
 
 @NgModule({
@@ -52,7 +39,6 @@ import { NotificationsService } from './shared/notifications/notifications.servi
       AppRoutingModule,
       FormsModule,
       ReactiveFormsModule,
-      NgxEditorModule,
       BrowserAnimationsModule,
       MatButtonModule,
       MatInputModule,
@@ -61,20 +47,8 @@ import { NotificationsService } from './shared/notifications/notifications.servi
       MatSidenavModule,
       MatIconModule,
       MatListModule,
-      MatDialogModule,
-      MatCardModule,
-      MatExpansionModule,
-      MatSnackBarModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatSortModule,
-      MatTabsModule,
-      MatGridListModule,
-      MatRadioModule,
       NotificationsModule,
       FlexLayoutModule,
-      MatStepperModule,
-      MatFormFieldModule
     ]
 })
 export class AppModule { }
