@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AvailableObjectsComponent } from './create-object/available-objects/available-objects.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
 import { CommonModule } from '@angular/common';
-import { CreateObjectComponent } from './create-object/create-object.component';
+import { CreateObjectComponent } from './objects/create-object/create-object.component';
 import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
+import { AvailableObjectsComponent } from './objects/available-objects/available-objects.component';
 
 @Component({
   selector: 'app-create',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Objects } from '../../pages/create/objects/objects.model';
 import { from, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Objects } from './objects.model';
 
 @Injectable({
   providedIn: 'root'

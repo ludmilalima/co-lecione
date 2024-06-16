@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
-import { ObjectsService } from 'src/app/shared/services/objects.service';
+import { ObjectsService } from '../create/objects/objects.service';
 
 @Component({
   selector: 'app-explore',

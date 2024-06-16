@@ -12,8 +12,8 @@ import { MatTableModule } from '@angular/material/table';
 import { Editor, Toolbar } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
-import { ObjectsService } from 'src/app/shared/services/objects.service';
-import { Objects } from '../objects/objects.model';
+import { Objects } from '../objects.model';
+import { ObjectsService } from '../objects.service';
 
 @Component({
   selector: 'app-create-object',

@@ -4,13 +4,13 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatTableModule } from '@angular/material/table';
 import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
-import { ObjectsService } from 'src/app/shared/services/objects.service';
 import { CardsComponent } from '../cards.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Objects } from 'src/app/pages/create/objects/objects.model';
+import { ObjectsService } from 'src/app/pages/create/objects/objects.service';
 
 @Component({
   selector: 'app-new-card',
