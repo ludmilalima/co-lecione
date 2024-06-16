@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { User } from '../components/admin-user/user.model';
+import { User } from './user.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

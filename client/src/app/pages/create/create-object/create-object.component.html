@@ -5,11 +5,16 @@
   fxLayoutGap="8px"
 >
   <div fxFlex class="container">
+    <p>teste!</p>
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
-        <app-new-question></app-new-question>
-        <button type="button" mat-button matStepperNext>Próximo</button>
+        <ng-template matStepLabel>Formulário de criação do objeto</ng-template>
+        <app-new-question (formSubmit)="onFormSubmit($event)"></app-new-question>
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <button type="button" mat-button matStepperNext>Próximo</button>
+        </div>
       </mat-step>
+
       <mat-step>
         <form [formGroup]="metadataForm" (ngSubmit)="addMetadata()">
           <ng-template matStepLabel
@@ -40,15 +45,28 @@
               <mat-icon>add</mat-icon>
             </button>
           </div>
-          <button type="button" mat-button matStepperNext>Próximo</button>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button type="button" mat-button matStepperPrevious>Voltar</button>
+            <button type="button" mat-button matStepperNext>Próximo</button>
+          </div>
         </form>
       </mat-step>
+
       <mat-step>
         <form [formGroup]="objForm" (ngSubmit)="submit()">
           <ng-template matStepLabel>Revisar e salvar</ng-template>
-          <button mat-raised-button color="primary" type="submit">
-            Submit
-          </button>
+          <p>
+            Verifique se o objeto criado e os metadados associados atendem aos
+            requisitos.
+          </p>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <button type="button" mat-button matStepperPrevious>Voltar</button>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-raised-button color="primary" type="submit">
+              Salvar
+            </button>
+          </div>
         </form>
       </mat-step>
     </mat-stepper>

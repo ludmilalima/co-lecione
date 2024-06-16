@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, finalize, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TableContent } from '../models/table';
 import { HttpClient } from '@angular/common/http';
+import { TableContent } from './table.model';
 
 @Injectable({
   providedIn: 'root'

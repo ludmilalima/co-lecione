@@ -1,0 +1,74 @@
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Assunto</mat-label>
+      <input
+        matInput
+        formControlName="topic"
+        title="Assunto"
+        placeholder="Assunto"
+      />
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Nota</mat-label>
+      <input matInput formControlName="note" title="Nota" placeholder="Nota" />
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Link para imagem</mat-label>
+      <input
+        matInput
+        formControlName="figureSrc"
+        title="Link para imagem"
+        placeholder="Link para imagem"
+      />
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Enunciado</mat-label>
+      <textarea
+        matInput
+        formControlName="statement"
+        title="Enunciado"
+      ></textarea>
+    </mat-form-field>
+  </p>
+
+  <div formArrayName="alternatives">
+    <mat-form-field appearance="outline">
+      <mat-label>Alternativa</mat-label>
+      <input
+        matInput
+        #alternativeInput
+        title="Alternativa"
+        placeholder="Alternativa"
+      />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="
+          addAlternative(alternativeInput.value); alternativeInput.value = ''
+        "
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div *ngFor="let alternative of alternatives.controls; let i = index">
+    <p>Alternativa {{ i + 1 }}:</p>
+    <p>{{ alternative.value }}</p>
+  </div>
+
+  <p>
+    <mat-checkbox formControlName="discursive">Discursiva</mat-checkbox>
+  </p>
+</form>

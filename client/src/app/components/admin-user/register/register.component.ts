@@ -1,14 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { User } from 'src/app/models/user';
-import { UserService } from 'src/app/services/user.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
+import { UserService } from 'src/app/components/admin-user/user.service';
 import { switchMap, EMPTY, tap, catchError, finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +35,6 @@ export class RegisterComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRegisterRef: MatDialogRef<RegisterComponent>,
     public userService: UserService,
-    private _notificationService: NotificationsService,
   ) { }
 
   /**

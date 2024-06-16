@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { MatDialogRef, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/components/admin-user/user.service';
 import { tap, catchError, switchMap, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 @Component({
   selector: 'app-login',

@@ -5,10 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { UserService } from './services/user.service';
+import { UserService } from './components/admin-user/user.service';
 import { CommonModule } from '@angular/common';
 import { MongoComponent } from './components/mongo/mongo.component';
-import { NotificationsService } from './services/notifications.service';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxEditorModule } from 'ngx-editor';
+import { NotificationsService } from './shared/notifications/notifications.service';
 
 @NgModule({
     declarations: [

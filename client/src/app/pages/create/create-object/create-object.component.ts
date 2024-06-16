@@ -9,11 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
-import { Editor, Toolbar} from 'ngx-editor';
+import { Editor, Toolbar } from 'ngx-editor';
 import { Subscription } from 'rxjs';
-import { NewQuestionComponent } from 'src/app/components/new-question/new-question.component';
-import { Objects } from 'src/app/models/objects';
-import { ObjectsService } from 'src/app/services/objects.service';
+import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
+import { ObjectsService } from 'src/app/shared/services/objects.service';
+import { Objects } from '../objects/objects.model';
 
 @Component({
   selector: 'app-create-object',
@@ -60,18 +60,7 @@ export class CreateObjectComponent {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-  objForm = new FormGroup({
-    avatarSrc: new FormControl(null),
-    headerImageSrc: new FormControl(null),
-    title: new FormControl(null),
-    subtitle: new FormControl(null),
-    content: new FormControl(
-      { value: null, disabled: false },
-      Validators.required,
-    ),
-    actionTitle: new FormControl(null),
-    actionLink: new FormControl(null),
-  });
+  objForm: FormGroup = new FormGroup({});
 
   metadataForm: FormGroup = new FormGroup({
     chave: new FormControl(''),
@@ -80,6 +69,7 @@ export class CreateObjectComponent {
 
   constructor(private _objectsService: ObjectsService) {
     this.editor = new Editor();
+    this.metadataTable = new MatTableModule();
   }
 
   ngOnInit(): void {
@@ -109,14 +99,20 @@ export class CreateObjectComponent {
         value: this.metadataForm.value.valor
       });
       this.metadataForm.reset();
-      this.metadataTable.renderRows();
+      if (this.metadataTable) {
+        this.metadataTable.renderRows();
+      }
     }
+  }
+
+  onFormSubmit(form: FormGroup) {
+    this.objForm = form.value;
+    console.log(this.objForm);
   }
 
   async submit(): Promise<void> {
     for (const key in this.objForm.controls) {
       if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
-        // Adiciona ao array 'card' um objeto com a chave e o valor do controle atual
         if (key === 'content') {
           var strContent = JSON.stringify(this.objForm.get(key).value);
           this.card.push({ key: key, value: strContent });

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Notifications, NotificationsType } from 'src/app/models/notifications';
-import { NotificationsService } from 'src/app/services/notifications.service';
+import { NotificationsService } from './notifications.service';
+import { Notifications, NotificationsType } from './notifications.model';
 
 @Component({
   selector: 'app-notifications',

@@ -1,4 +1,4 @@
-import { Question } from "src/app/models/question";
+import { Question } from "src/app/components/reusable/question/question.model";
 
 export class QuestionExample {
     

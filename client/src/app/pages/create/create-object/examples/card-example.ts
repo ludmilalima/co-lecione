@@ -1,4 +1,4 @@
-import { Card } from "src/app/models/card";
+import { Card } from "src/app/components/reusable/cards/card.model";
 
 export class CardExample {
 
