@@ -1,3 +1,4 @@
+import { FormArray } from "@angular/forms";
 import { Question } from "src/app/components/reusable/question/question.model";
 
 export class QuestionExample {
@@ -350,6 +351,7 @@ export class QuestionExample {
             'Ruim',
             'Péssimo',
         ],
+        selectedAlternatives: new FormArray([]),
         discursive: true,
     };
 }

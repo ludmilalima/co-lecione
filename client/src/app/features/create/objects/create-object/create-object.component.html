@@ -5,11 +5,10 @@
   fxLayoutGap="8px"
 >
   <div fxFlex class="container">
-    <p>teste!</p>
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
         <ng-template matStepLabel>Formulário de criação do objeto</ng-template>
-        <app-new-question (formSubmit)="onFormSubmit($event)"></app-new-question>
+        <app-new-question></app-new-question>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
@@ -53,7 +52,7 @@
       </mat-step>
 
       <mat-step>
-        <form [formGroup]="objForm" (ngSubmit)="submit()">
+        <form>
           <ng-template matStepLabel>Revisar e salvar</ng-template>
           <p>
             Verifique se o objeto criado e os metadados associados atendem aos
@@ -63,7 +62,7 @@
             <button type="button" mat-button matStepperPrevious>Voltar</button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button color="primary" type="submit" (click)="submit()">
               Salvar
             </button>
           </div>
@@ -75,6 +74,16 @@
   <div fxFlex class="container" *ngIf="objForm.touched || metadata.length > 0">
     <ng-container *ngIf="objForm.touched">
       <h3>Objeto criado:</h3>
+      <question
+      [topic]="objForm.value.topic"
+      [note]="objForm.value.note"
+      [figureSrc]="objForm.value.figureSrc"
+      [statement]="objForm.value.statement"
+      [alternatives]="objForm.value.alternatives"
+      [discursive]="objForm.value.discursive"
+      [question]="question"
+    >
+    </question>
     </ng-container>
     <ng-container *ngIf="metadata.length > 0">
       <h3>Metadados associados:</h3>

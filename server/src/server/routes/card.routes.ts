@@ -62,7 +62,6 @@ cardRouter.post('/create', async (req, res) => {
     }
 
     const card = new CardModel(cardData);
-    console.log(card);
     try {
         const savedCard = await card.save();
         res.status(201).json(savedCard);

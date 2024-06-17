@@ -1,3 +1,5 @@
+import { FormArray } from "@angular/forms";
+
 export class Question {
     topic?: string;
     note?: string;
@@ -5,6 +7,7 @@ export class Question {
     statement?: string;
     alternatives?: string[];
     discursive?: boolean;
+    selectedAlternatives?: FormArray;
 
     constructor(question: Array<{ key: string, value: string }>) {
         question.forEach(item => {

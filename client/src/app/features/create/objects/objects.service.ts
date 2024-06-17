@@ -18,7 +18,6 @@ export class ObjectsService {
   }
 
   createObject(object: Objects): Observable<any> {
-    console.log('Creating object:', object);
     return from(fetch(this.baseUrl + '/objects/create', {
       method: 'POST',
       headers: {

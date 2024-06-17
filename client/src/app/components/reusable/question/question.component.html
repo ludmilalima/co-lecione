@@ -12,7 +12,11 @@
     <mat-card-content>
       <form [formGroup]="formQuestion" *ngIf="statement">
         <div class="editor">
-          <ngx-editor [editor]="_editorQuestion" formControlName="editorQ">
+          <ngx-editor
+            [editor]="_editorQuestion"
+            formControlName="editorQ"
+            [placeholder]="'Insira o enunciado da questão...'"
+          >
           </ngx-editor>
         </div>
       </form>
@@ -44,8 +48,5 @@
         </div>
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="accent" type="button">Criar!</button>
-    </mat-card-actions>
   </mat-card>
 </ng-container>

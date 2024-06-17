@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
+import { Question } from './question.model';
 
 @Component({
   selector: 'question',
@@ -29,9 +30,7 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
   @Input() statement?: string;
   @Input() alternatives?: string[];
   @Input() discursive?: boolean;
-
-  // editorQuestion: Editor;
-  // editorAnswer: Editor;
+  @Input() question?: Question;
 
   toolbarAnswer: Toolbar = [
     ['bold', 'italic'],
@@ -70,14 +69,15 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
     this.formQuestion.get('editorQ').setValue(JSON.parse(this.statement));
   };
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['statement']) {
+      this.formQuestion.get('editorQ').setValue(changes['statement'].currentValue);
+      console.log(this.question);
+    }
+  }
+
   ngOnDestroy(): void {
     this._editorQuestion.destroy();
     this._editorAnswer.destroy();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['content']) {
-      this.formQuestion.get('editorQ').setValue(changes['statement'].currentValue);
-    }
   }
 }

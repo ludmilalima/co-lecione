@@ -18,6 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationsService } from './shared/notifications/notifications.service';
+import { SharedFormService } from './shared/services/shared-form.service';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { NotificationsService } from './shared/notifications/notifications.servi
         importProvidersFrom(MatNativeDateModule),
         UserService,
         NotificationsService,
+        SharedFormService,
     ],
     bootstrap: [AppComponent],
     imports: [

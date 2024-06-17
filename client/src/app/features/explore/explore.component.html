@@ -15,6 +15,18 @@
           >
           </app-cards>
         </div>
+        <div *ngIf="item.type == 'question'">
+          <question
+            [topic]="item.content.topic"
+            [note]="item.content.note"
+            [figureSrc]="item.content.figureSrc"
+            [statement]="item.content.statement"
+            [alternatives]="item.content.alternatives"
+            [discursive]="item.content.discursive"
+            [question]="item"
+          >
+          </question>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Roteiros"></mat-tab>

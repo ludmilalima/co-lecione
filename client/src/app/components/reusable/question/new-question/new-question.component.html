@@ -1,4 +1,4 @@
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
   <p>
     <mat-form-field appearance="outline">
       <mat-label>Assunto</mat-label>
@@ -30,16 +30,17 @@
     </mat-form-field>
   </p>
 
-  <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Enunciado</mat-label>
-      <textarea
-        matInput
-        formControlName="statement"
-        title="Enunciado"
-      ></textarea>
-    </mat-form-field>
-  </p>
+  <div class="editor">
+    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+    <ngx-editor
+      [editor]="editor"
+      [placeholder]="'Enunciado'"
+      formControlName="statement"
+    >
+    </ngx-editor>
+  </div>
+
+  <br>
 
   <div formArrayName="alternatives">
     <mat-form-field appearance="outline">
@@ -61,11 +62,6 @@
         <mat-icon>add</mat-icon>
       </button>
     </mat-form-field>
-  </div>
-
-  <div *ngFor="let alternative of alternatives.controls; let i = index">
-    <p>Alternativa {{ i + 1 }}:</p>
-    <p>{{ alternative.value }}</p>
   </div>
 
   <p>
