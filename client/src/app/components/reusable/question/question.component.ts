@@ -27,7 +27,7 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
   @Input() topic?: string;
   @Input() note?: string;
   @Input() figureSrc?: string;
-  @Input() statement?: string;
+  @Input() statement?: Object;
   @Input() alternatives?: string[];
   @Input() discursive?: boolean;
   @Input() question?: Question;

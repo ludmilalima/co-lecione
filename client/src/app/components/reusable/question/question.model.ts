@@ -4,7 +4,7 @@ export class Question {
     topic?: string;
     note?: string;
     figureSrc?: string;
-    statement?: string;
+    statement?: Object;
     alternatives?: string[];
     discursive?: boolean;
     selectedAlternatives?: FormArray;
