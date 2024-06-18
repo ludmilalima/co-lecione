@@ -66,13 +66,12 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   ngOnInit(): void {
-    this.formQuestion.get('editorQ').setValue(JSON.parse(this.statement));
+    this.formQuestion.get('editorQ').setValue(this.statement);
   };
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['statement']) {
       this.formQuestion.get('editorQ').setValue(changes['statement'].currentValue);
-      console.log(this.question);
     }
   }
 

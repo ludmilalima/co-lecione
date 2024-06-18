@@ -9,9 +9,11 @@
     >
       <div fxFlex="30" class="container">
         <h2>Objetos disponíveis</h2>
-        <app-available-objects (objectTypeChange)="handleObjectTypeChange($event)"></app-available-objects>
+        <app-available-objects
+          (objectTypeChange)="handleObjectTypeChange($event)"
+        ></app-available-objects>
       </div>
-      <div fxFlex="70" class="container">
+      <div fxFlex="70" class="container" *ngIf="newObjectType != null">
         <h2>Objeto em desenvolvimento</h2>
         <!-- <ng-container *ngIf="newObjectType == 'card'">
           <app-new-card></app-new-card>

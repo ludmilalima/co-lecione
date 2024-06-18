@@ -8,7 +8,7 @@
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
         <ng-template matStepLabel>Formulário de criação do objeto</ng-template>
-        <app-new-question></app-new-question>
+        <app-new-question *ngIf="objectType == 'question'"></app-new-question>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
@@ -71,8 +71,8 @@
     </mat-stepper>
   </div>
 
-  <div fxFlex class="container" *ngIf="objForm.touched || metadata.length > 0">
-    <ng-container *ngIf="objForm.touched">
+  <div fxFlex class="container" *ngIf="touchedForm || metadata.length > 0">
+    <ng-container *ngIf="touchedForm">
       <h3>Objeto criado:</h3>
       <question
       [topic]="objForm.value.topic"

@@ -50,22 +50,13 @@ export class CreateObjectComponent {
   editor: Editor;
   editorContent: Subscription;
 
+  touchedForm: boolean = false;
+
   displayedColumns: string[] = ['chave', 'valor'];
 
   newObject: Array<{ key: string, value: string }> = [];
   metadata: Array<{ key: string, value: string }> = [];
   isLinear = false;
-
-  // toolbar: Toolbar = [
-  //   ['bold', 'italic'],
-  //   ['underline', 'strike'],
-  //   ['code', 'blockquote'],
-  //   ['ordered_list', 'bullet_list'],
-  //   [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-  //   ['link', 'image'],
-  //   ['text_color', 'background_color'],
-  //   ['align_left', 'align_center', 'align_right', 'align_justify'],
-  // ];
 
   objForm: FormGroup;
   question: Question;
@@ -81,12 +72,19 @@ export class CreateObjectComponent {
   ) {
     this.editor = new Editor();
     this.metadataTable = new MatTableModule();
-    console.log(this.objectType);
   }
 
   ngOnInit(): void {
     this._formService.currentForm.subscribe(form => {
       this.objForm = form;
+    });
+
+    this._formService.formChanged.subscribe(isFilled => {
+      if (isFilled) {
+        if(!this.touchedForm){
+          this.touchedForm = true;
+        }
+      }
     });
 
     addEventListener('change', () => {
@@ -134,12 +132,11 @@ export class CreateObjectComponent {
 
     for (const key in this.objForm.controls) {
       if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
-        if (key === 'content' || key === 'statement') {
+        if (typeof this.objForm.get(key).value != 'string') {
           var strContent = JSON.stringify(this.objForm.get(key).value);
           this.newObject.push({ key: key, value: strContent });
         } else {
-          var strContent = JSON.stringify(this.objForm.get(key).value);
-          this.newObject.push({ key: key, value: strContent });
+          this.newObject.push({ key: key, value: this.objForm.get(key).value });
         }
       }
     }
@@ -150,10 +147,10 @@ export class CreateObjectComponent {
         this.newObject,
         this.metadata
       );
-      console.log(obj);
       (this._objectsService.createObject(obj)).subscribe(response => {
-        console.log(response);
       });
+      this.objForm.reset();
     }
+    this.newObject = [];
   }
 }

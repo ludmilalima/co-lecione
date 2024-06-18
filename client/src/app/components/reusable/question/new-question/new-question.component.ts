@@ -61,6 +61,7 @@ export class NewQuestionComponent implements OnInit, OnDestroy {
     this._formService.updateForm(this.form);
     this.form.valueChanges.subscribe(() => {
       this._formService.updateForm(this.form);
+      this._formService.checkFormFilled(this.form);
     });
   }
 
