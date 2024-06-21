@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ObjectsService } from 'src/app/features/create/objects/objects.service';
 import { Objects } from 'src/app/features/create/objects/objects.model';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { SharedFormService } from 'src/app/shared/services/shared-form.service';
 
 @Component({
   selector: 'app-new-card',
@@ -28,21 +31,15 @@ import { Objects } from 'src/app/features/create/objects/objects.model';
     MatInputModule,
     CardsComponent,
     NgxEditorModule,
+    FlexLayoutModule,
+    MatButtonModule
   ]
 })
 export class NewCardComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('metadataTable', { static: false }) metadataTable: any;
-  @ViewChild('addMetadataButton', { static: false }) addMetadataButton: any;
+  form: FormGroup = new FormGroup({});
 
   editor: Editor;
   editorContent: Subscription;
-
-  displayedColumns: string[] = ['chave', 'valor'];
-
-  card: Array<{ key: string, value: string }> = [];
-  metadata: Array<{ key: string, value: string }> = [];
-  isLinear = false;
-
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -54,35 +51,25 @@ export class NewCardComponent implements AfterViewInit, OnDestroy {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
-  objForm = new FormGroup({
-    avatarSrc: new FormControl(null),
-    headerImageSrc: new FormControl(null),
-    title: new FormControl(null),
-    subtitle: new FormControl(null),
-    content: new FormControl(
-      { value: null, disabled: false },
-      Validators.required(),
-    ),
-    actionTitle: new FormControl(null),
-    actionLink: new FormControl(null),
-  });
-
-  metadataForm: FormGroup = new FormGroup({
-    chave: new FormControl(''),
-    valor: new FormControl('')
-  },);
-
-  constructor(private _objectsService: ObjectsService) {
-    this.editor = new Editor();
+  constructor(private fb: FormBuilder, private _formService: SharedFormService, private _objectsService: ObjectsService) {
+    this.form = this.fb.group({
+      avatarSrc: [''],
+      headerImageSrc: [''],
+      title: [''],
+      subtitle: [''],
+      content: new FormControl({ value: null, disabled: false }, Validators.required()),
+      actionTitle: [''],
+      actionLink: [''],
+    });
   }
 
   ngOnInit(): void {
-    addEventListener('change', () => {
-      if (this.metadataForm.valid) {
-        this.addMetadataButton.disabled = false;
-      } else {
-        this.addMetadataButton.disabled = true;
-      }
+    this.editor = new Editor();
+
+    this._formService.updateForm(this.form);
+    this.form.valueChanges.subscribe(() => {
+      this._formService.updateForm(this.form);
+      this._formService.checkFormFilled(this.form);
     });
   }
 
@@ -93,41 +80,6 @@ export class NewCardComponent implements AfterViewInit, OnDestroy {
     this.editor.destroy();
     if (this.editorContent) {
       this.editorContent.unsubscribe();
-    }
-  }
-
-  addMetadata(): void {
-    if (this.metadataForm.valid) {
-      this.metadata.push({
-        key: this.metadataForm.value.chave,
-        value: this.metadataForm.value.valor
-      });
-      this.metadataForm.reset();
-      this.metadataTable.renderRows();
-    }
-  }
-
-  async submit(): Promise<void> {
-    for (const key in this.objForm.controls) {
-      if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
-        // Adiciona ao array 'card' um objeto com a chave e o valor do controle atual
-        if (key === 'content') {
-          var strContent = JSON.stringify(this.objForm.get(key).value);
-          this.card.push({ key: key, value: strContent });
-        } else {
-          this.card.push({ key: key, value: this.objForm.get(key).value });
-        }
-      }
-    }
-
-    if (this.card.length > 0 && this.metadata.length > 0) {
-      var obj = new Objects(
-        'card',
-        this.card,
-        this.metadata
-      );
-      (await this._objectsService.createObject(obj)).subscribe(response => {
-      });
     }
   }
 }

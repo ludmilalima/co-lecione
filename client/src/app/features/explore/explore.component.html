@@ -17,6 +17,7 @@
         </div>
         <div *ngIf="item.type == 'question'">
           <question
+            class="object-container"
             [topic]="item.content.topic"
             [note]="item.content.note"
             [figureSrc]="item.content.figureSrc"

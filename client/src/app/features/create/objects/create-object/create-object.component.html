@@ -9,6 +9,7 @@
       <mat-step>
         <ng-template matStepLabel>Formulário de criação do objeto</ng-template>
         <app-new-question *ngIf="objectType == 'question'"></app-new-question>
+        <app-new-card *ngIf="objectType == 'card'"></app-new-card>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
@@ -62,7 +63,12 @@
             <button type="button" mat-button matStepperPrevious>Voltar</button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" type="submit" (click)="submit()">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              (click)="submit()"
+            >
               Salvar
             </button>
           </div>
@@ -75,15 +81,28 @@
     <ng-container *ngIf="touchedForm">
       <h3>Objeto criado:</h3>
       <question
-      [topic]="objForm.value.topic"
-      [note]="objForm.value.note"
-      [figureSrc]="objForm.value.figureSrc"
-      [statement]="objForm.value.statement"
-      [alternatives]="objForm.value.alternatives"
-      [discursive]="objForm.value.discursive"
-      [question]="question"
-    >
-    </question>
+        *ngIf="objectType == 'question'"
+        [topic]="objForm.value.topic"
+        [note]="objForm.value.note"
+        [figureSrc]="objForm.value.figureSrc"
+        [statement]="objForm.value.statement"
+        [alternatives]="objForm.value.alternatives"
+        [discursive]="objForm.value.discursive"
+        [question]="question"
+      >
+      </question>
+
+      <app-cards
+        *ngIf="objectType == 'card'"
+        [avatarSrc]="objForm.value.avatarSrc"
+        [headerImageSrc]="objForm.value.headerImageSrc"
+        [title]="objForm.value.title"
+        [subtitle]="objForm.value.subtitle"
+        [content]="objForm.value.content"
+        [actionTitle]="objForm.value.actionTitle"
+        [actionLink]="objForm.value.actionLink"
+      >
+      </app-cards>
     </ng-container>
     <ng-container *ngIf="metadata.length > 0">
       <h3>Metadados associados:</h3>

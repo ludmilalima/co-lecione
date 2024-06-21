@@ -17,7 +17,8 @@ import { ObjectsService } from '../objects.service';
 import { SharedFormService } from 'src/app/shared/services/shared-form.service';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
 import { Question } from 'src/app/components/reusable/question/question.model';
-import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
+import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
+import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 
 @Component({
   selector: 'app-create-object',
@@ -37,7 +38,9 @@ import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/co
     FlexLayoutModule,
     ReactiveFormsModule,
     NewQuestionComponent,
-    QuestionComponent
+    NewCardComponent,
+    QuestionComponent,
+    CardsComponent
   ]
 })
 
@@ -150,6 +153,8 @@ export class CreateObjectComponent {
       (this._objectsService.createObject(obj)).subscribe(response => {
       });
       this.objForm.reset();
+      this.metadata = [];
+      this.touchedForm = false;
     }
     this.newObject = [];
   }
