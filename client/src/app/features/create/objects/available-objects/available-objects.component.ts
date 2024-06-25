@@ -8,6 +8,7 @@ import { QuestionComponent } from 'src/app/components/reusable/question/question
 import { MatButtonModule } from '@angular/material/button';
 import { Card } from 'src/app/components/reusable/cards/card.model';
 import { Question } from 'src/app/components/reusable/question/question.model';
+import { CollapseAccordionOnClickDirective } from 'src/app/shared/directives/collapse-accordion-on-click.directive';
 
 @Component({
   selector: 'app-available-objects',
@@ -19,7 +20,8 @@ import { Question } from 'src/app/components/reusable/question/question.model';
     MatExpansionModule,
     MatButtonModule,
     CardsComponent,
-    QuestionComponent
+    QuestionComponent,
+    CollapseAccordionOnClickDirective
   ],
 })
 export class AvailableObjectsComponent {
