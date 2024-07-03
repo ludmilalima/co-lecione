@@ -41,7 +41,7 @@ export class CreateComponent implements OnInit {
     }
   }
 
-  changeObjectType(newType: string): void {
+  changeObjectType(newType: string | null): void {
     this.newObjectType = newType;
   }
 }

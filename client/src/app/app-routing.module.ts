@@ -5,6 +5,7 @@ import { ExploreComponent } from './features/explore/explore.component';
 import { ResumeComponent } from './features/resume/resume.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/explorar', pathMatch: 'full'},
   { path: 'explorar', component: ExploreComponent },
   { path: 'criar', component: CreateComponent },
   { path: 'retomar', component: ResumeComponent },

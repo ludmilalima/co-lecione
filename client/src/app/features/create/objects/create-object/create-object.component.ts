@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
-import { Editor, Toolbar } from 'ngx-editor';
+import { Editor } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
 import { Objects } from '../objects.model';
@@ -49,6 +49,7 @@ export class CreateObjectComponent {
   @ViewChild('addMetadataButton', { static: false }) addMetadataButton: any;
 
   @Input() objectType: string;
+  @Output() objectTypeChange: EventEmitter<string> = new EventEmitter<string>();
 
   editor: Editor;
   editorContent: Subscription;
@@ -123,16 +124,6 @@ export class CreateObjectComponent {
   }
 
   submit(): void {
-    this.question = {
-      'topic': this.objForm.value.topic,
-      'note': this.objForm.value.note,
-      'figureSrc': this.objForm.value.figureSrc,
-      'statement': this.objForm.value.statement,
-      'alternatives': this.objForm.value.alternatives,
-      'selectedAlternatives': this.objForm.value.selectedAlternatives,
-      'discursive': this.objForm.value.discursive,
-    };
-
     for (const key in this.objForm.controls) {
       if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
         if (typeof this.objForm.get(key).value != 'string') {
@@ -157,5 +148,6 @@ export class CreateObjectComponent {
       this.touchedForm = false;
     }
     this.newObject = [];
+    this.objectTypeChange.emit(null);
   }
 }
