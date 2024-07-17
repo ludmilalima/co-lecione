@@ -38,7 +38,7 @@ export class ObjectsService {
 
 
   getAllObjects(): Observable<any> {
-    return from(fetch(this.baseUrl + '/objects/list-all', {
+    return from(fetch(this.baseUrl + '/objects/read-all', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
