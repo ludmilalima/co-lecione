@@ -1,11 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body {
+html, body, app-root {
   height: 100%;
-  width: 100%;
   margin: 0;
-  padding: 0;
 }
 
 .fill-remaining-space {
@@ -23,13 +20,6 @@ body {
 
 .form-container {
   margin: 8px;
-}
-
-.body-wrapper {
-  margin: 20px;
-  padding: 20px;
-  height: auto;
-  width: auto;
 }
 
 .content-wrapper {

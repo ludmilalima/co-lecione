@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
-import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
-import { CommonModule } from '@angular/common';
-import { CreateObjectComponent } from './objects/create-object/create-object.component';
-import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
-import { AvailableObjectsComponent } from './objects/available-objects/available-objects.component';
 import { CreateObjectTabComponent } from './objects/create-object-tab/create-object-tab.component';
+import { CreateItineraryTabComponent } from './itineraries/create-itinerary-tab/create-itinerary-tab.component';
 
 @Component({
   selector: 'app-create',
@@ -14,36 +9,17 @@ import { CreateObjectTabComponent } from './objects/create-object-tab/create-obj
   styleUrls: ['./create.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     MatTabsModule,
-    AvailableObjectsComponent,
-    NewCardComponent,
-    NewQuestionComponent,
-    CreateObjectComponent,
-    CreateObjectTabComponent
+    CreateObjectTabComponent,
+    CreateItineraryTabComponent
   ]
 })
 export class CreateComponent implements OnInit {
   newObjectType: string = null;
 
-  constructor(private _confirmationDialogService: ConfirmationDialogService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  handleObjectTypeChange(newType: string): void {
-    if (this.newObjectType) {
-      this._confirmationDialogService.openDialog(
-        'Tem certeza que gostaria de descartar o objeto atual?',
-        () => this.changeObjectType(newType),
-        () => { }
-      );
-    } else {
-      this.changeObjectType(newType);
-    }
-  }
-
-  changeObjectType(newType: string | null): void {
-    this.newObjectType = newType;
-  }
 }
