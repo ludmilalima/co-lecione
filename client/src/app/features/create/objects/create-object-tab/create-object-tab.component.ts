@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
-import { CommonModule } from '@angular/common';
-import { CreateObjectComponent } from './objects/create-object/create-object.component';
 import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
-import { AvailableObjectsComponent } from './objects/available-objects/available-objects.component';
-import { CreateObjectTabComponent } from './objects/create-object-tab/create-object-tab.component';
+import { AvailableObjectsComponent } from '../available-objects/available-objects.component';
+import { CreateObjectComponent } from '../create-object/create-object.component';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
+  selector: 'app-create-object-tab',
+  templateUrl: './create-object-tab.component.html',
+  styleUrl: './create-object-tab.component.scss',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,11 +18,10 @@ import { CreateObjectTabComponent } from './objects/create-object-tab/create-obj
     AvailableObjectsComponent,
     NewCardComponent,
     NewQuestionComponent,
-    CreateObjectComponent,
-    CreateObjectTabComponent
+    CreateObjectComponent
   ]
 })
-export class CreateComponent implements OnInit {
+export class CreateObjectTabComponent {
   newObjectType: string = null;
 
   constructor(private _confirmationDialogService: ConfirmationDialogService) { }

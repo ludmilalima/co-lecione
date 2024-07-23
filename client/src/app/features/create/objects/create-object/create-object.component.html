@@ -82,12 +82,7 @@
       <h3>Objeto criado:</h3>
       <question
         *ngIf="objectType == 'question'"
-        [topic]="objForm.value.topic"
-        [note]="objForm.value.note"
-        [figureSrc]="objForm.value.figureSrc"
-        [statement]="objForm.value.statement"
-        [alternatives]="objForm.value.alternatives"
-        [discursive]="objForm.value.discursive"
+
         [question]="question"
       >
       </question>

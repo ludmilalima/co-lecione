@@ -1,0 +1,21 @@
+<div
+fxLayout="row"
+fxLayout.lt-sm="column"
+fxLayout.lt-md="column"
+fxLayoutGap="8px"
+class="wrapper container"
+>
+<div fxFlex="30" class="container">
+  <h2>Objetos disponíveis</h2>
+  <app-available-objects
+    (objectTypeChange)="handleObjectTypeChange($event)"
+  ></app-available-objects>
+</div>
+<div fxFlex="70" class="container" *ngIf="newObjectType != null">
+  <h2>Objeto em desenvolvimento</h2>
+  <app-create-object
+    (objectTypeChange)="changeObjectType($event)"
+    [objectType]="newObjectType"
+  ></app-create-object>
+</div>
+</div>
