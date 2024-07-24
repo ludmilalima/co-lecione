@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
-import { Question } from './question.model';
 
 @Component({
   selector: 'question',
@@ -30,7 +29,6 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
   @Input() statement?: Object;
   @Input() alternatives?: string[];
   @Input() discursive?: boolean;
-  @Input() question?: Question;
 
   toolbarAnswer: Toolbar = [
     ['bold', 'italic'],
