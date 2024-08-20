@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     private dialogLogin: MatDialog,
     private dialogLogout: MatDialog,
     private dialogUserDetails: MatDialog,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
   ) { };
 
   ngOnInit(): void {
