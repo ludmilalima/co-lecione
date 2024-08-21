@@ -2,6 +2,10 @@ import { VocabularyType } from "../../util.model";
 
 export class Purpose extends VocabularyType {
     override value: PurposeEnum;
+
+    getValueOptions(): Array<string> {
+        return Object.values(PurposeEnum);
+    }
 }
 
 enum PurposeEnum {

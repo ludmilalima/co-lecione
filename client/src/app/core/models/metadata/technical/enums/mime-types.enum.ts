@@ -1,9 +1,11 @@
 import * as mimeDb from 'mime-db';
+import { VocabularyType } from '../../util.model';
 
-export class MimeTypes {
-    private mimeTypes: { [key: string]: string } = mimeDb;
+export class MimeType extends VocabularyType{
+    override value: string;
+    mimeTypes: { [key: string]: string } = mimeDb;
 
-    getTopLevelMimeTypes(): string[] {
+    getValueOptions(): string[] {
         return Object.values(TopLevel);
     }
 

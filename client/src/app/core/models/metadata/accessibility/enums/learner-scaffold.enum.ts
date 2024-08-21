@@ -1,4 +1,15 @@
-export enum LearnerScaffold {
+import { VocabularyType } from "../../util.model";
+
+export class LearnerScaffold extends VocabularyType {
+    override source = 'OBAA';
+    override value = LearnerScaffoldEnum;
+
+    getValueOptions(): Array<string> {
+        return Object.values(LearnerScaffoldEnum);
+    }
+}
+
+enum LearnerScaffoldEnum {
     dictionary = 'dictionary',
     calculator = 'calculator',
     noteTaking = 'noteTaking',

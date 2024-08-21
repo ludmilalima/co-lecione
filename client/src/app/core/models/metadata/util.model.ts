@@ -43,10 +43,10 @@ export class DurationType {
     description: LangStringType = new LangStringType(0, 1);
 }
 
-export class VocabularyType {
+export abstract class VocabularyType {
     minOccurs: number;
     maxOccurs: number;
-    source: "LOMv1.0";
+    source: string = 'LOMv1.0';
     value: any;
 
     constructor(minOccurs: number, maxOccurs: number) {
@@ -54,9 +54,7 @@ export class VocabularyType {
         this.maxOccurs = maxOccurs;
     }
 
-    getValueOptions(): Array<string> {
-        return Object.values(typeof (this.value));
-    }
+    abstract getValueOptions(): Array<string>;
 }
 
 export class IdentifierType {
@@ -88,7 +86,15 @@ export class ContributeType {
     }
 }
 
-export enum IsoLanguageCodeEnum {
+export class LanguageType extends CharacterStringType {
+    override content: Array<IsoLanguageCodeEnum>;
+
+    getIsoLanguageCodes(): Array<string> {
+        return Object.values(IsoLanguageCodeEnum);
+    }
+}
+
+enum IsoLanguageCodeEnum {
     Abkhazian = "ab",
     Afar = "aa",
     Afrikaans = "af",

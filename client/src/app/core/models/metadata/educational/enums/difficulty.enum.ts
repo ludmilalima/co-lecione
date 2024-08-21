@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class Difficulty extends VocabularyType {
     override value: DifficultyEnum;
 
-    getDifficulties(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(DifficultyEnum);
     }
 }

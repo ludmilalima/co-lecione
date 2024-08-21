@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class LearningResourceType extends VocabularyType {
     override value: LearningResource;
 
-    getLearningResourceTypes(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(LearningResource);
     }
 }

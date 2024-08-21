@@ -2,6 +2,10 @@ import { VocabularyType } from "../../util.model";
 
 export class Structure extends VocabularyType {
     override value: StructureValue;
+
+    getValueOptions(): Array<string> {
+        return Object.values(StructureValue);
+    }
 }
 
 enum StructureValue {

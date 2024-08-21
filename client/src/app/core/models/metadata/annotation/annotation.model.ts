@@ -9,10 +9,8 @@ export class Annotation {
     date: DateTimeType = new DateTimeType;
     description: LangStringType = new LangStringType(0, 1);
 
-    constructor(
-        private dateTimeValidatorService: DateTimeValidatorService,
-        private langStringValidatorService: LangStringValidatorService
-    ) { }
+    private dateTimeValidatorService: DateTimeValidatorService;
+    private langStringValidatorService: LangStringValidatorService;
 
     setEntity(entity: string): void {
         this.entity.content.push(entity);

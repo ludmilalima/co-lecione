@@ -2,6 +2,10 @@ import { VocabularyType } from "../../util.model";
 
 export class Kind extends VocabularyType {
     override value: KindEnum;
+
+    getValueOptions(): Array<string> {
+        return Object.values(KindEnum);
+    }
 }
 
 enum KindEnum {

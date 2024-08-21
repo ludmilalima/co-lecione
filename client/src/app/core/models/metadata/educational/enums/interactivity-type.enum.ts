@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model"
 export class InteractivityType extends VocabularyType {
     override value: InteractivityTypeEnum;
 
-    getInteractivityTypes(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(InteractivityTypeEnum);
     }
 }

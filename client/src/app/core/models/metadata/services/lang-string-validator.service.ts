@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IsoLanguageCodeEnum } from '../accessibility/enums/iso-language-code.enum';
+import { IsoLanguageCodeEnum } from '../util.model';
 
 @Injectable({
     providedIn: 'root',

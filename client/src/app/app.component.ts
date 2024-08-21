@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { Relation } from './core/models/metadata/relation/relation.model';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   loggedUser: string = '';
 
+  relation: Relation = new Relation();
+
   constructor(
     private sanitizer: DomSanitizer,
     private dialogLogin: MatDialog,
@@ -34,6 +37,8 @@ export class AppComponent implements OnInit {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../assets/logo-title.png');
     this.isLoggedIn = Boolean(localStorage.getItem('token'));
     this.loggedUser = localStorage.getItem('name') || '';
+
+    console.log(this.relation.kind.getValueOptions());
   }
 
   openLoginDialog(): void {

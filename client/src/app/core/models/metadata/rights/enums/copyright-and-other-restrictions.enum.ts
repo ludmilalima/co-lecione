@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class CopyrightAndOtherRestrictions extends VocabularyType {
     override value: CopyrightAndOtherRestrictionsEnum;
 
-    getValues(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(CopyrightAndOtherRestrictionsEnum);
     }
 }

@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class SemanticDensity extends VocabularyType {
     override value: SemanticDensityEnum;
 
-    getSemanticDensities(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(SemanticDensityEnum);
     }
 }

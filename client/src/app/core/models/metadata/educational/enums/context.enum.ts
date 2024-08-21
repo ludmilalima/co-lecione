@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class Context extends VocabularyType {
     override value: ContextEnum;
 
-    getContexts(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(ContextEnum);
     }
 }

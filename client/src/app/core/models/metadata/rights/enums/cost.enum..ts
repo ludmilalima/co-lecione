@@ -3,7 +3,7 @@ import { VocabularyType } from "../../util.model";
 export class Cost extends VocabularyType {
     override value: CostEnum;
 
-    getValues(): Array<string> {
+    getValueOptions(): Array<string> {
         return Object.values(CostEnum);
     }
 }
