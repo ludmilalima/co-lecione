@@ -5,6 +5,9 @@ import { CardsComponent } from 'src/app/components/reusable/cards/cards.componen
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
 import { ObjectsService } from '../create/objects/objects.service';
 import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.service';
+import { FilterComponent } from 'src/app/components/reusable/filter/filter.component';
+import { Obaa } from 'src/app/core/models/metadata/obaa.model';
+import { UnitSelect } from 'src/app/components/reusable/filter/filter.model';
 
 @Component({
   selector: 'app-explore',
@@ -16,10 +19,14 @@ import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.se
     MatTabsModule,
     CardsComponent,
     QuestionComponent,
+    FilterComponent,
   ]
 })
 export class ExploreComponent implements OnInit {
   objects: any[] = [];
+
+  unitSelects: Array<UnitSelect> = [];
+  obaa: Obaa = new Obaa();
 
   constructor(private _objectsService: ObjectsService, private _convertByType: ConvertByTypeService) { }
 
@@ -43,5 +50,8 @@ export class ExploreComponent implements OnInit {
         };
       });
     });
+
+    this.unitSelects.push(new UnitSelect('Select a unit', ['unit1', 'unit2', 'unit3']));
+    this.unitSelects.push(new UnitSelect('Select a fruit', this.obaa.educational.intendedEndUserRole.getValueOptions()));
   }
 }

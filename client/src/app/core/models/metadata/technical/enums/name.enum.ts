@@ -1,4 +1,14 @@
-export enum OperatingSystems {
+import { VocabularyType } from "../../util.model";
+
+export class OperatingSystems extends VocabularyType {
+    override value: OperatingSystemsEnum;
+
+    override getValueOptions(): Array<string> {
+        return Object.values(OperatingSystemsEnum);
+    }
+}
+
+enum OperatingSystemsEnum {
     pcDos = 'pc-dos',
     msWindows = 'ms-windows',
     macos = 'macos',
@@ -7,7 +17,15 @@ export enum OperatingSystems {
     none = 'none'
 }
 
-export enum Browsers {
+export class Browsers extends VocabularyType {
+    override value: BrowsersEnum;
+
+    override getValueOptions(): Array<string> {
+        return Object.values(BrowsersEnum);
+    }
+}
+
+enum BrowsersEnum {
     any = 'any',
     netscapeCommunicator = 'netscape-communicator',
     msInternetExplorer = 'ms-internet-explorer',

@@ -9,8 +9,10 @@ import { Relation } from "./relation/relation.model";
 import { Rights } from "./rights/rights.model";
 import { SegmentInformationTable } from "./segment-information-table/segment-information-table.model";
 import { Technical } from "./technical/technical.model";
+import { NodeInfo } from "./util.model";
 
 export class Obaa {
+    nodeInfo: NodeInfo;
     general: General = new General();
     lifeCycle: LifeCycle = new LifeCycle();
     metaMetadata: MetaMetadata = new MetaMetadata();
@@ -22,4 +24,13 @@ export class Obaa {
     classification: Classification = new Classification();
     accessibility: Accessibility = new Accessibility();
     segmentInformationTable: SegmentInformationTable = new SegmentInformationTable();
+
+    constructor() {
+        this.nodeInfo = new NodeInfo(
+            0,
+            1,
+            'The root element of the OBAA model.',
+            'root'
+        );
+    }
 }

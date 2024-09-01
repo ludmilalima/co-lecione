@@ -5,7 +5,7 @@ export class LearningContentType extends VocabularyType {
     override value = LearningContentTypeEnum;
 
     override getValueOptions(): Array<string> {
-        return Object.keys(this.value).filter(value => isNaN(Number(value)));
+        return Object.values(LearningContentTypeEnum);
     }
 }
 

@@ -1,4 +1,14 @@
-export enum SpecificOperatingSystems {
+import { VocabularyType } from "../../util.model";
+
+export class SpecificOperatingSystems extends VocabularyType {
+    override value: SpecificOperatingSystemsEnum;
+
+    override getValueOptions(): Array<string> {
+        return Object.values(SpecificOperatingSystemsEnum);
+    }
+}
+
+enum SpecificOperatingSystemsEnum {
     pcDos = 'pc-dos',
     msWindows = 'ms-windows',
     macOs = 'macos',
@@ -7,7 +17,15 @@ export enum SpecificOperatingSystems {
     none = 'none'
 }
 
-export enum SpecificBrowsers {
+export class SpecificBrowsers extends VocabularyType {
+    override value: SpecificBrowsersEnum;
+
+    override getValueOptions(): Array<string> {
+        return Object.values(SpecificOperatingSystemsEnum);
+    }
+}
+
+enum SpecificBrowsersEnum {
     any = 'any',
     netscapeCommunicator = 'netscape-communicator',
     msInternetExplorer = 'ms-internet-explorer',
@@ -18,7 +36,15 @@ export enum SpecificBrowsers {
     googleChrome = 'google-chrome'
 }
 
-export enum SpecificMiddleware {
+export class SpecificMiddleware extends VocabularyType {
+    override value: SpecificMiddlewareEnum;
+
+    override getValueOptions(): Array<string> {
+        return Object.values(SpecificMiddlewareEnum);
+    }
+}
+
+enum SpecificMiddlewareEnum {
     ginga = 'ginga',
     mhp = 'mhp',
     arib = 'arib',

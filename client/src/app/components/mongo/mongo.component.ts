@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { NotificationsService } from "src/app/shared/notifications/notifications.service";
-import { TableService } from "../reusable/table/table.service";
+import { TableService } from "../reusable/question/table/table.service";
 
 @Component({
   selector: "app-mongo",

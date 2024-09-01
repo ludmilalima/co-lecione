@@ -1,14 +1,17 @@
 export class LangStringType {
-    minOccurs: number;
-    maxOccurs: number;
+    nodeInfo: NodeInfo;
     langString: Array<{
         content: string;
         language: IsoLanguageCodeEnum;
     }>;
 
     constructor(minOccurs: number, maxOccurs: number) {
-        this.minOccurs = minOccurs;
-        this.maxOccurs = maxOccurs;
+        this.nodeInfo = new NodeInfo(
+            minOccurs,
+            maxOccurs,
+            'A string of characters in one or more languages.',
+            'langString-type'
+        );
         this.langString = [];
     }
 
@@ -18,70 +21,122 @@ export class LangStringType {
 }
 
 export class CharacterStringType {
-    minOccurs: number;
-    maxOccurs: number;
+    nodeInfo: NodeInfo;
     content: Array<string>;
 
     constructor(minOccurs: number, maxOccurs: number) {
-        this.minOccurs = minOccurs;
-        this.maxOccurs = maxOccurs;
+        this.nodeInfo = new NodeInfo(
+            minOccurs,
+            maxOccurs,
+            'A string of characters.',
+            'characterString-type'
+        );
         this.content = [];
     }
 }
 
+export class BooleanType {
+    nodeInfo: NodeInfo;
+    content: boolean;
+
+    constructor() {
+        this.nodeInfo = new NodeInfo(
+            1,
+            1,
+            'A boolean value.',
+            'boolean-type'
+        );
+    }
+}
+
 export class DateTimeType {
-    minOccurs: number = 0;
-    maxOccurs: number = 1;
+    nodeInfo: NodeInfo;
     dateTime: string;
     description: LangStringType = new LangStringType(0, 1);
+
+    constructor() {
+        this.nodeInfo = new NodeInfo(
+            0,
+            1,
+            'A point in time.',
+            'dateTime-type'
+        );
+    }
 }
 
 export class DurationType {
-    minOccurs: number = 0;
-    maxOccurs: number = 1;
+    nodeInfo: NodeInfo;
     duration: string;
     description: LangStringType = new LangStringType(0, 1);
+
+    constructor() {
+        this.nodeInfo = new NodeInfo(
+            0,
+            1,
+            'A duration of time.',
+            'duration-type'
+        );
+    }
 }
 
 export abstract class VocabularyType {
-    minOccurs: number;
-    maxOccurs: number;
+    nodeInfo: NodeInfo;
     source: string = 'LOMv1.0';
     value: any;
 
     constructor(minOccurs: number, maxOccurs: number) {
-        this.minOccurs = minOccurs;
-        this.maxOccurs = maxOccurs;
+        this.nodeInfo = new NodeInfo(
+            minOccurs,
+            maxOccurs,
+            'A value from a controlled vocabulary.',
+        );
+
+        this.setType();
+        this.nodeInfo.optionsList = this.getValueOptions();
+    }
+
+    setType() {
+        if (this.nodeInfo.minOccurs >= 0 && this.nodeInfo.maxOccurs <= 1) {
+            this.nodeInfo.nodeType = 'single-select';
+        } else {
+            this.nodeInfo.nodeType = 'multi-select';
+        }
     }
 
     abstract getValueOptions(): Array<string>;
 }
 
 export class IdentifierType {
-    minOccurs: number;
-    maxOccurs: number;
+    nodeInfo: NodeInfo;
     identifier: Array<{
         catalog: string;
         entry: string;
     }>;
 
     constructor(minOccurs: number, maxOccurs: number) {
-        this.minOccurs = minOccurs;
-        this.maxOccurs = maxOccurs;
+        this.nodeInfo = new NodeInfo(
+            minOccurs,
+            maxOccurs,
+            'A unique identifier for the resource.',
+            'identifier-type'
+        );
         this.identifier = [];
     }
 }
 
 export class ContributeType {
-    minOccurs: number;
-    maxOccurs: number;
+    nodeInfo: NodeInfo;
     role: any;
     entity: CharacterStringType;
     date: DateTimeType;
 
     constructor(minOccurs: number, maxOccurs: number, minEntity: number, maxEntity: number) {
-        this.minOccurs = minOccurs;
-        this.maxOccurs = maxOccurs;
+        this.nodeInfo = new NodeInfo(
+            minOccurs,
+            maxOccurs,
+            'A person or organization that contributed to the resource.',
+            'contribute-type'
+        );
         this.entity = new CharacterStringType(minEntity, maxEntity);
     }
 }
@@ -89,12 +144,18 @@ export class ContributeType {
 export class LanguageType extends CharacterStringType {
     override content: Array<IsoLanguageCodeEnum>;
 
+    constructor(minOccurs: number, maxOccurs: number) {
+        super(minOccurs, maxOccurs);
+        this.nodeInfo.nodeType = 'language-type';
+        this.nodeInfo.description = 'A language used in the resource.';
+    }
+
     getIsoLanguageCodes(): Array<string> {
         return Object.values(IsoLanguageCodeEnum);
     }
 }
 
-enum IsoLanguageCodeEnum {
+export enum IsoLanguageCodeEnum {
     Abkhazian = "ab",
     Afar = "aa",
     Afrikaans = "af",
@@ -282,4 +343,23 @@ enum IsoLanguageCodeEnum {
     Yoruba = "yo",
     Zhuang = "za",
     Zulu = "zu"
+}
+
+export class NodeInfo {
+    description?: string;
+    minOccurs?: number;
+    maxOccurs?: number;
+    nodeType?: string;
+    optionsList?: Array<string>;
+
+    constructor(minOccurs?: number, maxOccurs?: number, description?: string, nodeType?: string) {
+        this.minOccurs = minOccurs;
+        this.maxOccurs = maxOccurs;
+        this.description = description;
+        this.nodeType = nodeType;
+    }
+}
+
+export abstract class ArrayInfo {
+    abstract childType: object;
 }
