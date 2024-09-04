@@ -12,6 +12,7 @@ export class LangStringType {
             'A string of characters in one or more languages.',
             'langString-type'
         );
+        this.nodeInfo.optionsList = this.getIsoLanguageCodes();
         this.langString = [];
     }
 
@@ -346,6 +347,7 @@ export enum IsoLanguageCodeEnum {
 }
 
 export class NodeInfo {
+    key?: string;
     description?: string;
     minOccurs?: number;
     maxOccurs?: number;

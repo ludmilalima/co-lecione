@@ -23,8 +23,6 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   loggedUser: string = '';
 
-  relation: Relation = new Relation();
-
   constructor(
     private sanitizer: DomSanitizer,
     private dialogLogin: MatDialog,
@@ -37,8 +35,6 @@ export class AppComponent implements OnInit {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../assets/logo-title.png');
     this.isLoggedIn = Boolean(localStorage.getItem('token'));
     this.loggedUser = localStorage.getItem('name') || '';
-
-    console.log(this.relation.kind.getValueOptions());
   }
 
   openLoginDialog(): void {

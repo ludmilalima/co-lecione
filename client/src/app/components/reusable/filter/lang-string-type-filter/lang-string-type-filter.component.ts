@@ -1,10 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { LangStringType } from 'src/app/core/models/metadata/util.model';
+import { IsoLanguageCodeEnum, LangStringType, NodeInfo } from 'src/app/core/models/metadata/util.model';
+import { UnitSelectComponent } from '../unit-select/unit-select.component';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
+import { MatButtonModule } from '@angular/material/button';
+import { FilterComponent } from '../filter.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-lang-string-type-filter',
@@ -12,43 +19,67 @@ import { LangStringType } from 'src/app/core/models/metadata/util.model';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
+    FlexLayoutModule,
+
+    UnitSelectComponent,
+    SimpleTextInputComponent,
+
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './lang-string-type-filter.component.html',
-  styleUrl: './lang-string-type-filter.component.scss'
+  styleUrl: './lang-string-type-filter.component.scss',
 })
-export class LangStringTypeFilterComponent {
-  @Input() langStringType: LangStringType;
+export class LangStringTypeFilterComponent implements OnInit {
+  @Input() nodeInfo: NodeInfo;
 
-  form: FormGroup;
+  @ViewChild(UnitSelectComponent) unitSelectComponent: UnitSelectComponent;
+  @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
-  constructor(private fb: FormBuilder) { }
+  filter: FilterComponent = new FilterComponent();
+  result: LangStringType;
+
+  content: string;
+  language: IsoLanguageCodeEnum;
+
+  contentNode: NodeInfo = new NodeInfo();
+  languageNode: NodeInfo = new NodeInfo();
+
+  displayedColumns: string[] = ['content', 'language', 'actions'];
+  dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.form = this.fb.group({
-      langString: this.fb.array([], [Validators.minLength(this.langStringType.nodeInfo.minOccurs), Validators.maxLength(this.langStringType.nodeInfo.maxOccurs)])
-    });
-  }
+    this.contentNode = { ...this.nodeInfo };
+    this.contentNode.description = 'Insert the content of the string.';
 
-  get langString(): FormArray {
-    return this.form.get('langString') as FormArray;
+    this.languageNode = { ...this.nodeInfo };
+    this.languageNode.key = 'Language';
+    this.result = new LangStringType(this.nodeInfo.minOccurs, this.nodeInfo.maxOccurs);
+    this.dataSource.data = this.result.langString;
   }
 
   addLangString() {
-    if (this.langString.length < this.langStringType.nodeInfo.maxOccurs) {
-      this.langString.push(this.fb.group({
-        content: ['', Validators.required],
-        language: ['', Validators.required]
-      }));
-    }
+    this.result.langString.push({ content: this.content, language: this.language });
+    this.dataSource.data = [...this.result.langString];
+    this.unitSelectComponent.reset();
+    this.simpleTextInputComponent.reset();
+    this.nodeInfo.optionsList.splice(this.nodeInfo.optionsList.indexOf(this.language), 1);
   }
 
   removeLangString(index: number) {
-    if (this.langString.length > this.langStringType.nodeInfo.minOccurs) {
-      this.langString.removeAt(index);
-    }
+    this.result.langString.splice(index, 1);
+    this.dataSource.data = [...this.result.langString];
+  }
+
+  onLanguageChange(value: string) {
+    this.language = value as IsoLanguageCodeEnum;
+  }
+
+  onContentChange(value: string) {
+    this.content = value;
   }
 }

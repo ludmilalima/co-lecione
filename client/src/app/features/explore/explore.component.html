@@ -2,9 +2,7 @@
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Objetos">
       <div class="container">
-        <app-filter
-          [unitSelects]="unitSelects"
-        ></app-filter>
+        <app-filter></app-filter>
       </div>
       <div *ngFor="let item of objects">
         <div *ngIf="item.type == 'card'">

@@ -4,21 +4,27 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled title="Button"></button>
-      <span *ngIf="node.object?.nodeInfo?.nodeType === 'root'">{{ node.object?.nodeInfo?.nodeType }}</span>
-      <br />
-      <div *ngIf="node.object?.nodeInfo?.nodeType == 'single-select'">
-        <!-- <span>{{ node.object.nodeInfo.nodeType }}</span> -->
-        <mat-form-field>
-          <mat-label>{{ node.name }}</mat-label>
-          <mat-select>
-            <mat-option
-              *ngFor="let item of node.object.nodeInfo.optionsList"
-              [value]="item"
-            >
-              {{ item }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+
+      <span *ngIf="node.object?.nodeInfo?.nodeType === 'root'">{{
+        convertString(node.object?.nodeInfo?.nodeType)
+      }}</span>
+      <div
+        *ngIf="node.object?.nodeInfo?.nodeType == 'single-select'"
+        class="flex-container"
+      >
+        <app-unit-select
+          class="flex-item"
+          [nodeInfo]="node.object?.nodeInfo"
+        ></app-unit-select>
+      </div>
+      <div
+        *ngIf="node.object?.nodeInfo?.nodeType == 'langString-type'"
+        class="flex-container"
+      >
+        <app-lang-string-type-filter
+          class="flex-item"
+          [nodeInfo]="node.object?.nodeInfo"
+        ></app-lang-string-type-filter>
       </div>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -36,8 +42,12 @@
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
       </button>
-      {{ node.name }}
+      <span>
+        {{ convertString(node.name) }}
+        <span *ngIf="node.object?.nodeInfo?.description != undefined"
+          >: {{ node.object?.nodeInfo?.description }}</span
+        >
+      </span>
     </mat-tree-node>
   </mat-tree>
-  <br />
 </div>
