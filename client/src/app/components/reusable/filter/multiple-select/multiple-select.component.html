@@ -1,0 +1,14 @@
+<div class="flex-container">
+  <mat-form-field class="flex-item">
+    <mat-label>{{ filter.getLastToken(nodeInfo.key) }}</mat-label>
+    <mat-select
+      (selectionChange)="onSelectionChange($event.value)"
+      [value]="selectedValues"
+      multiple
+    >
+      <mat-option *ngFor="let item of nodeInfo.optionsList" [value]="item">{{
+        item
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

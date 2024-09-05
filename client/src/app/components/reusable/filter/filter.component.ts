@@ -9,6 +9,7 @@ import { LangStringTypeFilterComponent } from './lang-string-type-filter/lang-st
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { SimpleTextInputComponent } from './simple-text-input/simple-text-input.component';
 import { IsoLanguageCodeEnum, NodeInfo } from 'src/app/core/models/metadata/util.model';
+import { CharacterStringTypeFilterComponent } from './character-string-type-filter/character-string-type-filter.component';
 
 interface ObaaNode {
   name: string;
@@ -32,6 +33,7 @@ interface ExampleFlatNode {
     UnitSelectComponent,
     SimpleTextInputComponent,
     LangStringTypeFilterComponent,
+    CharacterStringTypeFilterComponent,
 
     MatTreeModule,
     MatButtonModule,

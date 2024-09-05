@@ -26,6 +26,15 @@
           [nodeInfo]="node.object?.nodeInfo"
         ></app-lang-string-type-filter>
       </div>
+      <div
+      *ngIf="node.object?.nodeInfo?.nodeType == 'characterString-type'"
+      class="flex-container"
+    >
+      <app-character-string-type-filter
+        class="flex-item"
+        [nodeInfo]="node.object?.nodeInfo"
+      ></app-character-string-type-filter>
+    </div>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node

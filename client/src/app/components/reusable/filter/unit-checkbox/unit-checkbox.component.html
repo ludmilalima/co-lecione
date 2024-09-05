@@ -1,0 +1,10 @@
+<div class="flex-container">
+    <mat-form-field class="flex-item">
+      <mat-label>{{ filter.getLastToken(nodeInfo.key) }}</mat-label>
+      <div *ngFor="let item of nodeInfo.optionsList">
+        <mat-checkbox [checked]="isSelected(item)" (change)="onCheckboxChange($event, item)">
+          {{ item }}
+        </mat-checkbox>
+      </div>
+    </mat-form-field>
+  </div>
