@@ -1,12 +1,14 @@
-<div class="flex-container">
-  <mat-form-field class="flex-item">
-    <mat-label>{{ filter.getLastToken(nodeInfo.key) }}</mat-label>
-    <input
-      matInput
-      placeholder="{{ nodeInfo.description }}"
-      [required]="isItRequired(nodeInfo.minOccurs)"
-      (input)="onInputChange($event.target['value'])"
-      [value]="inputValue"
-    />
-  </mat-form-field>
+<div class="field-container">
+  <div class="flex-container">
+    <mat-form-field class="flex-item">
+      <mat-label>{{ filter.getLastToken(object.nodeInfo.key) }}</mat-label>
+      <input
+        matInput
+        placeholder="{{ object.nodeInfo.description }}"
+        [required]="isItRequired(object.nodeInfo.minOccurs)"
+        (input)="onInputChange($event.target['value'])"
+        [value]="inputValue"
+      />
+    </mat-form-field>
+  </div>
 </div>

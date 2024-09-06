@@ -1,9 +1,8 @@
 <ng-container>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Objetos">
-      <div class="container">
-        <app-filter></app-filter>
-      </div>
+      <app-filter></app-filter>
+
       <div *ngFor="let item of objects">
         <div *ngIf="item.type == 'card'">
           <app-cards

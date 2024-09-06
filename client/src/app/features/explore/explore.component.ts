@@ -50,8 +50,5 @@ export class ExploreComponent implements OnInit {
         };
       });
     });
-
-    this.unitSelects.push(new UnitSelect('Select a unit', ['unit1', 'unit2', 'unit3']));
-    this.unitSelects.push(new UnitSelect('Select a fruit', this.obaa.educational.intendedEndUserRole.getValueOptions()));
   }
 }

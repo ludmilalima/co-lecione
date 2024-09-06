@@ -1,29 +1,25 @@
 <div class="field-container">
-  <span>
-    <h4>
-      {{ filter.getLastToken(nodeInfo.key) }}: N character strings in one or
-      more languages, where {{ nodeInfo.minOccurs }} ≥ N ≤
-      {{ nodeInfo.maxOccurs }}.
-    </h4>
-  </span>
+  <h4>
+    {{ filter.getLastToken(object.nodeInfo.key) }}
+  </h4>
 
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
     <div fxFlex>
       <p>
         <app-unit-select
-          [nodeInfo]="languageNode"
+          [object]="languageObj"
           (valueChange)="onLanguageChange($event)"
         ></app-unit-select>
       </p>
       <p>
         <app-simple-text-input
-          [nodeInfo]="contentNode"
+          [object]="contentObj"
           (valueChange)="onContentChange($event)"
         ></app-simple-text-input>
       </p>
     </div>
     <button
-      *ngIf="result.langString.length < nodeInfo.maxOccurs"
+      *ngIf="result.langString.length < object.nodeInfo.maxOccurs"
       type="submit"
       color="primary"
       mat-icon-button
@@ -61,4 +57,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
+
+  <h5 [align]="'end'">
+    N character strings in one or more languages, where
+    {{ object.nodeInfo.minOccurs }} ≥ N ≤ {{ object.nodeInfo.maxOccurs }}.
+  </h5>
 </div>

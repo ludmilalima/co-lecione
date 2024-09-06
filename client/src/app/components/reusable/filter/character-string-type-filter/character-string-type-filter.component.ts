@@ -30,7 +30,8 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './character-string-type-filter.component.scss'
 })
 export class CharacterStringTypeFilterComponent {
-  @Input() nodeInfo: NodeInfo;
+  @Input() object: CharacterStringType;
+  @Input() filterComponent: Array<any>;
 
   @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
@@ -43,22 +44,36 @@ export class CharacterStringTypeFilterComponent {
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.result = new CharacterStringType(this.nodeInfo.minOccurs, this.nodeInfo.maxOccurs);
-    this.dataSource.data = this.result.content;
-  }
-
-  addCharacterString() {
-    this.result.content.push(this.content);
-    this.dataSource.data = [...this.result.content];
-    this.simpleTextInputComponent.reset();
-  }
-
-  removeCharacterString(index: number) {
-    this.result.content.splice(index, 1);
-    this.dataSource.data = [...this.result.content];
+    this.result = this.object;
   }
 
   onContentChange(value: string) {
     this.content = value;
+  }
+
+  addCharacterString() {
+    this.result.content.push(this.content);
+    this.simpleTextInputComponent.reset();
+    this.handleContentChange();
+  }
+
+  removeCharacterString(index: number) {
+    this.result.content.splice(index, 1);
+    this.handleContentChange();
+  }
+
+  handleContentChange() {
+    this.dataSource.data = [...this.result.content];
+    this.handleFilter();
+  }
+
+  handleFilter() {
+    let item = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key);
+    if (item == undefined) {
+      this.filterComponent.push(this.result);
+    }
+    else {
+      this.filterComponent[this.filterComponent.indexOf(item)] = this.result;
+    }
   }
 }

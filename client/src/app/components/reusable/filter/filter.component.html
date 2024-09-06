@@ -1,40 +1,58 @@
-<div class="container">
+<div class="container wrapper">
+  <h2>Filtros</h2>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled title="Button"></button>
 
-      <span *ngIf="node.object?.nodeInfo?.nodeType === 'root'">{{
-        convertString(node.object?.nodeInfo?.nodeType)
-      }}</span>
       <div
-        *ngIf="node.object?.nodeInfo?.nodeType == 'single-select'"
-        class="flex-container"
+        [ngSwitch]="node.object?.nodeInfo?.nodeType"
+        class="flex-container background-container"
       >
-        <app-unit-select
-          class="flex-item"
-          [nodeInfo]="node.object?.nodeInfo"
-        ></app-unit-select>
+        <span *ngSwitchCase="'root'">
+          {{ convertString(node.object?.nodeInfo?.nodeType) }}
+        </span>
+        <div *ngSwitchCase="'single-select'" class="flex-container">
+          <app-unit-select
+            class="flex-item"
+            [object]="node.object"
+            [filterComponent]="filters"
+          ></app-unit-select>
+        </div>
+        <div *ngSwitchCase="'multi-select'" class="flex-container">
+          <app-multiple-select
+            class="flex-item"
+            [object]="node.object"
+            [filterComponent]="filters"
+          ></app-multiple-select>
+        </div>
+        <div *ngSwitchCase="'langString-type'" class="flex-container">
+          <app-lang-string-type-filter
+            class="flex-item"
+            [object]="node.object"
+            [filterComponent]="filters"
+          ></app-lang-string-type-filter>
+        </div>
+        <div *ngSwitchCase="'characterString-type'" class="flex-container">
+          <app-character-string-type-filter
+            class="flex-item"
+            [object]="node.object"
+            [filterComponent]="filters"
+          ></app-character-string-type-filter>
+        </div>
+        <div *ngSwitchCase="'boolean-type'" class="flex-container">
+          <app-boolean-type-filter
+            class="flex-item"
+            [object]="node.object"
+            [filterComponent]="filters"
+          >
+          </app-boolean-type-filter>
+        </div>
+        <div *ngSwitchDefault>
+          <span>{{ convertString(node.object?.nodeInfo?.nodeType) }}</span>
+        </div>
       </div>
-      <div
-        *ngIf="node.object?.nodeInfo?.nodeType == 'langString-type'"
-        class="flex-container"
-      >
-        <app-lang-string-type-filter
-          class="flex-item"
-          [nodeInfo]="node.object?.nodeInfo"
-        ></app-lang-string-type-filter>
-      </div>
-      <div
-      *ngIf="node.object?.nodeInfo?.nodeType == 'characterString-type'"
-      class="flex-container"
-    >
-      <app-character-string-type-filter
-        class="flex-item"
-        [nodeInfo]="node.object?.nodeInfo"
-      ></app-character-string-type-filter>
-    </div>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node
@@ -43,20 +61,33 @@
       matTreeNodeToggle
     >
       <button
-        mat-icon-button
+        class="mat-h3"
+        mat-button
+        extended
         matTreeNodeToggle
         [attr.aria-label]="'Toggle ' + node.name"
       >
         <mat-icon class="mat-icon-rtl-mirror">
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
-      </button>
-      <span>
         {{ convertString(node.name) }}
-        <span *ngIf="node.object?.nodeInfo?.description != undefined"
-          >: {{ node.object?.nodeInfo?.description }}</span
-        >
-      </span>
+      </button>
     </mat-tree-node>
   </mat-tree>
+
+  <!-- <div class="mat-typography">
+    <div class="mat-h1">This is a mat-h1 heading</div>
+    <div class="mat-h2">This is a mat-h2 heading</div>
+    <div class="mat-h3">This is a mat-h3 heading</div>
+    <div class="mat-h4">This is a mat-h4 heading</div>
+    <div class="mat-h5">This is a mat-h5 heading</div>
+    <div class="mat-h6">This is a mat-h6 heading</div>
+    <div class="mat-subtitle1">This is a mat-subtitle1 text</div>
+    <div class="mat-subtitle2">This is a mat-subtitle2 text</div>
+    <div class="mat-body1">This is a mat-body1 text</div>
+    <div class="mat-body2">This is a mat-body2 text</div>
+    <div class="mat-caption">This is a mat-caption text</div>
+    <div class="mat-button">This is a mat-button text</div>
+    <div class="mat-overline">This is a mat-overline text</div>
+  </div> -->
 </div>

@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { IsoLanguageCodeEnum, NodeInfo } from 'src/app/core/models/metadata/util.model';
+import { IsoLanguageCodeEnum, NodeInfo, VocabularyType } from 'src/app/core/models/metadata/util.model';
 import { FilterComponent } from '../filter.component';
 
 @Component({
@@ -21,12 +21,19 @@ import { FilterComponent } from '../filter.component';
 })
 
 
-export class UnitSelectComponent {
-  @Input() nodeInfo: NodeInfo;
+export class UnitSelectComponent implements OnInit {
+  @Input() object: any;
+  @Input() filterComponent: Array<any>;
   @Output() valueChange = new EventEmitter<string>();
 
   filter: FilterComponent = new FilterComponent();
-  selectedValue: string;
+  result: VocabularyType;
+  selectedValue: any;
+
+
+  ngOnInit() {
+    this.result = this.object;
+  }
 
   onSelectionChange(event: any) {
     this.selectedValue = event as string;

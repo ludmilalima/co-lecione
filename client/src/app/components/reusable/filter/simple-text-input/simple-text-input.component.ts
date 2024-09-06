@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './simple-text-input.component.scss'
 })
 export class SimpleTextInputComponent {
-  @Input() nodeInfo: NodeInfo;
+  @Input() object: any;
   @Output() valueChange = new EventEmitter<string>();
 
   filter: FilterComponent = new FilterComponent();

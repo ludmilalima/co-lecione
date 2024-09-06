@@ -1,10 +1,16 @@
-<div class="flex-container">
-  <mat-form-field class="flex-item">
-    <mat-label>{{ filter.getLastToken(nodeInfo.key) }}</mat-label>
-    <mat-select (selectionChange)="onSelectionChange($event.value)" [value]="selectedValue">
-      @for (item of nodeInfo.optionsList; track nodeInfo.optionsList) {
-      <mat-option [value]="item">{{ item }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+<div class="field-container">
+  <div class="flex-container">
+    <mat-form-field class="flex-item">
+      <mat-label>{{ filter.getLastToken(object.nodeInfo.key) }}</mat-label>
+      <mat-select
+        (selectionChange)="onSelectionChange($event.value)"
+        [value]="selectedValue"
+      >
+        @for (item of object.nodeInfo.optionsList; track
+        object.nodeInfo.optionsList) {
+        <mat-option [value]="item">{{ item }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>

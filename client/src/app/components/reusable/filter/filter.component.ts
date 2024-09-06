@@ -10,6 +10,10 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { SimpleTextInputComponent } from './simple-text-input/simple-text-input.component';
 import { IsoLanguageCodeEnum, NodeInfo } from 'src/app/core/models/metadata/util.model';
 import { CharacterStringTypeFilterComponent } from './character-string-type-filter/character-string-type-filter.component';
+import { BooleanTypeFilterComponent } from './boolean-type-filter/boolean-type-filter.component';
+import { DateTimeTypeFilterComponent } from "./date-time-type-filter/date-time-type-filter.component";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 
 interface ObaaNode {
   name: string;
@@ -29,16 +33,20 @@ interface ExampleFlatNode {
   standalone: true,
   imports: [
     CommonModule,
+    MatFormFieldModule,
 
     UnitSelectComponent,
     SimpleTextInputComponent,
     LangStringTypeFilterComponent,
     CharacterStringTypeFilterComponent,
+    BooleanTypeFilterComponent,
+    DateTimeTypeFilterComponent,
+    MultipleSelectComponent,
 
     MatTreeModule,
     MatButtonModule,
     MatIconModule,
-  ],
+],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +55,7 @@ export class FilterComponent {
 
   obaa: Obaa = new Obaa();
   obaaTree: Array<ObaaNode> = [{ name: 'root', children: [], hierarchy: 'root' }];
+  filters: Array<any> = [];
 
   constructor() {
     this.mapNodes(this.obaaTree[0], this.obaa);

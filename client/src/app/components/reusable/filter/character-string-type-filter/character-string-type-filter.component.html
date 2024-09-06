@@ -1,20 +1,18 @@
-<p>character-string-type-filter works!</p>
 <div class="field-container">
   <h4>
-    {{ filter.getLastToken(nodeInfo.key) }}: N character strings, where
-    {{ nodeInfo.minOccurs }} ≥ N ≤ {{ nodeInfo.maxOccurs }}.
+    {{ filter.getLastToken(object.nodeInfo.key) }}
   </h4>
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
     <div fxFlex>
       <p>
         <app-simple-text-input
-          [nodeInfo]="nodeInfo"
+          [object]="object"
           (valueChange)="onContentChange($event)"
         ></app-simple-text-input>
       </p>
     </div>
     <button
-      *ngIf="result.content.length < nodeInfo.maxOccurs"
+      *ngIf="result.content.length < object.nodeInfo.maxOccurs"
       type="submit"
       color="primary"
       mat-icon-button
@@ -48,4 +46,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
+
+  <h5 [align]="'end'">
+    N character strings, where {{ object.nodeInfo.minOccurs }} ≥ N ≤
+    {{ object.nodeInfo.maxOccurs }}.
+  </h5>
 </div>
