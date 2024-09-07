@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FilterComponent } from '../filter.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { ProcessStringService } from '../process-string.service';
 
 @Component({
   selector: 'app-lang-string-type-filter',
@@ -41,7 +42,8 @@ export class LangStringTypeFilterComponent implements OnInit {
   @ViewChild(UnitSelectComponent) unitSelectComponent: UnitSelectComponent;
   @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
-  filter: FilterComponent = new FilterComponent();
+  constructor(public _processStringService: ProcessStringService) { }
+
   result: LangStringType;
 
   content: string;
@@ -71,9 +73,10 @@ export class LangStringTypeFilterComponent implements OnInit {
       this.result.langString = [...oldData];
       this.dataSource.data = [...oldData];
     }
+    this.updateOptionList();
   }
+  
   onLanguageChange(value: any) {
-    console.log(value);
     this.language = value as IsoLanguageCodeEnum;
   }
 
@@ -86,7 +89,6 @@ export class LangStringTypeFilterComponent implements OnInit {
     this.unitSelectComponent.reset();
     this.simpleTextInputComponent.reset();
     this.handleContentChange();
-    console.log(this.result.langString);
   }
 
   removeLangString(index: number) {
@@ -98,12 +100,10 @@ export class LangStringTypeFilterComponent implements OnInit {
     this.dataSource.data = [...this.result.langString];
     this.updateOptionList();
     this.handleFilter();
-
-    console.log(this.dataSource.data);
   }
 
   updateOptionList() {
-    this.object.nodeInfo.optionsList =
+    this.languageObj.nodeInfo.optionsList =
       this.object.nodeInfo.optionsList.filter(item => !this.result.langString.map(x => x.language).includes(item as IsoLanguageCodeEnum));
   }
 

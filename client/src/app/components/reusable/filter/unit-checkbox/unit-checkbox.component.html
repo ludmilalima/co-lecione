@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="flex-item">
-    <mat-checkbox (change)="onCheckboxChange($event)">
-      {{ filter.getLastToken(object.nodeInfo.key) }}
+    <mat-checkbox (change)="onCheckboxChange($event)" [checked]="content">
+      {{ _processStringService.getLastToken(object.nodeInfo.key) }}
     </mat-checkbox>
   </div>
 </div>

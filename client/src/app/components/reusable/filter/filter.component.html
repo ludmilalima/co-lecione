@@ -11,7 +11,7 @@
         class="flex-container background-container"
       >
         <span *ngSwitchCase="'root'">
-          {{ convertString(node.object?.nodeInfo?.nodeType) }}
+          {{ _processStringService.convertString(node.object?.nodeInfo?.nodeType) }}
         </span>
         <div *ngSwitchCase="'single-select'" class="flex-container">
           <app-unit-select
@@ -50,7 +50,7 @@
           </app-boolean-type-filter>
         </div>
         <div *ngSwitchDefault>
-          <span>{{ convertString(node.object?.nodeInfo?.nodeType) }}</span>
+          <span>{{ _processStringService.convertString(node.object?.nodeInfo?.nodeType) }}</span>
         </div>
       </div>
     </mat-tree-node>
@@ -70,7 +70,7 @@
         <mat-icon class="mat-icon-rtl-mirror">
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
-        {{ convertString(node.name) }}
+        {{ _processStringService.convertString(node.name) }}
       </button>
     </mat-tree-node>
   </mat-tree>

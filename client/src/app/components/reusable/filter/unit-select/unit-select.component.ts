@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { IsoLanguageCodeEnum, NodeInfo, VocabularyType } from 'src/app/core/models/metadata/util.model';
-import { FilterComponent } from '../filter.component';
+import { VocabularyType } from 'src/app/core/models/metadata/util.model';
+import { ProcessStringService } from '../process-string.service';
 
 @Component({
   selector: 'app-unit-select',
@@ -26,21 +26,46 @@ export class UnitSelectComponent implements OnInit {
   @Input() filterComponent: Array<any>;
   @Output() valueChange = new EventEmitter<string>();
 
-  filter: FilterComponent = new FilterComponent();
-  result: VocabularyType;
-  selectedValue: any;
+  constructor(public _processStringService: ProcessStringService) { }
 
+  result: VocabularyType;
 
   ngOnInit() {
-    this.result = this.object;
+    this.result = JSON.parse(JSON.stringify(this.object))
+
+    if (this.object.nodeInfo.nodeType == 'single-select') {
+      this.retrieveData();
+    }
   }
 
   onSelectionChange(event: any) {
-    this.selectedValue = event as string;
-    this.valueChange.emit(this.selectedValue);
+    this.result.value = event;
+    this.valueChange.emit(this.result.value);
+
+    if (this.result.nodeInfo.nodeType == 'single-select') {
+      this.handleFilter();
+    }
   }
 
   reset() {
-    this.selectedValue = '';
+    this.result.value = '';
+  }
+
+  retrieveData() {
+    let oldData = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key)?.value;
+
+    if (oldData != undefined) {
+      this.result.value = oldData;
+    }
+  }
+
+  handleFilter() {
+    let item = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key);
+    if (item == undefined) {
+      this.filterComponent.push(this.result);
+    }
+    else {
+      this.filterComponent[this.filterComponent.indexOf(item)] = this.result;
+    }
   }
 }

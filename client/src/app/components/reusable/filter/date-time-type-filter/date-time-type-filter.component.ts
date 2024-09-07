@@ -27,12 +27,10 @@ export class DateTimeTypeFilterComponent implements OnInit {
 
   @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
-  filter: FilterComponent = new FilterComponent();
   result: DateTimeType;
 
   ngOnInit() {
-    this.result = new DateTimeType();
-    this.result.nodeInfo = { ...this.nodeInfo };
+    this.result = JSON.parse(JSON.stringify(this.object));
   }
 
   onInputChange(value: string) {

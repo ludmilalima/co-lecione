@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ProcessStringService } from '../process-string.service';
 
 @Component({
   selector: 'app-character-string-type-filter',
@@ -35,7 +36,8 @@ export class CharacterStringTypeFilterComponent {
 
   @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
-  filter: FilterComponent = new FilterComponent();
+  constructor(public _processStringService: ProcessStringService) { }
+
   result: CharacterStringType;
 
   content: string;
@@ -44,7 +46,8 @@ export class CharacterStringTypeFilterComponent {
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
-    this.result = this.object;
+    this.result = JSON.parse(JSON.stringify(this.object));
+    this.retrieveData();
   }
 
   onContentChange(value: string) {
@@ -65,6 +68,14 @@ export class CharacterStringTypeFilterComponent {
   handleContentChange() {
     this.dataSource.data = [...this.result.content];
     this.handleFilter();
+  }
+
+  retrieveData() {
+    let oldData = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key)?.content;
+    if (oldData != undefined) {
+      this.result.content = [...oldData];
+      this.dataSource.data = [...oldData];
+    }
   }
 
   handleFilter() {

@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { BooleanType, NodeInfo } from 'src/app/core/models/metadata/util.model';
-import { FilterComponent } from '../filter.component';
 import { CommonModule } from '@angular/common';
+import { ProcessStringService } from '../process-string.service';
 
 @Component({
   selector: 'app-unit-checkbox',
@@ -19,11 +18,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './unit-checkbox.component.html',
   styleUrls: ['./unit-checkbox.component.scss']
 })
-export class UnitCheckboxComponent {
+export class UnitCheckboxComponent implements OnInit {
   @Input() object: any;
   @Output() valueChange = new EventEmitter<string[]>();
 
-  filter: FilterComponent = new FilterComponent();
+  content: boolean = false;
+
+  constructor(public _processStringService: ProcessStringService) { }
+
+  ngOnInit() {
+    this.content = this.object.content as boolean;
+  }
 
   onCheckboxChange(event: any) {
     this.valueChange.emit(event);

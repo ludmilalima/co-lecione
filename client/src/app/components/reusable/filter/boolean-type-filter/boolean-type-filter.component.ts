@@ -28,20 +28,24 @@ export class BooleanTypeFilterComponent implements OnInit {
   @Input() object: BooleanType;
   @Input() filterComponent: Array<any>;
 
-  @ViewChild(UnitCheckboxComponent) unitCheckboxComponent: UnitCheckboxComponent;
-
-  filter: FilterComponent = new FilterComponent();
   result: BooleanType;
 
-  content: boolean;
-
   ngOnInit() {
-    this.result = this.object;
+    this.result = JSON.parse(JSON.stringify(this.object));
+    this.retrieveData();
   }
 
   onElementChange(value: string[]) {
     this.result.content = value['checked'] as boolean;
     this.handleFilter();
+  }
+
+  retrieveData() {
+    let oldData = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key)?.content as boolean;
+    if (oldData != undefined) {
+      this.object.content = oldData;
+      this.result.content = oldData;
+    }
   }
 
   handleFilter() {

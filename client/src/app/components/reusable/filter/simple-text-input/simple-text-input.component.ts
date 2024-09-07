@@ -2,9 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NodeInfo } from 'src/app/core/models/metadata/util.model';
-import { FilterComponent } from '../filter.component';
 import { CommonModule } from '@angular/common';
+import { ProcessStringService } from '../process-string.service';
 
 @Component({
   selector: 'app-simple-text-input',
@@ -23,7 +22,8 @@ export class SimpleTextInputComponent {
   @Input() object: any;
   @Output() valueChange = new EventEmitter<string>();
 
-  filter: FilterComponent = new FilterComponent();
+  constructor(public _processStringService: ProcessStringService) { }
+
   inputValue: string = '';
 
   onInputChange(event: any) {
