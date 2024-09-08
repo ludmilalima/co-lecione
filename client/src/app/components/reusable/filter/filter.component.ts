@@ -54,13 +54,12 @@ interface ExampleFlatNode {
 export class FilterComponent {
 
   obaa: Obaa = new Obaa();
-  obaaTree: Array<ObaaNode> = [{ name: 'root', children: [], hierarchy: 'root' }];
+  obaaTree: Array<ObaaNode>;
   filters: Array<any> = [];
 
   constructor(public _processStringService: ProcessStringService) {
     this._processStringService = new ProcessStringService();
-    this.mapNodes(this.obaaTree[0], this.obaa);
-    this.dataSource.data = this.obaaTree;
+    this.initTree();
   }
 
   private _transformer = (node: ObaaNode, level: number) => {
@@ -121,4 +120,16 @@ export class FilterComponent {
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  initTree() {
+    this.obaaTree = [{ name: 'Filtros', children: [], hierarchy: 'root' }];
+    this.mapNodes(this.obaaTree[0], this.obaa);
+    this.dataSource.data = this.obaaTree;
+  }
+
+
+  clearFilters() {
+    this.initTree();
+    this.filters = [];
+  }
 }

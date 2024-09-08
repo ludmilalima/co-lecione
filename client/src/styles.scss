@@ -4,15 +4,18 @@
 html, body, app-root {
   height: 100%;
   margin: 0;
-}
-
-.fill-remaining-space {
-  flex: 1 1 auto;
+  padding: 0;
 }
 
 body {
-  margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.fill-remaining-space {
+  flex: 1 1 auto;
 }
 
 .custom-button {
@@ -35,6 +38,7 @@ body {
 
 .wrapper {
   margin: 8px;
+
 }
 
 .container {

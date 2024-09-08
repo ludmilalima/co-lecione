@@ -1,4 +1,4 @@
-import { CharacterStringType, IdentifierType, IsoLanguageCodeEnum, LanguageType, NodeInfo } from "../util.model";
+import { CharacterStringType, IdentifierType, LanguageType, NodeInfo } from "../util.model";
 import { ContributeMetaMetadata } from "./enums/contribute-meta-metadata.enum";
 
 export class MetaMetadata {
@@ -15,6 +15,5 @@ export class MetaMetadata {
             'General information about the learning object.',
             'root'
         );
-        this.metadataSchema.content.push("LOMv1.0");
     }
 }

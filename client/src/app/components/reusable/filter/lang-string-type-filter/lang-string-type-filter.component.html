@@ -3,7 +3,12 @@
     {{ _processStringService.getLastToken(object.nodeInfo.key) }}
   </h4>
 
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="10px"
+    *ngIf="result.langString.length < result.nodeInfo.maxOccurs"
+  >
     <div fxFlex>
       <p>
         <app-unit-select

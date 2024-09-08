@@ -2,7 +2,12 @@
   <h4>
     {{ _processStringService.getLastToken(object.nodeInfo.key) }}
   </h4>
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="10px"
+    *ngIf="result.content.length < result.nodeInfo.maxOccurs"
+  >
     <div fxFlex>
       <p>
         <app-simple-text-input

@@ -1,5 +1,4 @@
 <div class="container wrapper">
-  <h2>Filtros</h2>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
@@ -11,7 +10,9 @@
         class="flex-container background-container"
       >
         <span *ngSwitchCase="'root'">
-          {{ _processStringService.convertString(node.object?.nodeInfo?.nodeType) }}
+          {{
+            _processStringService.convertString(node.object?.nodeInfo?.nodeType)
+          }}
         </span>
         <div *ngSwitchCase="'single-select'" class="flex-container">
           <app-unit-select
@@ -50,7 +51,9 @@
           </app-boolean-type-filter>
         </div>
         <div *ngSwitchDefault>
-          <span>{{ _processStringService.convertString(node.object?.nodeInfo?.nodeType) }}</span>
+          <span>{{
+            _processStringService.convertString(node.object?.nodeInfo?.nodeType)
+          }}</span>
         </div>
       </div>
     </mat-tree-node>
@@ -75,19 +78,8 @@
     </mat-tree-node>
   </mat-tree>
 
-  <!-- <div class="mat-typography">
-    <div class="mat-h1">This is a mat-h1 heading</div>
-    <div class="mat-h2">This is a mat-h2 heading</div>
-    <div class="mat-h3">This is a mat-h3 heading</div>
-    <div class="mat-h4">This is a mat-h4 heading</div>
-    <div class="mat-h5">This is a mat-h5 heading</div>
-    <div class="mat-h6">This is a mat-h6 heading</div>
-    <div class="mat-subtitle1">This is a mat-subtitle1 text</div>
-    <div class="mat-subtitle2">This is a mat-subtitle2 text</div>
-    <div class="mat-body1">This is a mat-body1 text</div>
-    <div class="mat-body2">This is a mat-body2 text</div>
-    <div class="mat-caption">This is a mat-caption text</div>
-    <div class="mat-button">This is a mat-button text</div>
-    <div class="mat-overline">This is a mat-overline text</div>
-  </div> -->
+  <div class="button-container" [align]="'end'">
+    <button mat-button (click)="clearFilters()">Limpar</button>
+    <button mat-button color="primary">Buscar</button>
+  </div>
 </div>
