@@ -594,7 +594,7 @@ export class CardExample {
         headerImageSrc: 'https://files.secure.website/wscfus/10567870/25715020/happy-golden-w1200-o.jpg',
         title: 'Este será o título do card!',
         subtitle: 'Este será o subtítulo do card.',
-        content: JSON.stringify(this.contentCard),
+        content: this.contentCard,
         actionTitle: 'Saiba mais!',
         actionLink: 'https://www.google.com'
     };

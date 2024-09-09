@@ -67,9 +67,23 @@ objectRouter.use(express.json());
  *       500:
  *         description: Error message.
  * /objects/search-any:
- *   get:
+ *   post:
  *     summary: Search objects with any metadata
  *     tags: [Objects]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 key:
+ *                   type: string
+ *                 value:
+ *                   type: string
+ *             description: An array of metadata objects
  *     responses:
  *       200:
  *         description: An array of object objects.
@@ -283,7 +297,7 @@ objectRouter.get('/search-all', async (req, res) => {
     }
 });
 
-objectRouter.get('/search-any', async (req, res) => {
+objectRouter.post('/search-any', async (req, res) => {
     try {
         const metadata = req.body;
 
@@ -292,7 +306,7 @@ objectRouter.get('/search-any', async (req, res) => {
         }
 
         const objects = await ObjectModel.find({
-            $or: metadata.map((item: { key: string, value: string }) => ({
+            $or: metadata.map((item) => ({
                 metadata: { $elemMatch: { key: item.key, value: item.value } }
             }))
         });

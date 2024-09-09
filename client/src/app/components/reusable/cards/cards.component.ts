@@ -26,7 +26,7 @@ export class CardsComponent implements OnInit, OnChanges, OnDestroy {
     @Input() headerImageSrc?: string;
     @Input() title?: string;
     @Input() subtitle?: string;
-    @Input() content?: string;
+    @Input() content?: Object;
     @Input() actionTitle?: string;
     @Input() actionLink?: string;
 
@@ -44,7 +44,7 @@ export class CardsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.form.get('editorContent').setValue(JSON.parse(this.content));
+        this.form.get('editorContent').setValue(this.content);
     }
 
     ngOnChanges(changes: SimpleChanges) {

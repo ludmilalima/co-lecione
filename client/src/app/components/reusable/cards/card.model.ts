@@ -3,7 +3,7 @@ export class Card {
     headerImageSrc?: string;
     title?: string;
     subtitle?: string;
-    content?: string;
+    content?: Object;
     actionTitle?: string;
     actionLink?: string;
 

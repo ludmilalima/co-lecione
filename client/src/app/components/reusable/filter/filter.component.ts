@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { UnitSelectComponent } from './unit-select/unit-select.component';
 import { CommonModule } from '@angular/common';
 import { Obaa } from 'src/app/core/models/metadata/obaa.model';
@@ -14,6 +14,11 @@ import { DateTimeTypeFilterComponent } from "./date-time-type-filter/date-time-t
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { ProcessStringService } from './process-string.service';
+import { ProcessMetadataService } from './process-metadata.service';
+import { ObjectsService } from 'src/app/features/create/objects/objects.service';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { CustomTypeFilterComponent } from './custom-type-filter/custom-type-filter.component';
+import { delay, Observable } from 'rxjs';
 
 interface ObaaNode {
   name: string;
@@ -42,6 +47,7 @@ interface ExampleFlatNode {
     BooleanTypeFilterComponent,
     DateTimeTypeFilterComponent,
     MultipleSelectComponent,
+    CustomTypeFilterComponent,
 
     MatTreeModule,
     MatButtonModule,
@@ -52,15 +58,17 @@ interface ExampleFlatNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
+  @Output() objectsChanged = new EventEmitter<any[]>();
+  clearFiltersEvent = new EventEmitter<boolean>();
 
   obaa: Obaa = new Obaa();
   obaaTree: Array<ObaaNode>;
   filters: Array<any> = [];
 
-  constructor(public _processStringService: ProcessStringService) {
-    this._processStringService = new ProcessStringService();
-    this.initTree();
-  }
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level,
+    node => node.expandable,
+  );
 
   private _transformer = (node: ObaaNode, level: number) => {
     return {
@@ -71,19 +79,24 @@ export class FilterComponent {
     };
   };
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level,
-    node => node.expandable,
-  );
-
   treeFlattener = new MatTreeFlattener(
     this._transformer,
     node => node.level,
     node => node.expandable,
     node => node.children,
   );
-
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  constructor(
+    public _processStringService: ProcessStringService,
+    private _processMetadataService: ProcessMetadataService,
+    private _objectsService: ObjectsService,
+    public _notificationsService: NotificationsService
+  ) {
+    this._processStringService = new ProcessStringService();
+
+    this.initTree();
+  }
 
   mapNodes(root: ObaaNode, item: Object) {
     for (const key in item) {
@@ -127,9 +140,33 @@ export class FilterComponent {
     this.dataSource.data = this.obaaTree;
   }
 
-
   clearFilters() {
     this.initTree();
     this.filters = [];
+    this.emitClearFilters().subscribe(() => {
+      this.clearFiltersEvent.emit(false);
+    });
+  }
+
+  emitClearFilters(): Observable<any> {
+    this.clearFiltersEvent.emit(true);
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next();
+        observer.complete();
+      }, 100);
+    });
+  }
+
+  search() {
+    if (this.filters.length == 0) {
+      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.');
+    }
+    else {
+      let filters = this._processMetadataService.buildFiltersList(this.filters);
+      this._objectsService.filterAny(filters).subscribe(data => {
+        this.objectsChanged.emit(data);
+      });
+    }
   }
 }

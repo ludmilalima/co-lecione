@@ -54,4 +54,28 @@ export class ObjectsService {
       throw error;
     }));
   }
+
+  filterAny(filters: any): Observable<any> {
+    return from(
+      fetch(`${this.baseUrl}/objects/search-any`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(filters)
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.message || 'Failed to get objects');
+            });
+          }
+          return response.json();
+        })
+        .catch(error => {
+          this.handleError(error);
+          throw error;
+        })
+    );
+  }
 }

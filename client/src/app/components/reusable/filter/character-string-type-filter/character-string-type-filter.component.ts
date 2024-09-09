@@ -48,11 +48,6 @@ export class CharacterStringTypeFilterComponent {
   ngOnInit() {
     this.result = JSON.parse(JSON.stringify(this.object));
     this.retrieveData();
-
-    console.log(this.object.nodeInfo.key);
-    if(this.object.nodeInfo.key.includes('metadataSchema')){
-      console.log(this.object);
-    }
   }
 
   onContentChange(value: string) {
