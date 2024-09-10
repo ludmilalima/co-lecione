@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Objects } from './objects.model';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,11 @@ export class ObjectsService {
 
   baseUrl = environment.baseUrl;
 
-  constructor() { }
+  constructor(private _notificationsService: NotificationsService) { }
 
   private handleError(error: any): Observable<never> {
-    console.error('UserService error: ', error);
+    this._notificationsService.error('ObjectService error:', error['message']);
+    console.error('ObjectService error: ', error);
     return throwError(() => error.error);
   }
 
