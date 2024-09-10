@@ -1,14 +1,13 @@
 <ng-container>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Objetos">
-      <app-filter 
-      #filter
-      [filters]="filters"
-      ></app-filter>
+      <div class="container wrapper">
+        <app-filter #filter [filters]="filters"></app-filter>
 
-      <div class="button-container" [align]="'end'">
-        <button mat-button (click)="clearFilters()">Limpar</button>
-        <button mat-button (click)="search()" color="primary">Buscar</button>
+        <div class="button-container" [align]="'end'">
+          <button mat-button (click)="clearFilters()">Limpar</button>
+          <button mat-button (click)="search()" color="primary">Buscar</button>
+        </div>
       </div>
 
       <div *ngFor="let item of objects">

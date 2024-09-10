@@ -16,12 +16,11 @@
       </mat-step>
 
       <mat-step>
-        <form [formGroup]="metadataForm" (ngSubmit)="addMetadata()">
-          <ng-template matStepLabel
-            >Formulário de criação dos metadados</ng-template
-          >
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <div fxFlex>
+        <ng-template matStepLabel
+          >Formulário de criação dos metadados</ng-template
+        >
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <!-- <div fxFlex>
               <p>
                 <mat-form-field appearance="outline">
                   <mat-label>Chave</mat-label>
@@ -43,13 +42,14 @@
               #addMetadataButton
             >
               <mat-icon>add</mat-icon>
-            </button>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button type="button" mat-button matStepperPrevious>Voltar</button>
-            <button type="button" mat-button matStepperNext>Próximo</button>
-          </div>
-        </form>
+            </button> -->
+
+          <app-metadata-form fxFlex [filters]="filters"></app-metadata-form>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <button type="button" mat-button matStepperPrevious>Voltar</button>
+          <button type="button" mat-button matStepperNext>Próximo</button>
+        </div>
       </mat-step>
 
       <mat-step>

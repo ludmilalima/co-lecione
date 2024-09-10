@@ -45,5 +45,4 @@ export class FilterComponent {
       }, 100);
     });
   }
-
 }

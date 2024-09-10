@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +19,8 @@ import { QuestionComponent } from 'src/app/components/reusable/question/question
 import { Question } from 'src/app/components/reusable/question/question.model';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
+import { MetadataFormComponent } from '../../metadata-form/metadata-form.component';
+import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
 
 @Component({
   selector: 'app-create-object',
@@ -28,6 +30,15 @@ import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new
   imports: [
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+
+    NewQuestionComponent,
+    NewCardComponent,
+    QuestionComponent,
+    CardsComponent,
+    MetadataFormComponent,
+
     MatCardModule,
     MatButtonModule,
     MatStepperModule,
@@ -35,21 +46,18 @@ import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new
     MatInputModule,
     MatIconModule,
     MatTableModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
-    NewQuestionComponent,
-    NewCardComponent,
-    QuestionComponent,
-    CardsComponent
   ]
 })
 
-export class CreateObjectComponent {
+export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('metadataTable', { static: false }) metadataTable: any;
   @ViewChild('addMetadataButton', { static: false }) addMetadataButton: any;
 
   @Input() objectType: string;
   @Output() objectTypeChange: EventEmitter<string> = new EventEmitter<string>();
+
+  filters: Array<any> = [];
+  private filtersDiffer: any;
 
   editor: Editor;
   editorContent: Subscription;
@@ -65,17 +73,15 @@ export class CreateObjectComponent {
   objForm: FormGroup;
   question: Question;
 
-  metadataForm: FormGroup = new FormGroup({
-    chave: new FormControl(''),
-    valor: new FormControl('')
-  },);
-
   constructor(
     private _objectsService: ObjectsService,
     private _formService: SharedFormService,
+    private _processMetadataService: ProcessMetadataService,
+    private differs: KeyValueDiffers
   ) {
     this.editor = new Editor();
     this.metadataTable = new MatTableModule();
+    this.filtersDiffer = this.differs.find(this.filters).create();
   }
 
   ngOnInit(): void {
@@ -85,22 +91,27 @@ export class CreateObjectComponent {
 
     this._formService.formChanged.subscribe(isFilled => {
       if (isFilled) {
-        if(!this.touchedForm){
+        if (!this.touchedForm) {
           this.touchedForm = true;
         }
       }
     });
 
-    addEventListener('change', () => {
-      if (this.metadataForm.valid) {
-        this.addMetadataButton.disabled = false;
-      } else {
-        this.addMetadataButton.disabled = true;
-      }
-    });
+    // addEventListener('change', () => {
+    //   if (this.metadataForm.valid) {
+    //     this.addMetadataButton.disabled = false;
+    //   } else {
+    //     this.addMetadataButton.disabled = true;
+    //   }
+    // });
   }
 
-  ngAfterViewInit(): void {
+  ngDoCheck(): void {
+    let filtersCopy = JSON.parse(JSON.stringify(this.filters));
+    const filterChanges = this.filtersDiffer.diff(filtersCopy);
+    if (filterChanges) {
+      this.updateMetadata();
+    }
   }
 
   ngOnDestroy(): void {
@@ -110,17 +121,21 @@ export class CreateObjectComponent {
     }
   }
 
-  addMetadata(): void {
-    if (this.metadataForm.valid) {
-      this.metadata.push({
-        key: this.metadataForm.value.chave,
-        value: this.metadataForm.value.valor
-      });
-      this.metadataForm.reset();
-      if (this.metadataTable) {
-        this.metadataTable.renderRows();
-      }
-    }
+  // addMetadata(): void {
+  //   if (this.metadataForm.valid) {
+  //     this.metadata.push({
+  //       key: this.metadataForm.value.chave,
+  //       value: this.metadataForm.value.valor
+  //     });
+  //     this.metadataForm.reset();
+  //     if (this.metadataTable) {
+  //       this.metadataTable.renderRows();
+  //     }
+  //   }
+  // }
+
+  updateMetadata(): void {
+    this.metadata = this._processMetadataService.buildFiltersList(this.filters);
   }
 
   submit(): void {
