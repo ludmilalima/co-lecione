@@ -1,0 +1,78 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled title="Button"></button>
+
+    <div
+      [ngSwitch]="node.object?.nodeInfo?.nodeType"
+      class="flex-container background-container"
+    >
+      <span *ngSwitchCase="'root'">
+        {{
+          _processStringService.convertString(node.object?.nodeInfo?.nodeType)
+        }}
+      </span>
+      <div *ngSwitchCase="'single-select'" class="flex-container">
+        <app-unit-select
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-unit-select>
+      </div>
+      <div *ngSwitchCase="'multi-select'" class="flex-container">
+        <app-multiple-select
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-multiple-select>
+      </div>
+      <div *ngSwitchCase="'langString-type'" class="flex-container">
+        <app-lang-string-type-filter
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-lang-string-type-filter>
+      </div>
+      <div *ngSwitchCase="'characterString-type'" class="flex-container">
+        <app-character-string-type-filter
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-character-string-type-filter>
+      </div>
+      <div *ngSwitchCase="'boolean-type'" class="flex-container">
+        <app-boolean-type-filter
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        >
+        </app-boolean-type-filter>
+      </div>
+      <div *ngSwitchDefault>
+        <span>{{
+          _processStringService.convertString(node.object?.nodeInfo?.nodeType)
+        }}</span>
+      </div>
+    </div>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node
+    *matTreeNodeDef="let node; when: hasChild"
+    matTreeNodePadding
+    matTreeNodeToggle
+  >
+    <button
+      class="mat-h3"
+      mat-button
+      extended
+      matTreeNodeToggle
+      [attr.aria-label]="'Toggle ' + node.name"
+    >
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+      </mat-icon>
+      {{ _processStringService.convertString(node.name) }}
+    </button>
+  </mat-tree-node>
+</mat-tree>

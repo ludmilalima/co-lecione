@@ -1,25 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { UnitSelectComponent } from './unit-select/unit-select.component';
-import { CommonModule } from '@angular/common';
-import { Obaa } from 'src/app/core/models/metadata/obaa.model';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from '@angular/material/tree';
-import { LangStringTypeFilterComponent } from './lang-string-type-filter/lang-string-type-filter.component';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { SimpleTextInputComponent } from './simple-text-input/simple-text-input.component';
-import { CharacterStringTypeFilterComponent } from './character-string-type-filter/character-string-type-filter.component';
-import { BooleanTypeFilterComponent } from './boolean-type-filter/boolean-type-filter.component';
-import { DateTimeTypeFilterComponent } from "./date-time-type-filter/date-time-type-filter.component";
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { MatTreeFlattener, MatTreeFlatDataSource, MatTreeModule } from '@angular/material/tree';
+import { Obaa } from 'src/app/core/models/metadata/obaa.model';
+import { ProcessMetadataService } from '../process-metadata.service';
+import { ProcessStringService } from '../process-string.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
-import { ProcessStringService } from './process-string.service';
-import { ProcessMetadataService } from './process-metadata.service';
-import { ObjectsService } from 'src/app/features/create/objects/objects.service';
-import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
-import { CustomTypeFilterComponent } from './custom-type-filter/custom-type-filter.component';
-import { Observable } from 'rxjs';
-import { StandardFormComponent } from './standard-form/standard-form.component';
+import { MatIconModule } from '@angular/material/icon';
+import { BooleanTypeFilterComponent } from '../boolean-type-filter/boolean-type-filter.component';
+import { CharacterStringTypeFilterComponent } from '../character-string-type-filter/character-string-type-filter.component';
+import { LangStringTypeFilterComponent } from '../lang-string-type-filter/lang-string-type-filter.component';
+import { MultipleSelectComponent } from '../multiple-select/multiple-select.component';
+import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
+import { UnitSelectComponent } from '../unit-select/unit-select.component';
 
 interface ObaaNode {
   name: string;
@@ -35,29 +29,32 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: 'app-filter',
+  selector: 'app-standard-form',
   standalone: true,
   imports: [
     CommonModule,
     MatFormFieldModule,
 
-    StandardFormComponent,
-    CustomTypeFilterComponent,
+    UnitSelectComponent,
+    SimpleTextInputComponent,
+    LangStringTypeFilterComponent,
+    CharacterStringTypeFilterComponent,
+    BooleanTypeFilterComponent,
+    MultipleSelectComponent,
 
+    MatTreeModule,
     MatButtonModule,
     MatIconModule,
   ],
-  templateUrl: './filter.component.html',
-  styleUrl: './filter.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './standard-form.component.html',
+  styleUrl: './standard-form.component.scss'
 })
-export class FilterComponent {
-  @Output() objectsChanged = new EventEmitter<any[]>();
-  clearFiltersEvent = new EventEmitter<boolean>();
+export class StandardFormComponent {
+  @Input() filters: Array<any>;
+  @Input() clearFilters: boolean;
 
   obaa: Obaa = new Obaa();
   obaaTree: Array<ObaaNode>;
-  filters: Array<any> = [];
 
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level,
@@ -84,8 +81,6 @@ export class FilterComponent {
   constructor(
     public _processStringService: ProcessStringService,
     private _processMetadataService: ProcessMetadataService,
-    private _objectsService: ObjectsService,
-    public _notificationsService: NotificationsService
   ) {
     this._processStringService = new ProcessStringService();
 
@@ -134,40 +129,13 @@ export class FilterComponent {
     this.dataSource.data = this.obaaTree;
   }
 
-  clearFilters() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['clearFilters'] && changes['clearFilters'].currentValue) {
+      this.clearFilter();
+    }
+  }
+
+  clearFilter() {
     this.initTree();
-    this.filters = [];
-    this.emitClearFilters().subscribe(() => {
-      this.clearFiltersEvent.emit(false);
-      this.getAllObjects();
-    });
-  }
-
-  emitClearFilters(): Observable<any> {
-    this.clearFiltersEvent.emit(true);
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next();
-        observer.complete();
-      }, 100);
-    });
-  }
-
-  search() {
-    if (this.filters.length == 0) {
-      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.');
-    }
-    else {
-      let filters = this._processMetadataService.buildFiltersList(this.filters);
-      this._objectsService.filterAny(filters).subscribe(data => {
-        this.objectsChanged.emit(data);
-      });
-    }
-  }
-
-  getAllObjects() {
-    this._objectsService.getAllObjects().subscribe(data => {
-      this.objectsChanged.emit(data);
-    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NodeInfo } from 'src/app/core/models/metadata/util.model';
 import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './custom-type-filter.component.html',
   styleUrl: './custom-type-filter.component.scss'
 })
-export class CustomTypeFilterComponent {
+export class CustomTypeFilterComponent implements OnInit, OnChanges {
   @Input() filterComponent: Array<any>;
   @Input() clearFilters: boolean;
 
