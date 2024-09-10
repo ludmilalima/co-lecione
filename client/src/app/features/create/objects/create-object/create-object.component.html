@@ -20,30 +20,6 @@
           >Formulário de criação dos metadados</ng-template
         >
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <!-- <div fxFlex>
-              <p>
-                <mat-form-field appearance="outline">
-                  <mat-label>Chave</mat-label>
-                  <input matInput placeholder="Chave" formControlName="chave" />
-                </mat-form-field>
-              </p>
-              <p>
-                <mat-form-field appearance="outline">
-                  <mat-label>Valor</mat-label>
-                  <input matInput placeholder="Valor" formControlName="valor" />
-                </mat-form-field>
-              </p>
-            </div>
-            <button
-              type="submit"
-              color="primary"
-              mat-icon-button
-              aria-label="Adicionar par chave/valor"
-              #addMetadataButton
-            >
-              <mat-icon>add</mat-icon>
-            </button> -->
-
           <app-metadata-form fxFlex [filters]="filters"></app-metadata-form>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -103,7 +79,8 @@
       >
       </app-cards>
     </ng-container>
-    <ng-container *ngIf="metadata.length > 0">
+    <br>
+    <div *ngIf="metadata.length > 0">
       <h3>Metadados associados:</h3>
       <table mat-table [dataSource]="metadata" #metadataTable>
         <!-- Coluna Chave -->
@@ -121,6 +98,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-    </ng-container>
+    </div>
   </div>
 </div>

@@ -21,6 +21,7 @@ import { CardsComponent } from 'src/app/components/reusable/cards/cards.componen
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { MetadataFormComponent } from '../../metadata-form/metadata-form.component';
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-create-object',
@@ -96,14 +97,6 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
         }
       }
     });
-
-    // addEventListener('change', () => {
-    //   if (this.metadataForm.valid) {
-    //     this.addMetadataButton.disabled = false;
-    //   } else {
-    //     this.addMetadataButton.disabled = true;
-    //   }
-    // });
   }
 
   ngDoCheck(): void {
@@ -120,19 +113,6 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
       this.editorContent.unsubscribe();
     }
   }
-
-  // addMetadata(): void {
-  //   if (this.metadataForm.valid) {
-  //     this.metadata.push({
-  //       key: this.metadataForm.value.chave,
-  //       value: this.metadataForm.value.valor
-  //     });
-  //     this.metadataForm.reset();
-  //     if (this.metadataTable) {
-  //       this.metadataTable.renderRows();
-  //     }
-  //   }
-  // }
 
   updateMetadata(): void {
     this.metadata = this._processMetadataService.buildFiltersList(this.filters);
