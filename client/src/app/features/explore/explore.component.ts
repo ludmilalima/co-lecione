@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
 import { ObjectsService } from '../create/objects/objects.service';
 import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.service';
 import { FilterComponent } from 'src/app/components/reusable/filter/filter.component';
+import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-explore',
@@ -14,19 +17,27 @@ import { FilterComponent } from 'src/app/components/reusable/filter/filter.compo
   standalone: true,
   imports: [
     CommonModule,
-    MatTabsModule,
+
     CardsComponent,
     QuestionComponent,
     FilterComponent,
+
+    MatTabsModule,
+    MatButtonModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExploreComponent implements OnInit {
+  @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
+
   objects: Array<any> = [];
+  filters: Array<any> = [];
 
   constructor(
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
+    private _processMetadataService: ProcessMetadataService,
+    public _notificationsService: NotificationsService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
 
@@ -52,9 +63,30 @@ export class ExploreComponent implements OnInit {
     });
   }
 
-  onObjectsChanged(objects: any[]): void {
-    this.processObjects(objects);
-    this.changeDetectorRef.detectChanges();
+  search() {
+    if (this.filters.length == 0) {
+      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.');
+    }
+    else {
+      let filters = this._processMetadataService.buildFiltersList(this.filters);
+      this._objectsService.filterAny(filters).subscribe(data => {
+        this.objects = data;
+        this.processObjects(this.objects);
+        this.changeDetectorRef.detectChanges();
+      });
+    }
+  }
+
+  clearFilters() {
+    this.filter.clearFilters();
+    this.getAllObjects();
+  }
+
+  getAllObjects() {
+    this._objectsService.getAllObjects().subscribe(data => {
+      this.objects = data;
+      this.processObjects(this.objects);
+    });
   }
 
   processObjects(objectsList: Array<any>): void {

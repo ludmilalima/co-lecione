@@ -1,7 +1,15 @@
 <ng-container>
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Objetos">
-      <app-filter (objectsChanged)="onObjectsChanged($event)"></app-filter>
+      <app-filter 
+      #filter
+      [filters]="filters"
+      ></app-filter>
+
+      <div class="button-container" [align]="'end'">
+        <button mat-button (click)="clearFilters()">Limpar</button>
+        <button mat-button (click)="search()" color="primary">Buscar</button>
+      </div>
 
       <div *ngFor="let item of objects">
         <div *ngIf="item.type == 'card'">
