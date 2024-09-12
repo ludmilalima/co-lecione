@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
-import { PlanFormComponent } from '../plan-form/plan-form.component';
+import { ObjectsSelectionComponent } from '../objects-selection/objects-selection.component';
 
 @Component({
   selector: 'app-create-itinerary',
@@ -16,15 +16,18 @@ import { PlanFormComponent } from '../plan-form/plan-form.component';
   imports: [
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+
+    ObjectsSelectionComponent,
+    
+
     MatButtonModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatTableModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
-    PlanFormComponent
   ],
   templateUrl: './create-itinerary.component.html',
   styleUrls: ['./create-itinerary.component.scss']

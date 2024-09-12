@@ -1,0 +1,57 @@
+<table
+  mat-table
+  #table
+  [dataSource]="dataSource"
+  class="full-width-table"
+>
+  <!-- Reorder Column -->
+  <ng-container matColumnDef="position">
+    <mat-header-cell *matHeaderCellDef class="fixed-width"> </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="fixed-width">
+      <mat-chip-set>
+        <mat-chip>{{ element.position }}</mat-chip>
+      </mat-chip-set>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Object Column -->
+  <ng-container matColumnDef="object">
+    <mat-header-cell *matHeaderCellDef class="flex-fill">
+      Roteiro em andamento
+    </mat-header-cell>
+    <mat-cell *matCellDef="let item" class="flex-fill">
+      <div *ngIf="item.type == 'card'">
+        <app-cards
+          class="object-container wrapper"
+          [avatarSrc]="item.content.avatarSrc"
+          [headerImageSrc]="item.content.headerImageSrc"
+          [title]="item.content.title"
+          [subtitle]="item.content.subtitle"
+          [content]="item.content.content"
+          [actionTitle]="item.content.actionTitle"
+          [actionLink]="item.content.actionLink"
+        >
+        </app-cards>
+      </div>
+      <div *ngIf="item.type == 'question'">
+        <question
+          class="object-container wrapper"
+          [topic]="item.content.topic"
+          [note]="item.content.note"
+          [figureSrc]="item.content.figureSrc"
+          [statement]="item.content.statement"
+          [alternatives]="item.content.alternatives"
+          [discursive]="item.content.discursive"
+        >
+        </question>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    cdkDrag
+    [cdkDragData]="row"
+  ></mat-row>
+</table>

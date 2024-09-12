@@ -1,0 +1,66 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center stretch">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Filtros disponíveis </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        class="container"
+        fxLayout="column"
+        fxLayoutAlign="start stretch"
+        fxFlex="100"
+      >
+        <app-filter #filter [filters]="filters" fxFlex="100"></app-filter>
+        <div class="button-container" fxLayoutAlign="end center" fxFlex="100">
+          <button mat-button (click)="clearFilters()">Limpar</button>
+          <button mat-button (click)="search()" color="primary">Buscar</button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Seleção dos objetos </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        class="container scrollable"
+        fxLayout="column"
+        fxLayoutAlign="start stretch"
+        fxFlex="100"
+      >
+        <app-selection-table
+          [objects]="objects"
+          [selectedObjects]="selectedObjects"
+        ></app-selection-table>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Ordenação dos objetos no roteiro </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        class="container scrollable"
+        fxLayout="column"
+        fxLayoutAlign="start stretch"
+        fxFlex="100"
+      >
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start stretch"
+          fxFlex="100"
+          fxLayoutGap="8px"
+        >
+          <div class="container scrollable" fxFlex="20">
+            <app-sortable-table
+              [selectedObjects]="selectedObjects"
+            ></app-sortable-table>
+          </div>
+          <div class="container scrollable" fxFlex="100">
+            <app-itinerary-table
+              [selectedObjects]="selectedObjects"
+            ></app-itinerary-table>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

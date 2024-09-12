@@ -7,12 +7,8 @@
   <div fxFlex class="container">
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
-        <ng-template matStepLabel
-          >Formulário de criação do plano de aprendizagem</ng-template
-        >
-        <div class="container">
-          <app-plan-form></app-plan-form>
-        </div>
+        <ng-template matStepLabel>Etapa de seleção dos objetos</ng-template>
+        <app-objects-selection></app-objects-selection>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
@@ -23,45 +19,11 @@
           <ng-template matStepLabel
             >Formulário de criação dos metadados associados</ng-template
           >
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-            <div fxFlex>
-              <p>
-                <mat-form-field appearance="outline">
-                  <mat-label>Chave</mat-label>
-                  <input matInput placeholder="Chave" formControlName="chave" />
-                </mat-form-field>
-              </p>
-              <p>
-                <mat-form-field appearance="outline">
-                  <mat-label>Valor</mat-label>
-                  <input matInput placeholder="Valor" formControlName="valor" />
-                </mat-form-field>
-              </p>
-            </div>
-            <button
-              type="submit"
-              color="primary"
-              mat-icon-button
-              aria-label="Adicionar par chave/valor"
-              #addMetadataButton
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <button type="button" mat-button matStepperPrevious>Voltar</button>
             <button type="button" mat-button matStepperNext>Próximo</button>
           </div>
         </form>
-      </mat-step>
-
-      <mat-step>
-        <ng-template matStepLabel>Etapa de seleção dos objetos</ng-template>
-
-        <div fxLayout="row" fxLayoutAlign="space-between center">
-          <button type="button" mat-button matStepperPrevious>Voltar</button>
-          <button type="button" mat-button matStepperNext>Próximo</button>
-        </div>
       </mat-step>
 
       <mat-step>

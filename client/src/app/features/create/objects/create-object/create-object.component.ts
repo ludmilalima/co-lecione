@@ -21,7 +21,6 @@ import { CardsComponent } from 'src/app/components/reusable/cards/cards.componen
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { MetadataFormComponent } from '../../metadata-form/metadata-form.component';
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
-import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-create-object',

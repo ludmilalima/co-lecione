@@ -1,0 +1,53 @@
+<table mat-table [dataSource]="objects">
+  <!-- Button Column -->
+  <ng-container matColumnDef="add">
+    <th mat-header-cell *matHeaderCellDef class="center-align">Incluir</th>
+    <td mat-cell *matCellDef="let row" class="center-align">
+      <button
+        color="primary"
+        mat-icon-button
+        (click)="addObject(row)"
+        [disabled]="isSelected(row)"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Object Column -->
+  <ng-container matColumnDef="object">
+    <th mat-header-cell *matHeaderCellDef class="center-align">
+      Objetos encontrados
+    </th>
+    <td mat-cell *matCellDef="let item" class="center-align">
+      <div *ngIf="item.type == 'card'">
+        <app-cards
+          class="object-container wrapper"
+          [avatarSrc]="item.content.avatarSrc"
+          [headerImageSrc]="item.content.headerImageSrc"
+          [title]="item.content.title"
+          [subtitle]="item.content.subtitle"
+          [content]="item.content.content"
+          [actionTitle]="item.content.actionTitle"
+          [actionLink]="item.content.actionLink"
+        >
+        </app-cards>
+      </div>
+      <div *ngIf="item.type == 'question'">
+        <question
+          class="object-container wrapper"
+          [topic]="item.content.topic"
+          [note]="item.content.note"
+          [figureSrc]="item.content.figureSrc"
+          [statement]="item.content.statement"
+          [alternatives]="item.content.alternatives"
+          [discursive]="item.content.discursive"
+        >
+        </question>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
