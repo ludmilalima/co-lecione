@@ -34,12 +34,10 @@ export class DateTimeTypeFilterComponent implements OnInit {
   }
 
   onInputChange(value: string) {
-    console.log(value);
     //this.result.dateTime = value;
   }
 
   onLanguageChange(value: LangStringType) {
-    console.log(value);
     //this.result.description = value;
   }
 }

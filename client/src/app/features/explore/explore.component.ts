@@ -45,6 +45,7 @@ export class ExploreComponent implements OnInit {
     this._objectsService.getAllObjects().subscribe(response => {
       this.objects = response.map((object: any) => {
         return {
+          id: object._id,
           type: object.type,
           content: object.content.reduce((acc: any, curr: any) => {
             return {
@@ -92,6 +93,7 @@ export class ExploreComponent implements OnInit {
   processObjects(objectsList: Array<any>): void {
     this.objects = objectsList.map((object: any) => {
       return {
+        id: object._id,
         type: object.type,
         content: object.content.reduce((acc: any, curr: any) => {
           return {

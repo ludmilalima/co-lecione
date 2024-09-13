@@ -39,6 +39,6 @@ export class SelectionTableComponent {
   }
 
   isSelected(row: any): boolean {
-    return this.selectedObjects.includes(row);
+    return this.selectedObjects.find((object: any) => object.id === row.id) !== undefined;
   }
 }

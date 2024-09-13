@@ -52,10 +52,7 @@ export class SortableTableComponent {
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    console.log(event);
-    console.log(event.item.data);
     const previousIndex = this.dataSource.data.findIndex(d => d === event.item.data);
-    console.log(previousIndex);
     moveItemInArray(this.dataSource.data, previousIndex, event.currentIndex);
     this.table.renderRows();
   }
