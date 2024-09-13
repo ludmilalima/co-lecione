@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,10 +14,11 @@ import { Editor, NgxEditorModule, Toolbar, Validators } from 'ngx-editor';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
     ReactiveFormsModule,
     NgxEditorModule,
+
+    MatCardModule,
+    MatButtonModule,
     MatRadioModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

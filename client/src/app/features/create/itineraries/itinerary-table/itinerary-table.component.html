@@ -1,9 +1,4 @@
-<table
-  mat-table
-  #table
-  [dataSource]="dataSource"
-  class="full-width-table"
->
+<table mat-table #table [dataSource]="dataSource">
   <!-- Reorder Column -->
   <ng-container matColumnDef="position">
     <mat-header-cell *matHeaderCellDef class="fixed-width"> </mat-header-cell>
@@ -17,12 +12,12 @@
   <!-- Object Column -->
   <ng-container matColumnDef="object">
     <mat-header-cell *matHeaderCellDef class="flex-fill">
-      Roteiro em andamento
+      Resultado
     </mat-header-cell>
     <mat-cell *matCellDef="let item" class="flex-fill">
-      <div *ngIf="item.type == 'card'">
+      <div *ngIf="item.type == 'card'" class="flex-fill">
         <app-cards
-          class="object-container wrapper"
+          class="wrapper"
           [avatarSrc]="item.content.avatarSrc"
           [headerImageSrc]="item.content.headerImageSrc"
           [title]="item.content.title"
@@ -33,9 +28,9 @@
         >
         </app-cards>
       </div>
-      <div *ngIf="item.type == 'question'">
+      <div *ngIf="item.type == 'question'" class="flex-fill">
         <question
-          class="object-container wrapper"
+          class="wrapper"
           [topic]="item.content.topic"
           [note]="item.content.note"
           [figureSrc]="item.content.figureSrc"
@@ -49,9 +44,5 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: displayedColumns"
-    cdkDrag
-    [cdkDragData]="row"
-  ></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </table>

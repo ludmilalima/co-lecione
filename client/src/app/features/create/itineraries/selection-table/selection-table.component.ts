@@ -1,8 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
@@ -42,5 +41,4 @@ export class SelectionTableComponent {
   isSelected(row: any): boolean {
     return this.selectedObjects.includes(row);
   }
-
 }

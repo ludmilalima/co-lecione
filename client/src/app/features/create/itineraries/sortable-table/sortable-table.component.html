@@ -21,7 +21,7 @@
 
   <!-- Object Column -->
   <ng-container matColumnDef="position">
-    <mat-header-cell *matHeaderCellDef class="fixed-width"> </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef class="fixed-width">Ordenar</mat-header-cell>
     <mat-cell *matCellDef="let item" class="fixed-width">
       <mat-chip-set>
         <mat-chip>{{ item.position }}</mat-chip>
@@ -40,7 +40,5 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: displayedColumns"
-  ></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </table>

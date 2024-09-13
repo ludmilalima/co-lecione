@@ -13,14 +13,14 @@ import { MatChipsModule } from '@angular/material/chips';
   standalone: true,
   imports: [
     CommonModule,
+
     CardsComponent,
     QuestionComponent,
+
     MatChipsModule,
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    CdkDropList,
-    CdkDrag,
   ],
   templateUrl: './itinerary-table.component.html',
   styleUrl: './itinerary-table.component.scss'

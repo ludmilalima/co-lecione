@@ -2,7 +2,7 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title> Filtros disponíveis </mat-panel-title>
+        <mat-panel-title> Filtrar </mat-panel-title>
       </mat-expansion-panel-header>
       <div
         class="container"
@@ -19,7 +19,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title> Seleção dos objetos </mat-panel-title>
+        <mat-panel-title> Selecionar </mat-panel-title>
       </mat-expansion-panel-header>
       <div
         class="container scrollable"
@@ -33,29 +33,34 @@
         ></app-selection-table>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel *ngIf="selectedObjects.length > 0">
       <mat-expansion-panel-header>
-        <mat-panel-title> Ordenação dos objetos no roteiro </mat-panel-title>
+        <mat-panel-title> Organizar </mat-panel-title>
       </mat-expansion-panel-header>
-      <div
-        class="container scrollable"
-        fxLayout="column"
-        fxLayoutAlign="start stretch"
-        fxFlex="100"
-      >
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100">
         <div
           fxLayout="row"
           fxLayoutAlign="start stretch"
           fxFlex="100"
-          fxLayoutGap="8px"
+          fxLayoutGap="4px"
         >
-          <div class="container scrollable" fxFlex="20">
+          <div
+            class="container scrollable"
+            fxLayoutAlign="start stretch"
+            fxFlex="174px"
+          >
             <app-sortable-table
+              fxFlex="156px"
               [selectedObjects]="selectedObjects"
             ></app-sortable-table>
           </div>
-          <div class="container scrollable" fxFlex="100">
+          <div
+            class="container scrollable"
+            fxLayoutAlign="start stretch"
+            fxFlex
+          >
             <app-itinerary-table
+              fxFlex
               [selectedObjects]="selectedObjects"
             ></app-itinerary-table>
           </div>
