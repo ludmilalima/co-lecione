@@ -1,0 +1,15 @@
+<div class="container">
+  <app-filter #filter [filters]="metadata"></app-filter>
+
+  <div class="button-container" [align]="'end'">
+    <button mat-button (click)="clearFilters()">Limpar</button>
+    <button
+      *ngIf="buttonAction != undefined"
+      mat-button
+      (click)="buttonAction.action()"
+      color="primary"
+    >
+      {{ buttonAction.label }}
+    </button>
+  </div>
+</div>

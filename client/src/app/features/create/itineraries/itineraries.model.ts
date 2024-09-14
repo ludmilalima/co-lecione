@@ -1,20 +1,15 @@
-export class Objects {
-    type: string;
-    content: Array<{ key: string, value: string }>;
+export class Itineraries {
+    content: Array<{ position: number, objectId: number }>;
     metadata: Array<{ key: string, value: string }>;
 
     constructor(
-        type: string,
-        content: Array<{ key: string, value: string }>,
+        content: Array<{ position: number, objectId: number }>,
         metadata: Array<{ key: string, value: string }>) {
-        if (!type) {
-            throw new Error('É obrigatória a especificação do tipo do objeto.');
-        }
         content.forEach(item => {
-            if (!item.key) {
+            if (!item.position) {
                 throw new Error('É obrigatório o preenchimento da chave do conteúdo.');
             }
-            if (!item.value) {
+            if (!item.objectId) {
                 throw new Error('É obrigatório o preenchimento do valor do conteúdo.');
             }
         });
@@ -26,7 +21,6 @@ export class Objects {
                 throw new Error('É obrigatório o preenchimento do valor do metadado.');
             }
         });
-        this.type = type;
         this.content = content;
         this.metadata = metadata;
     }

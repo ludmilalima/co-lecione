@@ -1,45 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FilterComponent } from 'src/app/components/reusable/filter/filter.component';
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.service';
-import { ObjectsService } from '../../objects/objects.service';
-import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
+import { ObjectsService } from '../../create/objects/objects.service';
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
-import { SelectionTableComponent } from '../selection-table/selection-table.component';
-import { ItineraryTableComponent } from '../itinerary-table/itinerary-table.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { SortableTableComponent } from '../sortable-table/sortable-table.component';
+import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-objects-selection',
+  selector: 'app-objects',
   standalone: true,
   imports: [
     CommonModule,
     FlexLayoutModule,
 
     FilterComponent,
-    CardsComponent,
     QuestionComponent,
-    SelectionTableComponent,
-    SortableTableComponent,
-    ItineraryTableComponent,
+    CardsComponent,
 
     MatButtonModule,
-    MatExpansionModule
   ],
-  templateUrl: './objects-selection.component.html',
-  styleUrl: './objects-selection.component.scss'
+  templateUrl: './objects.component.html',
+  styleUrl: './objects.component.scss'
 })
-export class ObjectsSelectionComponent implements OnInit {
-  @Input() selectedObjects: Array<any> = [];
+export class ObjectsComponent implements OnInit {
   @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
 
-  filters: Array<any> = [];
   objects: Array<any> = [];
+  filters: Array<any> = [];
 
   constructor(
     private _objectsService: ObjectsService,

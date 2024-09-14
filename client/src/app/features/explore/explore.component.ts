@@ -9,6 +9,9 @@ import { FilterComponent } from 'src/app/components/reusable/filter/filter.compo
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { MatButtonModule } from '@angular/material/button';
+import { ItinerariesComponent } from './itineraries/itineraries.component';
+import { ObjectsComponent } from './objects/objects.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-explore',
@@ -17,97 +20,16 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [
     CommonModule,
+    FlexLayoutModule,
 
-    CardsComponent,
-    QuestionComponent,
-    FilterComponent,
+    ItinerariesComponent,
+    ObjectsComponent,
 
     MatTabsModule,
     MatButtonModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExploreComponent implements OnInit {
-  @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
+export class ExploreComponent {
 
-  objects: Array<any> = [];
-  filters: Array<any> = [];
-
-  constructor(
-    private _objectsService: ObjectsService,
-    private _convertByType: ConvertByTypeService,
-    private _processMetadataService: ProcessMetadataService,
-    public _notificationsService: NotificationsService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) { }
-
-  ngOnInit(): void {
-    this._objectsService.getAllObjects().subscribe(response => {
-      this.objects = response.map((object: any) => {
-        return {
-          id: object._id,
-          type: object.type,
-          content: object.content.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: this._convertByType.convertType(curr.value),
-            };
-          }, {}),
-          metadata: object.metadata.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: curr.value,
-            };
-          }, {}),
-        };
-      });
-    });
-  }
-
-  search() {
-    if (this.filters.length == 0) {
-      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.');
-    }
-    else {
-      let filters = this._processMetadataService.buildFiltersList(this.filters);
-      this._objectsService.filterAny(filters).subscribe(data => {
-        this.objects = data;
-        this.processObjects(this.objects);
-        this.changeDetectorRef.detectChanges();
-      });
-    }
-  }
-
-  clearFilters() {
-    this.filter.clearFilters();
-    this.getAllObjects();
-  }
-
-  getAllObjects() {
-    this._objectsService.getAllObjects().subscribe(data => {
-      this.objects = data;
-      this.processObjects(this.objects);
-    });
-  }
-
-  processObjects(objectsList: Array<any>): void {
-    this.objects = objectsList.map((object: any) => {
-      return {
-        id: object._id,
-        type: object.type,
-        content: object.content.reduce((acc: any, curr: any) => {
-          return {
-            ...acc,
-            [curr.key]: this._convertByType.convertType(curr.value),
-          };
-        }, {}),
-        metadata: object.metadata.reduce((acc: any, curr: any) => {
-          return {
-            ...acc,
-            [curr.key]: curr.value,
-          };
-        }, {}),
-      };
-    });
-  }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -25,7 +25,8 @@ import { QuestionComponent } from 'src/app/components/reusable/question/question
   styleUrl: './metadata-form.component.scss'
 })
 export class MetadataFormComponent {
-  @Input() filters: Array<any>
+  @Input() metadata: Array<any>;
+  @Input() buttonAction: { label: string, action: Function };
 
   @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
 

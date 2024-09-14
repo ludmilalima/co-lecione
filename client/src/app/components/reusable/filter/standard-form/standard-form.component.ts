@@ -124,7 +124,7 @@ export class StandardFormComponent {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   initTree() {
-    this.obaaTree = [{ name: 'Filtros', children: [], hierarchy: 'root' }];
+    this.obaaTree = [{ name: 'Metadados', children: [], hierarchy: 'root' }];
     this.mapNodes(this.obaaTree[0], this.obaa);
     this.dataSource.data = this.obaaTree;
   }

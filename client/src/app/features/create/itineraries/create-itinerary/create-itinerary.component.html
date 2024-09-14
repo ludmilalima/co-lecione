@@ -7,23 +7,26 @@
   <div fxFlex class="container">
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
-        <ng-template matStepLabel>Etapa de seleção dos objetos</ng-template>
-        <app-objects-selection></app-objects-selection>
+        <ng-template matStepLabel>Elaboração do roteiro</ng-template>
+        <app-objects-selection
+          [selectedObjects]="selectedObjects"
+          #objectsSelection
+        ></app-objects-selection>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
 
       <mat-step>
-        <form [formGroup]="metadataForm" (ngSubmit)="addMetadata()">
-          <ng-template matStepLabel
-            >Formulário de criação dos metadados associados</ng-template
-          >
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <button type="button" mat-button matStepperPrevious>Voltar</button>
-            <button type="button" mat-button matStepperNext>Próximo</button>
-          </div>
-        </form>
+        <ng-template matStepLabel>Associação de metadados</ng-template>
+        <app-metadata-form
+          [metadata]="metadata"
+          #metadataForm
+        ></app-metadata-form>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <button type="button" mat-button matStepperPrevious>Voltar</button>
+          <button type="button" mat-button matStepperNext>Próximo</button>
+        </div>
       </mat-step>
 
       <mat-step>
@@ -42,6 +45,7 @@
               color="primary"
               type="submit"
               (click)="submit()"
+              [disabled]="!isValid()"
             >
               Salvar
             </button>

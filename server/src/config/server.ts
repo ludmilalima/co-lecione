@@ -68,7 +68,7 @@ connectToDatabase()
     app.use("/users", userRouter);
     app.use("/table-contents", tablesRouter);
     app.use("/objects", objectRouter);
-    app.use("/learning-plans", learningPlanRouter);
+    app.use("/itineraries", learningPlanRouter);
 
 
     // start the Express server
