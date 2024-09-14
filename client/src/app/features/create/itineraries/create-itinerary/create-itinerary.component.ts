@@ -77,6 +77,8 @@ export class CreateItineraryComponent {
         this._notificationsService.error('Erro!', 'Erro ao criar itinerário.');
       },
       complete: () => {
+        this.selectedObjects = [];
+        this.metadata = [];
         this.objectsSelection.clearFilters();
         this.metadataForm.clearFilters();
       }

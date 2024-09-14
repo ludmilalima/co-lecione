@@ -17,10 +17,12 @@ import { CollapseAccordionOnClickDirective } from 'src/app/shared/directives/col
   standalone: true,
   imports: [
     CommonModule,
-    MatExpansionModule,
-    MatButtonModule,
+
     CardsComponent,
     QuestionComponent,
+
+    MatExpansionModule,
+    MatButtonModule,
     CollapseAccordionOnClickDirective
   ],
 })
@@ -32,7 +34,9 @@ export class AvailableObjectsComponent {
   question: Question = new QuestionExample().newQuestion;
 
   setObjectType(type: string): void {
-    this.newObjectType = type;
-    this.objectTypeChange.emit(this.newObjectType);
+    if (this.newObjectType != type) {
+      this.newObjectType = type;
+      this.objectTypeChange.emit(this.newObjectType);
+    }
   }
 }

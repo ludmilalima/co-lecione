@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
-import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
 import { AvailableObjectsComponent } from '../available-objects/available-objects.component';
 import { CreateObjectComponent } from '../create-object/create-object.component';
 
@@ -21,27 +20,4 @@ import { CreateObjectComponent } from '../create-object/create-object.component'
     CreateObjectComponent
   ]
 })
-export class CreateObjectTabComponent {
-  newObjectType: string = null;
-
-  constructor(private _confirmationDialogService: ConfirmationDialogService) { }
-
-  ngOnInit(): void {
-  }
-
-  handleObjectTypeChange(newType: string): void {
-    if (this.newObjectType) {
-      this._confirmationDialogService.openDialog(
-        'Tem certeza que gostaria de descartar o objeto atual?',
-        () => this.changeObjectType(newType),
-        () => { }
-      );
-    } else {
-      this.changeObjectType(newType);
-    }
-  }
-
-  changeObjectType(newType: string | null): void {
-    this.newObjectType = newType;
-  }
-}
+export class CreateObjectTabComponent {}

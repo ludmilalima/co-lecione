@@ -21,6 +21,9 @@ import { CardsComponent } from 'src/app/components/reusable/cards/cards.componen
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { MetadataFormComponent } from '../../../../components/reusable/metadata-form/metadata-form.component';
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
+import { AvailableObjectsComponent } from '../available-objects/available-objects.component';
+import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 @Component({
   selector: 'app-create-object',
@@ -33,6 +36,7 @@ import { ProcessMetadataService } from 'src/app/components/reusable/filter/proce
     FlexLayoutModule,
     ReactiveFormsModule,
 
+    AvailableObjectsComponent,
     NewQuestionComponent,
     NewCardComponent,
     QuestionComponent,
@@ -51,10 +55,11 @@ import { ProcessMetadataService } from 'src/app/components/reusable/filter/proce
 
 export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
   @ViewChild('metadataTable', { static: false }) metadataTable: any;
-  @ViewChild('addMetadataButton', { static: false }) addMetadataButton: any;
+  @ViewChild('metadataForm') metadataForm: MetadataFormComponent;
 
-  @Input() objectType: string;
   @Output() objectTypeChange: EventEmitter<string> = new EventEmitter<string>();
+
+  objectType: string = null;
 
   filters: Array<any> = [];
   private filtersDiffer: any;
@@ -74,9 +79,11 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
   question: Question;
 
   constructor(
+    private _confirmationDialogService: ConfirmationDialogService,
     private _objectsService: ObjectsService,
     private _formService: SharedFormService,
     private _processMetadataService: ProcessMetadataService,
+    private _notificationsService: NotificationsService,
     private differs: KeyValueDiffers
   ) {
     this.editor = new Editor();
@@ -117,6 +124,22 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
     this.metadata = this._processMetadataService.buildFiltersList(this.filters);
   }
 
+  handleObjectTypeChange(newType: string): void {
+    if (this.objectType != null && this.objectType != newType) {
+      this._confirmationDialogService.openDialog(
+        'Tem certeza que gostaria de descartar o objeto atual?',
+        () => this.changeObjectType(newType),
+        () => { }
+      );
+    } else {
+      this.changeObjectType(newType);
+    }
+  }
+
+  changeObjectType(newType: string | null): void {
+    this.objectType = newType;
+  }
+
   submit(): void {
     for (const key in this.objForm.controls) {
       if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
@@ -129,19 +152,52 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
       }
     }
 
-    if (this.newObject.length > 0 && this.metadata.length > 0) {
+    const observer = {
+      next: (response: any) => {
+        this._notificationsService.success('Sucesso!', 'Objeto criado com sucesso.');
+      },
+      error: (error: any) => {
+        this._notificationsService.error('Erro!', 'Erro ao criar objeto.');
+      },
+      complete: () => {
+        this.objForm.reset();
+        this.metadata = [];
+        this.newObject = [];
+        this.objectTypeChange.emit(null);
+        this.objectType = null;
+        this.metadataForm.clearFilters();
+      }
+    };
+
+    if (this.checkMandatoryObject() && this.checkMandatoryMetadata()) {
+
       var obj = new Objects(
         this.objectType,
         this.newObject,
         this.metadata
       );
-      (this._objectsService.createObject(obj)).subscribe(response => {
-      });
-      this.objForm.reset();
-      this.metadata = [];
-      this.touchedForm = false;
+
+      this._objectsService.createObject(obj).subscribe(observer);
     }
-    this.newObject = [];
-    this.objectTypeChange.emit(null);
+  }
+
+  checkMandatoryObject(): boolean {
+    if (this.newObject.length < 1) {
+      this._notificationsService.error('Erro!', 'O objeto deve conter ao menos um campo preenchido.');
+      return false;
+    }
+    return true;
+  }
+
+  checkMandatoryMetadata(): boolean {
+    if (this.metadata.length < 1) {
+      this._notificationsService.error('Erro!', 'O objeto deve ter metadados associados.');
+      return false;
+    }
+    return true;
+  }
+
+  isValid(): boolean {
+    return (this.metadata.length > 0) && this.objForm != undefined && this.objForm.controls != undefined;
   }
 }

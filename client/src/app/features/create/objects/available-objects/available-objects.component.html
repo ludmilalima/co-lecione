@@ -18,7 +18,12 @@
     >
     </app-cards>
     <mat-action-row>
-      <button mat-button color="warn" (click)="setObjectType('card')" [appCollapseAccordionOnClick]="accordion">
+      <button
+        mat-button
+        color="warn"
+        (click)="setObjectType('card')"
+        [appCollapseAccordionOnClick]="accordion"
+      >
         Criar
       </button>
     </mat-action-row>
@@ -43,35 +48,21 @@
     >
     </question>
     <mat-action-row>
-      <button mat-button color="warn" (click)="setObjectType('question')" [appCollapseAccordionOnClick]="accordion">
+      <button
+        mat-button
+        color="warn"
+        (click)="setObjectType('question')"
+        [appCollapseAccordionOnClick]="accordion"
+      >
         Criar
       </button>
     </mat-action-row>
   </mat-expansion-panel>
-
-  <!-- table -->
-  <!-- <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title> Tabela </mat-panel-title>
-        <mat-panel-description> Completar...</mat-panel-description>
-      </mat-expansion-panel-header>
-      <custom-table
-        *ngIf="employees != undefined"
-        [tableData]="employees"
-        [tableColumns]="tableColumns"
-        [isFilterable]="true"
-        [isPageable]="true"
-        [paginationSizes]="[2, 4, 6]"
-        [defaultPageSize]="4"
-        (sort)="sortData($event)"
-        [rowActionIcon]="'remove_shopping_cart'"
-        (rowAction)="removeOrder($event)"
-      >
-      </custom-table>
-      <mat-action-row>
-        <button mat-button color="warn" (click)="setObjectType('table')">
-          Criar
-        </button>
-      </mat-action-row>
-    </mat-expansion-panel> -->
 </mat-accordion>
+<br />
+<div *ngIf="newObjectType != undefined" [align]="'center'">
+  <h3>
+    Tipo de objeto selecionado:
+    <b>{{ newObjectType }}</b>
+  </h3>
+</div>

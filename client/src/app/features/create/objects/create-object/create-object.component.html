@@ -4,21 +4,37 @@
   fxLayout.lt-md="column"
   fxLayoutGap="8px"
 >
-  <div fxFlex class="container">
+  <div fxFlex class="container wrapper">
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
       <mat-step>
-        <ng-template matStepLabel>Formulário de criação do objeto</ng-template>
-        <app-new-question *ngIf="objectType == 'question'"></app-new-question>
-        <app-new-card *ngIf="objectType == 'card'"></app-new-card>
+        <ng-template matStepLabel>Escolher o tipo do objeto</ng-template>
+        <div class="container">
+          <app-available-objects
+            (objectTypeChange)="handleObjectTypeChange($event)"
+          ></app-available-objects>
+        </div>
         <div fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-button matStepperNext>Próximo</button>
         </div>
       </mat-step>
 
       <mat-step>
-        <ng-template matStepLabel
-          >Formulário de criação dos metadados</ng-template
-        >
+        <ng-template matStepLabel>Preencher o conteúdo do objeto</ng-template>
+        <div class="container" *ngIf="objectType != undefined">
+          <app-new-question *ngIf="objectType == 'question'"></app-new-question>
+          <app-new-card *ngIf="objectType == 'card'"></app-new-card>
+        </div>
+        <div *ngIf="objectType == undefined">
+          <h3>Para iniciar, selecione um tipo de objeto na etapa anterior.</h3>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <button type="button" mat-button matStepperPrevious>Voltar</button>
+          <button type="button" mat-button matStepperNext>Próximo</button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Associar metadados ao objeto</ng-template>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
           <app-metadata-form fxFlex [metadata]="filters"></app-metadata-form>
         </div>
@@ -30,7 +46,7 @@
 
       <mat-step>
         <form>
-          <ng-template matStepLabel>Revisar e salvar</ng-template>
+          <ng-template matStepLabel>Revisar e salvar o objeto</ng-template>
           <p>
             Verifique se o objeto criado e os metadados associados atendem aos
             requisitos.
@@ -44,6 +60,7 @@
               color="primary"
               type="submit"
               (click)="submit()"
+              [disabled]="!isValid()"
             >
               Salvar
             </button>
@@ -79,7 +96,7 @@
       >
       </app-cards>
     </ng-container>
-    <br>
+    <br />
     <div *ngIf="metadata.length > 0">
       <h3>Metadados associados:</h3>
       <table mat-table [dataSource]="metadata" #metadataTable>

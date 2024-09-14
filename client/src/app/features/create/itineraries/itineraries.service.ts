@@ -14,8 +14,8 @@ export class ItinerariesService {
   constructor(private _notificationsService: NotificationsService) { }
 
   private handleError(error: any): Observable<never> {
-    this._notificationsService.error('ObjectService error:', error['message']);
-    console.error('ObjectService error: ', error);
+    this._notificationsService.error('ItinerariesService error:', error['message']);
+    console.error('ItinerariesService error: ', error);
     return throwError(() => error.error);
   }
 
@@ -47,7 +47,7 @@ export class ItinerariesService {
     }).then(response => {
       if (!response.ok) {
         this.handleError(response);
-        throw new Error('Failed to get objects');
+        throw new Error('Failed to get itineraries');
       }
       return response.json();
     }).catch(error => {
