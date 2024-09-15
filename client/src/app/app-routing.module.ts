@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateComponent } from './features/create/create.component';
 import { ExploreComponent } from './features/explore/explore.component';
-import { ResumeComponent } from './features/resume/resume.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/explorar', pathMatch: 'full'},
