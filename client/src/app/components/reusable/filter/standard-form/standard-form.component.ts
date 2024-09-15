@@ -14,6 +14,7 @@ import { LangStringTypeFilterComponent } from '../lang-string-type-filter/lang-s
 import { MultipleSelectComponent } from '../multiple-select/multiple-select.component';
 import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
 import { UnitSelectComponent } from '../unit-select/unit-select.component';
+import { GenericContainerComponent } from '../generic-container/generic-container.component';
 
 interface ObaaNode {
   name: string;
@@ -39,6 +40,7 @@ interface ExampleFlatNode {
     SimpleTextInputComponent,
     LangStringTypeFilterComponent,
     CharacterStringTypeFilterComponent,
+    GenericContainerComponent,
     BooleanTypeFilterComponent,
     MultipleSelectComponent,
 

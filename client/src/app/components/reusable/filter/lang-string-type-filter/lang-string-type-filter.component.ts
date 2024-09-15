@@ -61,7 +61,7 @@ export class LangStringTypeFilterComponent implements OnInit {
     this.languageObj = JSON.parse(JSON.stringify(this.object));
     this.languageObj.nodeInfo.key = 'Language';
 
-    this.result = JSON.parse(JSON.stringify(this.object));;
+    this.result = JSON.parse(JSON.stringify(this.object));
 
     this.retrieveData();
   }
@@ -74,7 +74,7 @@ export class LangStringTypeFilterComponent implements OnInit {
     }
     this.updateOptionList();
   }
-  
+
   onLanguageChange(value: any) {
     this.language = value as IsoLanguageCodeEnum;
   }
@@ -91,12 +91,19 @@ export class LangStringTypeFilterComponent implements OnInit {
   }
 
   removeLangString(index: number) {
-    this.result.langString.splice(index, 1);
+    let item = this.dataSource.data[index];
+    this.dataSource.data.splice(index, 1);
+    if (this.result.langString.includes(item)) {
+      this.result.langString.splice(this.result.langString.indexOf(item), 1);
+    }
     this.handleContentChange();
   }
 
   handleContentChange() {
-    this.dataSource.data = [...this.result.langString];
+    let content = this.result.langString
+      .filter(item => !this.dataSource.data
+        .some(dataItem => dataItem.content === item.content && dataItem.language === item.language));
+    this.dataSource.data = [...this.dataSource.data, ...content];
     this.updateOptionList();
     this.handleFilter();
   }
@@ -107,12 +114,20 @@ export class LangStringTypeFilterComponent implements OnInit {
   }
 
   handleFilter() {
-    let item = this.filterComponent.find(item => item.nodeInfo.key === this.object.nodeInfo.key);
-    if (item == undefined) {
+    let objectsFound = this.filterComponent.filter(item => item.nodeInfo.key === this.object.nodeInfo.key);
+    if (objectsFound.length === 0) {
       this.filterComponent.push(this.result);
     }
     else {
-      this.filterComponent[this.filterComponent.indexOf(item)] = this.result;
+      let objectIncluded = objectsFound.includes(this.result);
+      if (!objectIncluded) {
+        this.filterComponent.push(this.result);
+      }
     }
+  }
+
+  handleIndex() {
+    this.result.langString = [];
+    this.updateOptionList();
   }
 }

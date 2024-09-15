@@ -28,18 +28,28 @@
         ></app-multiple-select>
       </div>
       <div *ngSwitchCase="'langString-type'" class="flex-container">
-        <app-lang-string-type-filter
+        <app-generic-container
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-lang-string-type-filter>
+        ></app-generic-container>
+        <!-- <app-lang-string-type-filter
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-lang-string-type-filter> -->
       </div>
       <div *ngSwitchCase="'characterString-type'" class="flex-container">
-        <app-character-string-type-filter
+        <app-generic-container
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-character-string-type-filter>
+        ></app-generic-container>
+        <!-- <app-character-string-type-filter
+          class="flex-item"
+          [object]="node.object"
+          [filterComponent]="filters"
+        ></app-character-string-type-filter> -->
       </div>
       <div *ngSwitchCase="'boolean-type'" class="flex-container">
         <app-boolean-type-filter

@@ -1,0 +1,39 @@
+<div class="field-container">
+  <h4>
+    {{ _processStringService.getLastToken(object.nodeInfo.key) }}
+  </h4>
+
+  <div [ngSwitch]="object?.nodeInfo?.nodeType" class="container">
+    <div *ngSwitchCase="'langString-type'" class="flex-container">
+      <app-lang-string-type-filter
+        class="flex-item"
+        [object]="localObject"
+        [filterComponent]="localFilterComponent"
+        #langStringFilter
+      ></app-lang-string-type-filter>
+    </div>
+    <div *ngSwitchCase="'characterString-type'" class="flex-container">
+      <app-character-string-type-filter
+        class="flex-item"
+        [object]="object"
+        [filterComponent]="filterComponent"
+        #characterStringFilter
+      ></app-character-string-type-filter>
+    </div>
+  </div>
+
+  <div [align]="'end'">
+    <button
+      mat-button
+      (click)="handleIndex()"
+      *ngIf="index < object.nodeInfo.maxOccurs"
+      color="primary"
+    >
+      Adicionar nova sentença
+    </button>
+  </div>
+  <h5 [align]="'end'">
+    {{ description }}, onde {{ object.nodeInfo.minOccurs }} ≥ N ≤
+    {{ object.nodeInfo.maxOccurs }}.
+  </h5>
+</div>
