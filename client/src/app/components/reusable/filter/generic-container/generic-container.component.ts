@@ -1,20 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ProcessStringService } from '../process-string.service';
 import { LangStringTypeFilterComponent } from '../lang-string-type-filter/lang-string-type-filter.component';
 import { CharacterStringTypeFilterComponent } from '../character-string-type-filter/character-string-type-filter.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-generic-container',
   standalone: true,
   imports: [
     CommonModule,
+    FlexLayoutModule,
 
     LangStringTypeFilterComponent,
     CharacterStringTypeFilterComponent,
 
     MatButtonModule,
+    MatBadgeModule,
   ],
   templateUrl: './generic-container.component.html',
   styleUrl: './generic-container.component.scss'
@@ -24,7 +28,6 @@ export class GenericContainerComponent implements OnInit {
   @Input() filterComponent: Array<any>;
 
   @ViewChild('langStringFilter') langStringFilter: LangStringTypeFilterComponent;
-  @ViewChild('characterStringFilter') characterStringFilter: CharacterStringTypeFilterComponent;
 
   localObject: any;
   localFilterComponent: Array<any>;
@@ -42,10 +45,7 @@ export class GenericContainerComponent implements OnInit {
 
     switch (this.object.nodeInfo.nodeType) {
       case "langString-type":
-        this.description = "N entradas que podem ser traduzidas em até 10 idiomas diferentes";
-        break;
-      case "characterString-type":
-        this.description = "Insert the content of the string.";
+        this.description = "N possíveis entradas que podem ser traduzidas em até 10 idiomas diferentes";
         break;
       default:
         console.log(this.object.nodeInfo.type);
@@ -58,9 +58,6 @@ export class GenericContainerComponent implements OnInit {
       switch (this.object.nodeInfo.nodeType) {
         case "langString-type":
           this.langStringFilter.handleIndex();
-          break;
-        case "characterString-type":
-          // this.characterStringTypeFilterComponent.handleIndex();
           break;
         default:
           console.log(this.object.nodeInfo.type);
