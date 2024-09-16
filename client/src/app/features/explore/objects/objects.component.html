@@ -10,7 +10,7 @@
   <div *ngFor="let item of objects">
     <div *ngIf="item.type == 'card'">
       <app-cards
-        class="object-container"
+        class="object-container wrapper"
         [avatarSrc]="item.content.avatarSrc"
         [headerImageSrc]="item.content.headerImageSrc"
         [title]="item.content.title"
@@ -23,7 +23,7 @@
     </div>
     <div *ngIf="item.type == 'question'">
       <question
-        class="object-container"
+        class="object-container wrapper"
         [topic]="item.content.topic"
         [note]="item.content.note"
         [figureSrc]="item.content.figureSrc"

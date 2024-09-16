@@ -36,12 +36,10 @@ export class ItinerariesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this._itinerariesService.getAllItineraries().subscribe(response => {
-        console.log(response);
-        response.map((itinerary: any) => {
-          console.log(itinerary);
-        });
+    this._itinerariesService.getAllItineraries().subscribe(response => {
+      response.map((itinerary: any) => {
       });
+    });
   }
 
   search() {

@@ -41,7 +41,7 @@
         </mat-radio-button>
       </mat-radio-group>
 
-      <form [formGroup]="formAnswer" *ngIf="discursive" fxFlex="none">
+      <form [formGroup]="formAnswer" *ngIf="discursive === 'true'" fxFlex="none">
         <div class="editor" fxFlexFill>
           <ngx-editor-menu [editor]="_editorAnswer" [toolbar]="toolbarAnswer">
           </ngx-editor-menu>

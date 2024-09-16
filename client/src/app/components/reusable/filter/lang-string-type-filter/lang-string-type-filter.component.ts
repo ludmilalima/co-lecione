@@ -118,15 +118,10 @@ export class LangStringTypeFilterComponent implements OnInit {
     if (objectsFound.length === 0) {
       this.filterComponent.push(this.result);
     }
-    else {
-      let objectIncluded = objectsFound.includes(this.result);
-      if (!objectIncluded) {
-        this.filterComponent.push(this.result);
-      }
-    }
   }
 
   handleIndex() {
+    this.filterComponent.push(JSON.parse(JSON.stringify(this.result)));
     this.result.langString = [];
     this.updateOptionList();
   }

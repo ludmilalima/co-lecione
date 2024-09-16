@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import { DataPropertyGetterPipe } from '../../../../pipes/data-property-getter.pipe';
+import { DataPropertyGetterPipe } from 'src/app/pipes/data-property-getter.pipe';
 
 @Component({
   selector: 'custom-table',

@@ -51,13 +51,13 @@ export class NewQuestionComponent implements OnInit, OnDestroy {
       figureSrc: [''],
       statement: new FormControl({ value: null, disabled: false }, Validators.required()),
       alternatives: this.fb.array([]),
-      discursive: [false]
+      discursive: false
     });
   }
 
   ngOnInit(): void {
     this.editor = new Editor();
-    
+
     this._formService.updateForm(this.form);
     this.form.valueChanges.subscribe(() => {
       this._formService.updateForm(this.form);

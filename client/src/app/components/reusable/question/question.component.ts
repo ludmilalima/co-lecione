@@ -30,7 +30,7 @@ export class QuestionComponent implements OnInit, OnChanges, OnDestroy {
   @Input() figureSrc?: string;
   @Input() statement?: Object;
   @Input() alternatives?: string[];
-  @Input() discursive?: boolean;
+  @Input() discursive?: string;
 
   toolbarAnswer: Toolbar = [
     ['bold', 'italic'],

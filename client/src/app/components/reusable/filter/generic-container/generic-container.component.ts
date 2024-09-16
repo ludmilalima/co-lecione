@@ -29,9 +29,6 @@ export class GenericContainerComponent implements OnInit {
 
   @ViewChild('langStringFilter') langStringFilter: LangStringTypeFilterComponent;
 
-  localObject: any;
-  localFilterComponent: Array<any>;
-
   description: string;
 
   constructor(public _processStringService: ProcessStringService) {
@@ -40,9 +37,6 @@ export class GenericContainerComponent implements OnInit {
   index: number = 1;
 
   ngOnInit() {
-    this.localObject = JSON.parse(JSON.stringify(this.object));
-    this.localFilterComponent = JSON.parse(JSON.stringify(this.filterComponent));
-
     switch (this.object.nodeInfo.nodeType) {
       case "langString-type":
         this.description = "N possíveis entradas que podem ser traduzidas em até 10 idiomas diferentes";

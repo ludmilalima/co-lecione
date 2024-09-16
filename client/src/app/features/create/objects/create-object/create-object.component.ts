@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DoCheck, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, EventEmitter, KeyValueDiffers, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Editor } from 'ngx-editor';
 import { Subscription } from 'rxjs';
 import { NewQuestionComponent } from 'src/app/components/reusable/question/new-question/new-question.component';
@@ -16,7 +16,6 @@ import { Objects } from '../objects.model';
 import { ObjectsService } from '../objects.service';
 import { SharedFormService } from 'src/app/shared/services/shared-form.service';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
-import { Question } from 'src/app/components/reusable/question/question.model';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
 import { NewCardComponent } from 'src/app/components/reusable/cards/new-card/new-card.component';
 import { MetadataFormComponent } from '../../../../components/reusable/metadata-form/metadata-form.component';
@@ -53,9 +52,10 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
   ]
 })
 
-export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
-  @ViewChild('metadataTable', { static: false }) metadataTable: any;
+export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, OnDestroy {
+  @ViewChild('metadataTable', { static: false }) metadataTable: MatTable<any>;
   @ViewChild('metadataForm') metadataForm: MetadataFormComponent;
+  @ViewChild('availableObjectsComponent') availableObjectsComponent: AvailableObjectsComponent;
 
   @Output() objectTypeChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -73,10 +73,10 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
 
   newObject: Array<{ key: string, value: string }> = [];
   metadata: Array<{ key: string, value: string }> = [];
+  dataSource = new MatTableDataSource(this.metadata);
   isLinear = false;
 
   objForm: FormGroup;
-  question: Question;
 
   constructor(
     private _confirmationDialogService: ConfirmationDialogService,
@@ -87,7 +87,6 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
     private differs: KeyValueDiffers
   ) {
     this.editor = new Editor();
-    this.metadataTable = new MatTableModule();
     this.filtersDiffer = this.differs.find(this.filters).create();
   }
 
@@ -103,6 +102,10 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.updateMetadata();
   }
 
   ngDoCheck(): void {
@@ -122,6 +125,10 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
 
   updateMetadata(): void {
     this.metadata = this._processMetadataService.buildFiltersList(this.filters);
+    this.dataSource.data = [...this.metadata];
+    if (this.metadataTable) {
+      this.metadataTable.renderRows();
+    }
   }
 
   handleObjectTypeChange(newType: string): void {
@@ -160,12 +167,7 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
         this._notificationsService.error('Erro!', 'Erro ao criar objeto.');
       },
       complete: () => {
-        this.objForm.reset();
-        this.metadata = [];
-        this.newObject = [];
-        this.objectTypeChange.emit(null);
-        this.objectType = null;
-        this.metadataForm.clearFilters();
+        this.resetCreation();
       }
     };
 
@@ -179,6 +181,17 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
 
       this._objectsService.createObject(obj).subscribe(observer);
     }
+  }
+
+  resetCreation(): void {
+    this.objForm.reset();
+    this.metadataForm.clearFilters();
+    this.newObject = [];
+    this.filters = [];
+    this.touchedForm = false;
+    this.updateMetadata();
+    this.objectType = undefined;
+    this.availableObjectsComponent.setObjectType(null);
   }
 
   checkMandatoryObject(): boolean {
@@ -199,5 +212,12 @@ export class CreateObjectComponent implements OnInit, DoCheck, OnDestroy {
 
   isValid(): boolean {
     return (this.metadata.length > 0) && this.objForm != undefined && this.objForm.controls != undefined;
+  }
+
+  clearObject(): void {
+    this.objForm.value['alternatives'] = null;
+    this.newObject = [];
+    this.objForm.reset();
+    this.touchedForm = false;
   }
 }

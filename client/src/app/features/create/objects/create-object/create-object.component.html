@@ -10,6 +10,7 @@
         <ng-template matStepLabel>Escolher o tipo do objeto</ng-template>
         <div class="container">
           <app-available-objects
+            #availableObjectsComponent
             (objectTypeChange)="handleObjectTypeChange($event)"
           ></app-available-objects>
         </div>
@@ -23,6 +24,16 @@
         <div class="container" *ngIf="objectType != undefined">
           <app-new-question *ngIf="objectType == 'question'"></app-new-question>
           <app-new-card *ngIf="objectType == 'card'"></app-new-card>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button
+              type="button"
+              mat-button
+              color="primary"
+              (click)="clearObject()"
+            >
+              Limpar
+            </button>
+          </div>
         </div>
         <div *ngIf="objectType == undefined">
           <h3>Para iniciar, selecione um tipo de objeto na etapa anterior.</h3>
@@ -36,7 +47,11 @@
       <mat-step>
         <ng-template matStepLabel>Associar metadados ao objeto</ng-template>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-          <app-metadata-form fxFlex [metadata]="filters"></app-metadata-form>
+          <app-metadata-form
+            fxFlex
+            [metadata]="filters"
+            #metadataForm
+          ></app-metadata-form>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <button type="button" mat-button matStepperPrevious>Voltar</button>
@@ -70,7 +85,7 @@
     </mat-stepper>
   </div>
 
-  <div fxFlex class="container" *ngIf="touchedForm || metadata.length > 0">
+  <div fxFlex class="container" *ngIf="touchedForm || metadata.length > 0" class="wrapper">
     <ng-container *ngIf="touchedForm">
       <h3>Objeto criado:</h3>
       <question
@@ -99,7 +114,7 @@
     <br />
     <div *ngIf="metadata.length > 0">
       <h3>Metadados associados:</h3>
-      <table mat-table [dataSource]="metadata" #metadataTable>
+      <table mat-table [dataSource]="dataSource" #metadataTable>
         <!-- Coluna Chave -->
         <ng-container matColumnDef="chave">
           <th mat-header-cell *matHeaderCellDef>Chave</th>
