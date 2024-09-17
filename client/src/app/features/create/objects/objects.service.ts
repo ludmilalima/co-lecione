@@ -57,6 +57,29 @@ export class ObjectsService {
     }));
   }
 
+  getObjectById(id: string): Observable<any> {
+    return from(
+      fetch(`${this.baseUrl}/objects/search-id/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.message || 'Failed to get objects');
+            });
+          }
+          return response.json();
+        })
+        .catch(error => {
+          this.handleError(error);
+          throw error;
+        })
+    );
+  }
+
   filterAny(filters: any): Observable<any> {
     return from(
       fetch(`${this.baseUrl}/objects/search-any`, {

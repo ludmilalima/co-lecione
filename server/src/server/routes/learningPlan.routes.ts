@@ -375,7 +375,7 @@ learningPlanRouter.get('/search-id/:id', async (req, res) => {
         const object = await LearningPlanModel.findById(req.params.id);
 
         if (!object) {
-            return res.status(404).json({ message: 'Object not found.' });
+            return res.status(404).json({ message: 'Itinerary not found.' });
         }
 
         return res.status(200).json(object);

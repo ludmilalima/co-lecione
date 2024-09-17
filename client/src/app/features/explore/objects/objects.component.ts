@@ -60,7 +60,6 @@ export class ObjectsComponent implements OnInit {
           }, {}),
         };
       });
-      console.log(this.objects);
     });
   }
 

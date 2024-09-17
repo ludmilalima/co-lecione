@@ -38,6 +38,29 @@ export class ItinerariesService {
     }));
   }
 
+  getItineraryById(id: string): Observable<any> {
+    return from(
+      fetch(`${this.baseUrl}/itineraries/search-id/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              throw new Error(err.message || 'Failed to get itinerary');
+            });
+          }
+          return response.json();
+        })
+        .catch(error => {
+          this.handleError(error);
+          throw error;
+        })
+    );
+  }
+
   getAllItineraries(): Observable<any> {
     return from(fetch(this.baseUrl + '/itineraries/read-all', {
       method: 'GET',

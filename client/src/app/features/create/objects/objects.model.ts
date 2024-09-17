@@ -1,4 +1,5 @@
 export class Objects {
+    _id?: string;
     type: string;
     content: Array<{ key: string, value: string }>;
     metadata: Array<{ key: string, value: string }>;

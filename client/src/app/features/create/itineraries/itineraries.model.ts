@@ -1,9 +1,10 @@
 export class Itineraries {
-    content: Array<{ position: number, objectId: number }>;
+    _id?: string;
+    content: Array<{ position: number, objectId: string }>;
     metadata: Array<{ key: string, value: string }>;
 
     constructor(
-        content: Array<{ position: number, objectId: number }>,
+        content: Array<{ position: number, objectId: string }>,
         metadata: Array<{ key: string, value: string }>) {
         content.forEach(item => {
             if (!item.position) {
