@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MetadataFormComponent } from 'src/app/components/reusable/metadata-form/metadata-form.component';
@@ -15,6 +15,7 @@ import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.se
 import { Objects } from '../../create/objects/objects.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
 
 @Component({
   selector: 'app-itineraries',
@@ -50,9 +51,38 @@ export class ItinerariesComponent implements OnInit {
     private _itinerariesService: ItinerariesService,
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
+    private _processMetadataService: ProcessMetadataService,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this._itinerariesService.getAllItineraries().subscribe(response => {
+      response.map((itinerary: Itineraries) => {
+        let item: Itineraries = new Itineraries([], []);
+        item._id = itinerary._id;
+        item.metadata = itinerary.metadata.map((metadata) => {
+          return {
+            key: metadata.key,
+            value: metadata.value,
+          }
+        });
+        item.content = itinerary.content.map((content) => {
+          return {
+            position: content.position,
+            objectId: content.objectId,
+          }
+        });
+        this.itineraries.push(item);
+      });
+    });
+  }
+
+  handleClearFilters() {
+    this.getAllItineraries();
+  }
+
+  getAllItineraries() {
+    this.itineraries = [];
     this._itinerariesService.getAllItineraries().subscribe(response => {
       response.map((itinerary: Itineraries) => {
         let item: Itineraries = new Itineraries([], []);
@@ -155,8 +185,15 @@ export class ItinerariesComponent implements OnInit {
     if (this.metadata.length == 0) {
       this._notificationsService.error("Erro!", "Nenhum filtro foi selecionado.");
     } else {
-      // this._itinerariesService.getItineraries(this.metadata).subscribe(response => {
-      //   console.log(response);
+      let filters = this._processMetadataService.buildFiltersList(this.metadata);
+
+      this._itinerariesService.filterAny(filters).subscribe(data => {
+        this.itineraries = data;
+        this.itineraries.forEach(itinerary => {
+          this.getItineraryContent(itinerary);
+        });
+        this.changeDetectorRef.detectChanges();
+      });
     }
   }
 }

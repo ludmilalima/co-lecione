@@ -296,7 +296,7 @@ learningPlanRouter.get('/search-all', async (req, res) => {
     }
 });
 
-learningPlanRouter.get('/search-any', async (req, res) => {
+learningPlanRouter.post('/search-any', async (req, res) => {
     try {
         const metadata = req.body;
 

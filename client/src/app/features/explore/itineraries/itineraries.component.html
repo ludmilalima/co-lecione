@@ -1,8 +1,10 @@
 <ng-container>
   <div class="wrapper">
     <app-metadata-form
+      #metadataForm
       [metadata]="metadata"
       [buttonAction]="buttonAction"
+      (filtersCleaned)="handleClearFilters()"
     ></app-metadata-form>
   </div>
 </ng-container>

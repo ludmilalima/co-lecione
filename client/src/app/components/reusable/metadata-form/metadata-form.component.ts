@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,10 +27,12 @@ import { QuestionComponent } from 'src/app/components/reusable/question/question
 export class MetadataFormComponent {
   @Input() metadata: Array<any>;
   @Input() buttonAction: { label: string, action: Function };
+  @Output() filtersCleaned: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
 
   clearFilters() {
     this.filter.clearFilters();
+    this.filtersCleaned.emit();
   }
 }
