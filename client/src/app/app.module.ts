@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationsService } from './shared/notifications/notifications.service';
 import { SharedFormService } from './shared/services/shared-form.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { SharedFormService } from './shared/services/shared-form.service';
       MatSidenavModule,
       MatIconModule,
       MatListModule,
+      MatTooltipModule,
       NotificationsModule,
       FlexLayoutModule,
     ]

@@ -13,6 +13,7 @@ import { ObjectsService } from '../create/objects/objects.service';
 import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 @Component({
   selector: 'app-consume',
@@ -27,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   templateUrl: './consume.component.html',
   styleUrl: './consume.component.scss'
@@ -38,6 +40,7 @@ export class ConsumeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private _notificationsService: NotificationsService,
     private _itinerariesService: ItinerariesService,
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
@@ -45,7 +48,6 @@ export class ConsumeComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      console.log(params);
       const id = params.get('id');
       if (id) {
         this.getItineraryById(id);
@@ -85,6 +87,16 @@ export class ConsumeComponent implements OnInit {
         };
       }, {}),
     };
+  }
+
+  shareItinerary(itinerary: Itineraries) {
+    let link: URL = new URL('http://localhost:4200' + '/consumir/' + itinerary._id);
+    navigator.clipboard.writeText(link.toString());
+    this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
+  }
+
+  sendAnswers() {
+
   }
 
   getObjectType(id: string): string {

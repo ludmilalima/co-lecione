@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,7 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatDialogModule,
     MatExpansionModule,
-    MatAccordion,
+    MatAccordion
   ]
 })
 export class UserDetailsComponent implements OnInit {
@@ -31,16 +32,16 @@ export class UserDetailsComponent implements OnInit {
     private dialogUserDetail: MatDialog,
   ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.name = localStorage.getItem('name');
     this.email = localStorage.getItem('email');
   }
 
-  editar(){
-    
+  editar() {
+
   }
 
-  alterarNome(){
+  alterarNome() {
 
   }
 }

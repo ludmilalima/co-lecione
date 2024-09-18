@@ -6,9 +6,9 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-toolbar class="nav-toolbar">
-      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
         <span fxFlex><img [src]="iconPath" alt="Ícone" /></span>
-        <span fxFlex class="project-title">LearnBench</span>
+        <span fxFlex class="project-title">co-lecione</span>
       </div>
     </mat-toolbar>
     <mat-nav-list>
@@ -23,36 +23,37 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
+        matTooltip="Exibir ou ocultar o menu"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span class="fill-remaining-space"></span>
       <div fxLayout="row" fxLayoutAlign="center center">
-        <span fxFlex>
-          <button
-            aria-label="Notifications"
-            mat-icon-button
-            (click)="drawer.toggle()"
-          >
-            <mat-icon>notifications</mat-icon>
-          </button>
-        </span>
         <span fxFlex *ngIf="isLoggedIn == true">
           <button
             aria-label="UserInfo"
             mat-icon-button
             (click)="openUserDetailsDialog()"
+            matTooltip="Exibir informações do usuário"
           >
             <mat-icon>account_circle</mat-icon>
           </button>
         </span>
         <span fxFlex *ngIf="isLoggedIn == true">
-          <button mat-icon-button (click)="openLogoutDialog()">
+          <button
+            mat-icon-button
+            matTooltip="Sair da conta atual"
+            (click)="openLogoutDialog()"
+          >
             <mat-icon>logout</mat-icon>
           </button>
         </span>
         <span fxFlex *ngIf="isLoggedIn == false">
-          <button mat-icon-button (click)="openLoginDialog()">
+          <button
+            mat-icon-button
+            matTooltip="Entrar em uma conta"
+            (click)="openLoginDialog()"
+          >
             <mat-icon>login</mat-icon>
           </button>
         </span>

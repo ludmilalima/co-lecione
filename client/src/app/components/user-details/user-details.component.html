@@ -1,31 +1,5 @@
 <h1 mat-dialog-title>Dados do usuário</h1>
 <div mat-dialog-content>
-  <mat-accordion multi>
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title> Dados do usuário: </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p><b>Nome:</b> {{name}}</p>
-        <p><b>Email:</b> {{email}}</p>
-    </mat-expansion-panel>
-  
-
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title> Deseja editar o nome de usuário? </mat-panel-title>
-      </mat-expansion-panel-header>
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Nome</mat-label>
-          <input matInput [(ngModel)]="newName" type="text" title="Nome"/>
-        </mat-form-field>
-      </p>
-      <div align="center">
-        <button mat-raised-button color="primary" (click)="alterarNome()">
-          Alterar
-        </button>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <p><b>Nome:</b> {{ name }}</p>
+  <p><b>Email:</b> {{ email }}</p>
 </div>

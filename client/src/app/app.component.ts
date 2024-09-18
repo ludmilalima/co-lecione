@@ -7,7 +7,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { Relation } from './core/models/metadata/relation/relation.model';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,7 @@ import { Relation } from './core/models/metadata/relation/relation.model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title: string = 'LearnBench';
+  title: string = 'co-lecione';
   iconPath: SafeResourceUrl;
   dialogLoginRef: MatDialogRef<LoginComponent, boolean>;
   dialogLogoutRef: MatDialogRef<LogoutComponent, boolean>;
