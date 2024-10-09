@@ -67,7 +67,7 @@ export class CreateItineraryComponent {
       return { position: object.position, objectId: object.id };
     });
 
-    this.newItinerary.metadata = [...this._processMetadataService.buildFiltersList(this.metadata), ...objMetadata];
+    this.newItinerary.metadata = [...this._processMetadataService.buildFiltersList(this.metadata)];
 
     const observer = {
       next: (response: any) => {
