@@ -169,9 +169,16 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
       element.style.width = '100%';
       element.style.height = 'auto';
 
-      const promise = domtoimage.toPng(element).then((dataUrl) => {
-        return { index, dataUrl };
-      });
+      await replaceImageUrlsWithDataUrls(element);
+
+      const promise = domtoimage.toPng(element, { cacheBust: false, useCORS: false })
+        .then((dataUrl) => {
+          return { index, dataUrl };
+        })
+        .catch((error) => {
+          console.error('Error generating image:', error);
+          return { index, dataUrl: null };
+        });
 
       promises.push(promise);
     } else {
@@ -270,4 +277,27 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
   } else if (operation === 'send') {
     window.open(pdf.output('bloburl'), '_blank');
   }
+}
+
+async function replaceImageUrlsWithDataUrls(element: HTMLElement): Promise<void> {
+  const images = element.querySelectorAll('img');
+  const promises = Array.from(images).map(async (img) => {
+    const url = img.src;
+    const dataUrl = await convertImageUrlToDataUrl(url);
+    img.src = dataUrl;
+  });
+
+  await Promise.all(promises);
+}
+
+async function convertImageUrlToDataUrl(url: string): Promise<string> {
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+  const response = await fetch(proxyUrl);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 }
