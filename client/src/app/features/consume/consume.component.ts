@@ -171,7 +171,7 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
 
       await replaceImageUrlsWithDataUrls(element);
 
-      const promise = domtoimage.toPng(element, { cacheBust: false, useCORS: false })
+      const promise = domtoimage.toPng(element, { cacheBust: true, useCORS: true })
         .then((dataUrl) => {
           return { index, dataUrl };
         })
@@ -291,13 +291,31 @@ async function replaceImageUrlsWithDataUrls(element: HTMLElement): Promise<void>
 }
 
 async function convertImageUrlToDataUrl(url: string): Promise<string> {
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-  const response = await fetch(proxyUrl);
-  const blob = await response.blob();
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
+  try {
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl, { mode: 'cors', credentials: 'same-origin' });
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error('Error fetching image with first proxy:', error);
+    try {
+      const proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
+      const response = await fetch(proxyUrl, { mode: 'cors', credentials: 'same-origin' });
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Error fetching image with second proxy:', error);
+      throw error;
+    }
+  }
 }
