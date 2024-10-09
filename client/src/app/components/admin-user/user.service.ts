@@ -4,6 +4,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 import { environment } from 'src/environments/environment';
+import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,13 @@ export class UserService {
   constructor
     (
       private httpClient: HttpClient,
+      private _notificationsService: NotificationsService,
     ) { }
 
 
   private handleError(error: any): Observable<never> {
     console.error('UserService error: ', error);
+    this._notificationsService.error('Erro!', error.message || 'Um erro ocorreu, tente novamente mais tarde.');
     return throwError(() => error.error);
   }
 
@@ -95,13 +98,14 @@ export class UserService {
   }
 
   getUserInfo(): Observable<User> {
+    this.loadToken();
     const token = this.getToken();
 
     if (!token) {
       // Handle the case when the token is not available
       // You can redirect the user to the login page or take appropriate action
       // For now, let's throw an error
-      throw new Error('Token not found.');
+      this.handleError(new Error('Não há usuário logado.'));
     }
 
     const headers = {

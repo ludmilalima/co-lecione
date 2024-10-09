@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
 import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
@@ -14,6 +13,9 @@ import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.se
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
+import { UserService } from 'src/app/components/admin-user/user.service';
 
 @Component({
   selector: 'app-consume',
@@ -25,7 +27,6 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
     CardsComponent,
     QuestionComponent,
 
-    MatTabsModule,
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
@@ -44,6 +45,7 @@ export class ConsumeComponent implements OnInit {
     private _itinerariesService: ItinerariesService,
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
+    private _userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -63,14 +65,38 @@ export class ConsumeComponent implements OnInit {
   }
 
   getObjects(): void {
-    this.itinerary?.content.map(object => {
+    if (!this.itinerary || !this.itinerary.content) {
+      console.error('Itinerary or itinerary content is undefined.');
+      return;
+    }
+
+    this.itinerary.content.forEach((object, index) => {
+      if (!object || !object.objectId) {
+        console.error(`Object or objectId is undefined at index ${index}.`);
+        return;
+      }
+
       this._objectsService.getObjectById(object.objectId).subscribe(response => {
-        this.loadedObjects.push(this.convertContent(response));
+        if (response) {
+          this.loadedObjects[index] = this.convertContent(response);
+        } else {
+          console.error(`Object with ID ${object.objectId} not found.`);
+        }
       });
     });
   }
 
   convertContent(object: any) {
+    if (!object) {
+      console.error('Object is undefined or null.');
+      return null;
+    }
+
+    if (!object._id || !object.type || !object.content || !object.metadata) {
+      console.error('Object properties are missing.');
+      return null;
+    }
+
     return {
       _id: object._id,
       type: object.type,
@@ -96,31 +122,152 @@ export class ConsumeComponent implements OnInit {
   }
 
   sendAnswers() {
+    this.getUserInfo();
+    if (localStorage.getItem('token')) {
+      generatePdf(this.itinerary, this.loadedObjects, 'send');
+    }
+    else {
+      this._notificationsService.error('Erro ao enviar respostas', 'Deve-se estar logado para enviar respostas.');
+    }
+  }
 
+  downloadPdf(): void {
+    this.getUserInfo();
+    if (localStorage.getItem('token')) {
+      generatePdf(this.itinerary, this.loadedObjects, 'download');
+    }
+    else {
+      this._notificationsService.error('Erro ao baixar PDF', 'Deve-se estar logado para baixar um PDF.');
+    }
   }
 
   getObjectType(id: string): string {
-    const item = this.loadedObjects?.find(obj => obj._id === id);
+    const item = this.loadedObjects?.filter(obj => obj !== undefined && obj !== null).find(obj => obj._id === id);
     return item ? item.type : 'undefined';
   }
 
   getObjectContent(id: string): any {
-    const item = this.loadedObjects?.find(obj => obj._id === id);
+    const item = this.loadedObjects?.filter(obj => obj !== undefined && obj !== null).find(obj => obj._id === id);
     return item ? item.content : null;
   }
 
-  defineItem(id: string): string {
-    let item = this.loadedObjects.find(obj => obj._id === id);
-    if (item != undefined) {
-      switch (item.type) {
-        case 'card':
-          return 'description';
-        case 'question':
-          return 'quiz';
-        case 'itinerary':
-          return 'route';
-      }
+  getUserInfo(): any {
+    this._userService.getUserInfo();
+  }
+}
+
+async function generatePdf(itinerary: Itineraries, objects: Array<any>, operation: string): Promise<void> {
+  let promises: Promise<{ index: number, dataUrl: string | null }>[] = [];
+
+  for (let i = 0; i < objects.length; i++) {
+    const obj = objects[i];
+    const index = i;
+    const element = document.getElementById(`content-${obj._id}`);
+
+    if (element) {
+      element.style.whiteSpace = 'nowrap';
+      element.style.width = '100%';
+      element.style.height = 'auto';
+
+      const promise = domtoimage.toPng(element).then((dataUrl) => {
+        return { index, dataUrl };
+      });
+
+      promises.push(promise);
+    } else {
+      promises.push(Promise.resolve({ index, dataUrl: null }));
     }
-    return 'warning';
+  }
+
+  const results = await Promise.all(promises);
+  let pdf = new jsPDF({
+    format: 'a4',
+    unit: 'mm',
+    orientation: 'portrait',
+    compress: true,
+  });
+
+  let userInfo = { name: localStorage.getItem('name'), email: localStorage.getItem('email') };
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const margin = 10; // Define a margin of 10mm
+  let y = margin; // Initial y position
+
+  // Add Roteiro Information
+  let title = JSON.parse(itinerary.metadata.find(item => item.key == 'general.title').value).content;
+  const titleLines = pdf.splitTextToSize(`Roteiro:\n${title}`, pageWidth - 2 * margin);
+  pdf.text(titleLines, margin, y);
+  y += titleLines.length * 10; // Adjust y position based on the number of lines
+
+  let description = JSON.parse(itinerary.metadata.find(item => item.key == 'general.description').value).content;
+  const descriptionLines = pdf.splitTextToSize(`Descrição:\n${description}`, pageWidth - 2 * margin);
+  pdf.text(descriptionLines, margin, y);
+  y += descriptionLines.length * 10; // Adjust y position based on the number of lines
+
+  const currentUrl = window.location.href;
+  pdf.setTextColor(0, 0, 255); // Set text color to blue
+  pdf.textWithLink(`Clique neste texto para acessar o roteiro original.`, margin, y, { url: currentUrl });
+  pdf.setTextColor(0, 0, 0); // Reset text color to black
+  y += 10;
+
+  pdf.text(`Usuário: ${userInfo.name} (${userInfo.email})`, margin, y);
+  y += 10;
+  const exportDate = new Date();
+  pdf.text(`Data da exportação: ${exportDate.toLocaleDateString()} ${exportDate.toLocaleTimeString()}`, margin, y);
+  y += 20; // Add extra space before the sumário
+
+  // Add content
+  for (const result of results) {
+    if (result.dataUrl) {
+      const imgData = result.dataUrl;
+      const imgProps = pdf.getImageProperties(imgData);
+
+      let imgWidth = imgProps.width * 0.264583; // Convert width to mm
+      let imgHeight = imgProps.height * 0.264583; // Convert height to mm
+
+      let pageHeightMm = ((imgProps.height * 0.264583) + 2 * margin);
+      let pageWidthMm = ((imgProps.width * 0.264583) + 2 * margin);
+
+      const orientation = pageWidthMm > pageHeightMm ? 'landscape' : 'portrait';
+      pdf.addPage([pageWidthMm, pageHeightMm], orientation);
+      pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+    }
+  }
+
+  // Add TOC entries
+  pdf.addPage();
+  y = 10;
+
+  // Add Table of Contents
+  pdf.text('Sumário', margin, y);
+  y += 10;
+
+  for (const result of results) {
+    if (result.dataUrl) {
+
+      if (y + 10 > pdf.internal.pageSize.getHeight() - margin) {
+        pdf.addPage();
+        y = margin;
+      }
+
+      let title = `Objeto ${result.index + 1}`;
+      switch (objects[result.index].type) {
+        case 'question':
+          title += ` - ${objects[result.index].content.topic}`;
+          break;
+
+        case 'card':
+          title += ` - ${objects[result.index].content.title}`;
+          break;
+      }
+
+      pdf.textWithLink(title, margin, y, { pageNumber: result.index + 2 });
+      y += 10;
+    }
+  }
+
+  if (operation === 'download') {
+    pdf.save('roteiro.pdf');
+  } else if (operation === 'send') {
+    window.open(pdf.output('bloburl'), '_blank');
   }
 }

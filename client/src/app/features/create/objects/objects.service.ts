@@ -73,6 +73,12 @@ export class ObjectsService {
           }
           return response.json();
         })
+        .then(data => {
+          if (!data || !data._id) {
+            throw new Error('Invalid object data received');
+          }
+          return data;
+        })
         .catch(error => {
           this.handleError(error);
           throw error;

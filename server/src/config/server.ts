@@ -5,6 +5,7 @@ import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import nodemailer from "nodemailer";
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { objectRouter } from "../server/routes/object.routes";
@@ -13,7 +14,7 @@ import { learningPlanRouter } from '../server/routes/learningPlan.routes';
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 
-const { ATLAS_URI } = process.env;
+const { ATLAS_URI, EMAIL_USER, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 
 if (!ATLAS_URI) {
   console.error("No ATLAS_URI environment variable has been defined in config.env");
@@ -38,8 +39,8 @@ connectToDatabase()
           // Tenta analisar o buffer da requisição como JSON
           JSON.parse(buf.toString(encoding as BufferEncoding));
         } catch (error) {
-            // Lança um erro se o corpo da requisição não for JSON válido
-            return (res as any).status(400).json({ error: 'Invalid JSON' });
+          // Lança um erro se o corpo da requisição não for JSON válido
+          return (res as any).status(400).json({ error: 'Invalid JSON' });
         }
       }
     }));
@@ -63,6 +64,37 @@ connectToDatabase()
     };
     const swaggerSpec = swaggerJsdoc(swaggerOptions);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: EMAIL_USER,
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+      },
+    });
+
+    app.post('/send-email', (req, res) => {
+      const { to, subject, text, html } = req.body;
+
+      const mailOptions = {
+        from: EMAIL_USER,
+        to,
+        subject,
+        text,
+        html,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(500).send(error.toString());
+        }
+        res.status(200).send('Email sent: ' + info.response);
+      });
+    });
 
     // Rotas
     app.use("/users", userRouter);

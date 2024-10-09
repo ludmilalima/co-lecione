@@ -14,6 +14,15 @@
         type="button"
         mat-icon-button
         color="primary"
+        (click)="downloadPdf()"
+        matTooltip="Enviar respostas"
+      >
+        <mat-icon>download</mat-icon>
+      </button>
+      <button
+        type="button"
+        mat-icon-button
+        color="primary"
         (click)="sendAnswers()"
         matTooltip="Enviar respostas"
       >
@@ -21,17 +30,12 @@
       </button>
     </div>
   </div>
-  <div class="container wrapper" fxFlex>
-    <mat-tab-group>
-      <mat-tab *ngFor="let item of itinerary.content; let i = index">
-        <ng-template mat-tab-label>
-          <mat-icon>{{ defineItem(item.objectId) }}</mat-icon>
-          {{ i + 1 }}
-        </ng-template>
-        <div>
+  <div *ngIf="itinerary != null">
+    <div *ngFor="let item of itinerary.content; let i = index">
+      <div id="content-{{ item.objectId }}" class="object-print">
+        <div class="wrapper">
           <div *ngIf="getObjectType(item.objectId) == 'card'">
             <app-cards
-              class="object-container wrapper"
               [avatarSrc]="getObjectContent(item.objectId)?.avatarSrc"
               [headerImageSrc]="getObjectContent(item.objectId)?.headerImageSrc"
               [title]="getObjectContent(item.objectId)?.title"
@@ -44,7 +48,6 @@
           </div>
           <div *ngIf="getObjectType(item.objectId) == 'question'">
             <question
-              class="object-container wrapper"
               [topic]="getObjectContent(item.objectId)?.topic"
               [note]="getObjectContent(item.objectId)?.note"
               [figureSrc]="getObjectContent(item.objectId)?.figureSrc"
@@ -55,7 +58,7 @@
             </question>
           </div>
         </div>
-      </mat-tab>
-    </mat-tab-group>
+      </div>
+    </div>
   </div>
 </div>
