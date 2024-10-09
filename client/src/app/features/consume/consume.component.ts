@@ -165,13 +165,13 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
     const element = document.getElementById(`content-${obj._id}`);
 
     if (element) {
-      element.style.whiteSpace = 'nowrap';
-      element.style.width = '100%';
+      element.style.whiteSpace = 'normal';
+      element.style.width = 'auto';
       element.style.height = 'auto';
 
       await replaceImageUrlsWithDataUrls(element);
 
-      const promise = domtoimage.toPng(element, { cacheBust: true, useCORS: true })
+      const promise = domtoimage.toPng(element, { cacheBust: false, useCORS: false })
         .then((dataUrl) => {
           return { index, dataUrl };
         })
@@ -197,7 +197,7 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
   let userInfo = { name: localStorage.getItem('name'), email: localStorage.getItem('email') };
   const pageWidth = pdf.internal.pageSize.getWidth();
   const margin = 10; // Define a margin of 10mm
-  let y = margin; // Initial y position
+  let y = 20; // Initial y position
 
   // Add Roteiro Information
   let title = JSON.parse(itinerary.metadata.find(item => item.key == 'general.title').value).content;
@@ -241,8 +241,8 @@ async function generatePdf(itinerary: Itineraries, objects: Array<any>, operatio
   }
 
   // Add TOC entries
-  pdf.addPage();
-  y = 10;
+  pdf.addPage('a4', 'portrait');
+  y = 20;
 
   // Add Table of Contents
   pdf.text('Sumário', margin, y);
