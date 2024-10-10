@@ -5,16 +5,16 @@ import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
-import nodemailer from "nodemailer";
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { objectRouter } from "../server/routes/object.routes";
 import { learningPlanRouter } from '../server/routes/learningPlan.routes';
+import { emailRouter } from '../server/routes/email.routes';
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 
-const { ATLAS_URI, EMAIL_USER, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
+const { ATLAS_URI } = process.env;
 
 if (!ATLAS_URI) {
   console.error("No ATLAS_URI environment variable has been defined in config.env");
@@ -65,36 +65,8 @@ connectToDatabase()
     const swaggerSpec = swaggerJsdoc(swaggerOptions);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: EMAIL_USER,
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-      },
-    });
-
-    app.post('/send-email', (req, res) => {
-      const { to, subject, text, html } = req.body;
-
-      const mailOptions = {
-        from: EMAIL_USER,
-        to,
-        subject,
-        text,
-        html,
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return res.status(500).send(error.toString());
-        }
-        res.status(200).send('Email sent: ' + info.response);
-      });
-    });
+    // Use the email router
+    app.use('/api', emailRouter);
 
     // Rotas
     app.use("/users", userRouter);
