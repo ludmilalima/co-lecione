@@ -4,9 +4,9 @@ import { MailerSend, EmailParams, Sender, Recipient, Attachment } from 'mailerse
 const router = express.Router();
 
 router.post('/send-email', async (req, res) => {
-    const { email, pdfData } = req.body;
+    const { destination, pdfData, subject, cc, message } = req.body;
 
-    if (!email || !pdfData) {
+    if (!destination || !pdfData) {
         return res.status(400).json({ error: 'Endereço de email e arquivo PDF são necessários' });
     }
 
@@ -14,8 +14,10 @@ router.post('/send-email', async (req, res) => {
         apiKey: process.env.EMAIL_API_KEY,
     });
 
-    const sentFrom = new Sender('robot@trial-0r83ql35dpp4zw1j.mlsender.net', 'Robot');
-    const recipients = [new Recipient(email, 'Recipient')];
+    const sentFrom = new Sender('robot@co-lecione.wiki.br', 'Robot');
+    const recipients = [new Recipient(destination, 'Recipient')];
+    const ccRecipient = [new Recipient(cc, 'CC')];
+    const messageBody = message ? `<p>${message}</p>` : '<strong>O arquivo PDF solicitado está anexado neste e-mail.</strong>';
 
     const attachments = [
         new Attachment(
@@ -31,13 +33,16 @@ router.post('/send-email', async (req, res) => {
         .setTo(recipients)
         .setReplyTo(sentFrom)
         .setAttachments(attachments)
-        .setSubject('Arquivo PDF')
-        .setHtml('<strong>O arquivo PDF solicitado está anexado neste e-mail.</strong>')
+        .setSubject(subject)
+        .setHtml(messageBody)
         .setText('Arquivo PDF.');
 
+    if (cc) {
+        emailParams.setCc(ccRecipient);
+    }
+
     try {
-        const result = await mailerSend.email.send(emailParams);
-        console.log('Email sent:', result);
+        await mailerSend.email.send(emailParams);
         res.status(200).json({ message: 'Email enviado com sucesso' });
     } catch (error) {
         console.error('Error sending email:', error);

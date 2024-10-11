@@ -31,7 +31,7 @@ connectToDatabase()
 
     // Middleware para parsing do corpo das requisições
     app.use(express.json({
-      limit: '1mb', // Limita o tamanho do corpo da requisição a 1 megabyte
+      limit: '50mb', // Limita o tamanho do corpo da requisição a 50 megabyte
       strict: true, // Garante que apenas objetos e arrays sejam aceitos
       type: 'application/json', // Aceita apenas requisições com MIME type application/json
       verify: (req, res, buf, encoding) => {

@@ -11,15 +11,19 @@ export class EmailSenderService {
 
     constructor(private http: HttpClient) { }
 
-    sendEmailWithAttachment(email: string, pdfData: Blob): Observable<any> {
+    sendEmailWithAttachment(mailLoad: any): Observable<any> {
+        const { destination, cc, subject, message, pdfData } = mailLoad;
         const reader = new FileReader();
         reader.readAsDataURL(pdfData);
         return new Observable(observer => {
             reader.onloadend = () => {
                 const base64data = reader.result as string;
                 const body = {
-                    email: email,
-                    pdfData: base64data.split(',')[1] // Remove o prefixo "data:application/pdf;base64,"
+                    destination: destination,
+                    pdfData: base64data.split(',')[1], // Remove o prefixo "data:application/pdf;base64,"
+                    subject: subject,
+                    cc: cc,
+                    message: message
                 };
 
                 const headers = new HttpHeaders({

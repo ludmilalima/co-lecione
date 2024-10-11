@@ -105,7 +105,8 @@ export class UserService {
       // Handle the case when the token is not available
       // You can redirect the user to the login page or take appropriate action
       // For now, let's throw an error
-      this.handleError(new Error('Não há usuário logado.'));
+      this._notificationsService.info('Atenção', 'Não há usuário logado.');
+      return throwError(() => new Error('No user logged in'));
     }
 
     const headers = {
@@ -127,6 +128,8 @@ export class UserService {
   logout() {
     // Remova o token armazenado no cliente (por exemplo, localStorage)
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
     this.setToken(null);
   }
 

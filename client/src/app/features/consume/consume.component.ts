@@ -17,6 +17,10 @@ import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 import { UserService } from 'src/app/components/admin-user/user.service';
 import { EmailSenderService } from 'src/app/shared/services/email-sender.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailDialogComponent } from './email-destination-dialog/email-dialog.component';
+import { FormGroup } from '@angular/forms';
+import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-consume',
@@ -39,6 +43,7 @@ export class ConsumeComponent implements OnInit {
 
   itinerary: Itineraries | null = null;
   loadedObjects: Array<Objects> = [];
+  emailForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +52,9 @@ export class ConsumeComponent implements OnInit {
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
     private _userService: UserService,
-    private _emailSenderService: EmailSenderService
+    private _emailSenderService: EmailSenderService,
+    private _confirmationDialogService: ConfirmationDialogService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -123,24 +130,34 @@ export class ConsumeComponent implements OnInit {
     this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
   }
 
-  sendAnswers() {
+  downloadPdf(): void {
     this.getUserInfo();
-    if (localStorage.getItem('token')) {
-      this.onGeneratePdf(this.itinerary, this.loadedObjects, 'send');
-    }
-    else {
-      this._notificationsService.error('Erro ao enviar respostas', 'Deve-se estar logado para enviar respostas.');
+    if (localStorage.getItem('token') == null) {
+      this._confirmationDialogService.openDialog(
+        `Não há conta logada no momento, o arquivo será baixado anonimamente. Deseja continuar?`,
+        () => this.downloadPdfAnonymously(),
+        null
+      );
+    } else {
+      this.onGeneratePdf(this.itinerary, this.loadedObjects, 'download');
     }
   }
 
-  downloadPdf(): void {
+  sendPdfByEmail(): void {
     this.getUserInfo();
-    if (localStorage.getItem('token')) {
-      this.onGeneratePdf(this.itinerary, this.loadedObjects, 'download');
+    if (localStorage.getItem('token') == null) {
+      this._confirmationDialogService.openDialog(
+        `Não há conta logada no momento, o arquivo será enviado anonimamente. Deseja continuar?`,
+        () => this.openEmailDialog(),
+        null
+      );
+    } else {
+      this.openEmailDialog();
     }
-    else {
-      this._notificationsService.error('Erro ao baixar PDF', 'Deve-se estar logado para baixar um PDF.');
-    }
+  }
+
+  downloadPdfAnonymously(): void {
+    this.onGeneratePdf(this.itinerary, this.loadedObjects, 'download');
   }
 
   getObjectType(id: string): string {
@@ -155,6 +172,22 @@ export class ConsumeComponent implements OnInit {
 
   getUserInfo(): any {
     this._userService.getUserInfo();
+  }
+
+  openEmailDialog(): void {
+    const dialogRef = this.dialog.open(EmailDialogComponent, {
+      width: '80%',
+      data: {
+        emailForm: this.emailForm,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.emailForm = result;
+        this.onGeneratePdf(this.itinerary, this.loadedObjects, 'send');
+      }
+    });
   }
 
   async onGeneratePdf(itinerary: Itineraries, objects: Array<any>, operation: string) {
@@ -176,7 +209,7 @@ export class ConsumeComponent implements OnInit {
 
         await replaceImageUrlsWithDataUrls(element);
 
-        const promise = domtoimage.toPng(element, { cacheBust: false, useCORS: false })
+        const promise = domtoimage.toPng(element, { cacheBust: true, useCORS: true })
           .then((dataUrl) => {
             return { index, dataUrl };
           })
@@ -221,8 +254,11 @@ export class ConsumeComponent implements OnInit {
     pdf.setTextColor(0, 0, 0); // Reset text color to black
     y += 10;
 
-    pdf.text(`Usuário: ${userInfo.name} (${userInfo.email})`, margin, y);
-    y += 10;
+    if (userInfo.name == null || userInfo.email == null) {
+      pdf.text(`Usuário: ${userInfo.name} (${userInfo.email})`, margin, y);
+      y += 10;
+    }
+
     const exportDate = new Date();
     pdf.text(`Data da exportação: ${exportDate.toLocaleDateString()} ${exportDate.toLocaleTimeString()}`, margin, y);
     y += 20; // Add extra space before the sumário
@@ -282,7 +318,18 @@ export class ConsumeComponent implements OnInit {
     } else if (operation === 'send') {
       const pdfData = pdf.output('blob')
 
-      this._emailSenderService.sendEmailWithAttachment(userInfo.email, pdfData).subscribe({
+      console.log(this.emailForm);
+      let itineraryName = JSON.parse(itinerary.metadata.find(item => item.key == 'general.title').value).content;
+
+      let mailLoad = {
+        destination: this.emailForm.get('destination').value as string,
+        pdfData: pdfData as Blob,
+        subject: `Roteiro: ` + itineraryName,
+        cc: userInfo.email ? userInfo.email as string : null,
+        message: (this.emailForm.get('message').value ? this.convertTextToHtml(this.emailForm.get('message').value) : 'Não foram adicionadas informações adicionais.') as string,
+      }
+
+      this._emailSenderService.sendEmailWithAttachment(mailLoad).subscribe({
         next: response => {
           console.log('Email sent successfully', response);
         },
@@ -295,143 +342,17 @@ export class ConsumeComponent implements OnInit {
 
     }
   }
+
+  convertTextToHtml(text: string): string {
+    // Substituir quebras de linha simples por <br>
+    const withBreaks = text.replace(/\n/g, '<br>');
+
+    // Envolver parágrafos em <p>
+    const paragraphs = withBreaks.split('<br><br>').map(paragraph => `<p>${paragraph}</p>`).join('');
+
+    return paragraphs;
+  }
 }
-
-// async function generatePdf(itinerary: Itineraries, objects: Array<any>, operation: string): Promise<void> {
-//   let promises: Promise<{ index: number, dataUrl: string | null }>[] = [];
-
-//   for (let i = 0; i < objects.length; i++) {
-//     const obj = objects[i];
-//     const index = i;
-//     const element = document.getElementById(`content-${obj._id}`);
-
-//     if (element) {
-//       element.style.whiteSpace = 'normal';
-//       element.style.width = 'auto';
-//       element.style.height = 'auto';
-
-//       await replaceImageUrlsWithDataUrls(element);
-
-//       const promise = domtoimage.toPng(element, { cacheBust: false, useCORS: false })
-//         .then((dataUrl) => {
-//           return { index, dataUrl };
-//         })
-//         .catch((error) => {
-//           console.error('Error generating image:', error);
-//           return { index, dataUrl: null };
-//         });
-
-//       promises.push(promise);
-//     } else {
-//       promises.push(Promise.resolve({ index, dataUrl: null }));
-//     }
-//   }
-
-//   const results = await Promise.all(promises);
-//   let pdf = new jsPDF({
-//     format: 'a4',
-//     unit: 'mm',
-//     orientation: 'portrait',
-//     compress: true,
-//   });
-
-//   let userInfo = { name: localStorage.getItem('name'), email: localStorage.getItem('email') };
-//   const pageWidth = pdf.internal.pageSize.getWidth();
-//   const margin = 10; // Define a margin of 10mm
-//   let y = 20; // Initial y position
-
-//   // Add Roteiro Information
-//   let title = JSON.parse(itinerary.metadata.find(item => item.key == 'general.title').value).content;
-//   const titleLines = pdf.splitTextToSize(`Roteiro:\n${title}`, pageWidth - 2 * margin);
-//   pdf.text(titleLines, margin, y);
-//   y += titleLines.length * 10; // Adjust y position based on the number of lines
-
-//   let description = JSON.parse(itinerary.metadata.find(item => item.key == 'general.description').value).content;
-//   const descriptionLines = pdf.splitTextToSize(`Descrição:\n${description}`, pageWidth - 2 * margin);
-//   pdf.text(descriptionLines, margin, y);
-//   y += descriptionLines.length * 10; // Adjust y position based on the number of lines
-
-//   const currentUrl = window.location.href;
-//   pdf.setTextColor(0, 0, 255); // Set text color to blue
-//   pdf.textWithLink(`Clique neste texto para acessar o roteiro original.`, margin, y, { url: currentUrl });
-//   pdf.setTextColor(0, 0, 0); // Reset text color to black
-//   y += 10;
-
-//   pdf.text(`Usuário: ${userInfo.name} (${userInfo.email})`, margin, y);
-//   y += 10;
-//   const exportDate = new Date();
-//   pdf.text(`Data da exportação: ${exportDate.toLocaleDateString()} ${exportDate.toLocaleTimeString()}`, margin, y);
-//   y += 20; // Add extra space before the sumário
-
-//   // Add content
-//   for (const result of results) {
-//     if (result.dataUrl) {
-//       const imgData = result.dataUrl;
-//       const imgProps = pdf.getImageProperties(imgData);
-
-//       let imgWidth = imgProps.width * 0.264583; // Convert width to mm
-//       let imgHeight = imgProps.height * 0.264583; // Convert height to mm
-
-//       let pageHeightMm = ((imgProps.height * 0.264583) + 2 * margin);
-//       let pageWidthMm = ((imgProps.width * 0.264583) + 2 * margin);
-
-//       const orientation = pageWidthMm > pageHeightMm ? 'landscape' : 'portrait';
-//       pdf.addPage([pageWidthMm, pageHeightMm], orientation);
-//       pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-//     }
-//   }
-
-//   // Add TOC entries
-//   pdf.addPage('a4', 'portrait');
-//   y = 20;
-
-//   // Add Table of Contents
-//   pdf.text('Sumário', margin, y);
-//   y += 10;
-
-//   for (const result of results) {
-//     if (result.dataUrl) {
-
-//       if (y + 10 > pdf.internal.pageSize.getHeight() - margin) {
-//         pdf.addPage();
-//         y = margin;
-//       }
-
-//       let title = `Objeto ${result.index + 1}`;
-//       switch (objects[result.index].type) {
-//         case 'question':
-//           title += ` - ${objects[result.index].content.topic}`;
-//           break;
-
-//         case 'card':
-//           title += ` - ${objects[result.index].content.title}`;
-//           break;
-//       }
-
-//       pdf.textWithLink(title, margin, y, { pageNumber: result.index + 2 });
-//       y += 10;
-//     }
-//   }
-
-//   if (operation === 'download') {
-//     pdf.save('roteiro.pdf');
-//   } else if (operation === 'send') {
-//     const pdfData = pdf.output('blob')
-
-//     let emailSender: EmailSenderService;
-//     emailSender.sendEmailWithAttachment(userInfo.email, pdfData).subscribe({
-//       next: response => {
-//         console.log('Email sent successfully', response);
-//       },
-//       error: error => {
-//         console.error('Error sending email', error);
-//       }
-//     });
-
-//     window.open(pdf.output('bloburl'), '_blank');
-
-//   }
-// }
 
 async function replaceImageUrlsWithDataUrls(element: HTMLElement): Promise<void> {
   const images = element.querySelectorAll('img');

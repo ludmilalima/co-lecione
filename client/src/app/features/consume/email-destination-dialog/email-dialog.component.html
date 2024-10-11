@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Enviar email</h1>
+<div mat-dialog-content>
+  <form
+    [formGroup]="emailForm"
+    (ngSubmit)="onSubmit()"
+    fxLayout="column"
+    fxLayoutGap="10px"
+  >
+    <mat-form-field fxFlex>
+      <mat-label>Destinatário</mat-label>
+      <input
+        matInput
+        formControlName="destination"
+        placeholder="Endereço de e-mail do destinatário..."
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex>
+      <textarea
+        matInput
+        formControlName="message"
+        placeholder="Informações complementares..."
+        rows="5"
+      ></textarea>
+    </mat-form-field>
+    <div
+      mat-dialog-actions
+      fxLayout="row"
+      fxLayoutAlign="end center"
+      fxLayoutGap="10px"
+    >
+      <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+      <button mat-button type="submit" [disabled]="emailForm.invalid">
+        Enviar
+      </button>
+    </div>
+  </form>
+</div>

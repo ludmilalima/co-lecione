@@ -11,7 +11,7 @@ export class ConfirmationDialogService {
     openDialog(question: string, confirmCallback: () => void, cancelCallback: () => void): void {
         const dialogData: DialogData = { question, confirmCallback, cancelCallback };
         this.dialog.open(ConfirmationDialogComponent, {
-            width: '250px',
+            width: '80%',
             data: dialogData
         });
     }
