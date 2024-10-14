@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://co-lecione.wiki.br', // URL base para o ambiente de produção
+  baseUrl: 'http://localhost:5200', // URL base para o ambiente de produção
 };
