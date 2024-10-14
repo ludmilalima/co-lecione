@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 import cors from "cors";
 import express from "express";
-import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import { connectToDatabase } from "./database";
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { objectRouter } from "../server/routes/object.routes";
