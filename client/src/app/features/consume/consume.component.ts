@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EmailDialogComponent } from './email-destination-dialog/email-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-consume',
@@ -125,7 +126,7 @@ export class ConsumeComponent implements OnInit {
   }
 
   shareItinerary(itinerary: Itineraries) {
-    let link: URL = new URL('http://localhost:4200' + '/consumir/' + itinerary._id);
+    let link: URL = new URL(environment.clientUrl + '/consumir/' + itinerary._id);
     navigator.clipboard.writeText(link.toString());
     this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
   }
