@@ -35,8 +35,6 @@ export class AppComponent implements OnInit {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../assets/logo-title.png');
     this.isLoggedIn = Boolean(localStorage.getItem('token'));
     this.loggedUser = localStorage.getItem('name') || '';
-
-    console.log(`Environment: ${environment.clientUrl}`);
   }
 
   openLoginDialog(): void {

@@ -319,7 +319,6 @@ export class ConsumeComponent implements OnInit {
     } else if (operation === 'send') {
       const pdfData = pdf.output('blob')
 
-      console.log(this.emailForm);
       let itineraryName = JSON.parse(itinerary.metadata.find(item => item.key == 'general.title').value).content;
 
       let mailLoad = {
@@ -332,7 +331,7 @@ export class ConsumeComponent implements OnInit {
 
       this._emailSenderService.sendEmailWithAttachment(mailLoad).subscribe({
         next: response => {
-          console.log('Email sent successfully', response);
+          this._notificationsService.success('Sucesso!', 'Email enviado com sucesso.', 5);
         },
         error: error => {
           console.error('Error sending email', error);
