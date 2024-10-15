@@ -14,12 +14,18 @@ import { emailRouter } from '../server/routes/email.routes';
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 
-const { ATLAS_URI } = process.env;
+const { ATLAS_URI, PORT } = process.env;
 
 if (!ATLAS_URI) {
   console.error("No ATLAS_URI environment variable has been defined in config.env");
   process.exit(1);
 }
+
+const devUrl = process.env.DEV_URL;
+const prodUrl = process.env.PROD_URL;
+const currentEnv = process.env.NODE_ENV;
+
+const url = currentEnv === 'prod' ? prodUrl : devUrl;
 
 connectToDatabase()
   .then(() => {
@@ -56,7 +62,7 @@ connectToDatabase()
         },
         servers: [
           {
-            url: 'http://localhost:5200',
+            url: `${url}:${PORT}`,
           },
         ],
       },
@@ -76,8 +82,8 @@ connectToDatabase()
 
 
     // start the Express server
-    app.listen(5200, () => {
-      console.info(`Server running at http://localhost:5200...`);
+    app.listen(PORT, () => {
+      console.info(`Server running at ${url}:${PORT}...`);
     });
 
     // Capture o sinal de interrupção e desconecte-se do banco de dados antes de encerrar o servidor
