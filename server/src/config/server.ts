@@ -41,6 +41,10 @@ connectToDatabase()
       strict: true, // Garante que apenas objetos e arrays sejam aceitos
       type: 'application/json', // Aceita apenas requisições com MIME type application/json
       verify: (req, res, buf, encoding) => {
+        console.log('req',req);
+        console.log('res',res);
+        console.log('buf',buf);
+        console.log('encoding',encoding);
         try {
           // Tenta analisar o buffer da requisição como JSON
           JSON.parse(buf.toString(encoding as BufferEncoding));
