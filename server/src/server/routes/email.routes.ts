@@ -14,9 +14,9 @@ router.post('/send-email', async (req, res) => {
         apiKey: process.env.EMAIL_API_KEY,
     });
 
-    const sentFrom = new Sender('robot@co-lecione.wiki.br', 'Robot');
-    const recipients = [new Recipient(destination, 'Recipient')];
-    const ccRecipient = [new Recipient(cc, 'CC')];
+    const sentFrom = new Sender('robot@co-lecione.wiki.br', 'Co-lecione');
+    const recipients = [new Recipient(destination)];
+    const ccRecipient = [new Recipient(cc)];
     const messageBody = message ? `<p>${message}</p>` : '<strong>O arquivo PDF solicitado está anexado neste e-mail.</strong>';
 
     const attachments = [
