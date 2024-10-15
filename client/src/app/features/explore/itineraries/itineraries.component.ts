@@ -16,6 +16,7 @@ import { Objects } from '../../create/objects/objects.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-itineraries',
@@ -171,13 +172,13 @@ export class ItinerariesComponent implements OnInit {
   }
 
   shareItinerary(itinerary: Itineraries) {
-    let link: URL = new URL('http://localhost:4200' + '/consumir/' + itinerary._id);
+    let link: URL = new URL(environment.clientUrl + '/consumir/' + itinerary._id);
     navigator.clipboard.writeText(link.toString());
     this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
   }
 
   openNewTab(itinerary: Itineraries) {
-    let link: URL = new URL('http://localhost:4200' + '/consumir/' + itinerary._id);
+    let link: URL = new URL(environment.clientUrl + '/consumir/' + itinerary._id);
     window.open(link.toString(), '_blank');
   }
 
