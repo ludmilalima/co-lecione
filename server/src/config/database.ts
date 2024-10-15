@@ -1,15 +1,23 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import os from 'os';
 
 // Carregar variáveis de ambiente do arquivo .env
 dotenv.config();
 
-const { ATLAS_URI, ATLAS_URI_PATH } = process.env;
+const { ATLAS_URI } = process.env;
 
-if (!ATLAS_URI || !ATLAS_URI_PATH) {
-  throw new Error('ATLAS_URI ou ATLAS_URI_PATH não definido no arquivo .env');
+if (!ATLAS_URI) {
+  throw new Error('ATLAS_URI não definido no arquivo .env');
 }
+
+const devCertPath = process.env.DEV_ATLAS_URI_PATH;
+const prodCertPath = process.env.PROD_ATLAS_URI_PATH;
+const currentEnv = process.env.NODE_ENV;
+
+const ATLAS_URI_PATH = currentEnv === 'prod' ? prodCertPath : devCertPath;
+
+console.log(`Using certificate path: ${ATLAS_URI_PATH}`);
 
 const options = {
   tls: true,

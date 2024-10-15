@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -x ts-node src/config/server.ts",
+    "build": "tsc",
+    "start:dev": "nodemon -x ts-node src/config/server.ts",
+    "start:prod": "npm run build && node dist/config/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
