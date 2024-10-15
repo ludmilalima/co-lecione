@@ -255,7 +255,7 @@ export class ConsumeComponent implements OnInit {
     pdf.setTextColor(0, 0, 0); // Reset text color to black
     y += 10;
 
-    if (userInfo.name == null || userInfo.email == null) {
+    if (userInfo.name != null || userInfo.email != null) {
       pdf.text(`Usuário: ${userInfo.name} (${userInfo.email})`, margin, y);
       y += 10;
     }
