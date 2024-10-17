@@ -1,6 +1,6 @@
 <div class="wrapper">
   <section class="container">
-    <h3>Busca por metadados padronizados:</h3>
+    <h3>Metadados padronizados:</h3>
     <app-standard-form
       [filters]="filters"
       [clearFilters]="clearFiltersEvent | async"
@@ -8,7 +8,7 @@
   </section>
 
   <section class="container">
-    <h3>Busca por metadados livres:</h3>
+    <h3>Metadados livres:</h3>
     <app-custom-type-filter
       [filterComponent]="filters"
       [clearFilters]="clearFiltersEvent | async"
