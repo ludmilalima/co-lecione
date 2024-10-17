@@ -7,7 +7,6 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 import { MatNativeDateModule } from '@angular/material/core';
 import { UserService } from './components/admin-user/user.service';
 import { CommonModule } from '@angular/common';
-import { MongoComponent } from './components/mongo/mongo.component';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,8 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        MongoComponent,
+        AppComponent
     ],
     exports: [],
     providers: [
