@@ -23,7 +23,7 @@ export class UserService {
 
   private handleError(error: any): Observable<never> {
     console.error('UserService error: ', error);
-    this._notificationsService.error('Erro!', error.message || 'Um erro ocorreu, tente novamente mais tarde.');
+    this._notificationsService.error('Erro!', error.message || 'Um erro ocorreu, tente novamente mais tarde.', 5000);
     return throwError(() => error.error);
   }
 
@@ -105,7 +105,7 @@ export class UserService {
       // Handle the case when the token is not available
       // You can redirect the user to the login page or take appropriate action
       // For now, let's throw an error
-      this._notificationsService.info('Atenção', 'Não há usuário logado.');
+      this._notificationsService.info('Atenção', 'Não há usuário logado.', 5000);
       return throwError(() => new Error('No user logged in'));
     }
 

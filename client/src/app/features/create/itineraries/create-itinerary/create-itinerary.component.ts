@@ -71,10 +71,10 @@ export class CreateItineraryComponent {
 
     const observer = {
       next: (response: any) => {
-        this._notificationsService.success('Sucesso!', 'Itinerário criado com sucesso.');
+        this._notificationsService.success('Sucesso!', 'Itinerário criado com sucesso.', 5000);
       },
       error: (error: any) => {
-        this._notificationsService.error('Erro!', 'Erro ao criar itinerário.');
+        this._notificationsService.error('Erro!', 'Erro ao criar itinerário.', 5000);
       },
       complete: () => {
         this.selectedObjects = [];
@@ -94,7 +94,7 @@ export class CreateItineraryComponent {
     let description = this.newItinerary.metadata.find((metadata) => metadata.key === 'general.description');
 
     if (!title || !description) {
-      this._notificationsService.error('Erro!', 'Os metadados padronizados \'Geral > Título e Descrição\' são obrigatórios.');
+      this._notificationsService.error('Erro!', 'Os metadados padronizados \'Geral > Título e Descrição\' são obrigatórios.', 5000);
     }
 
     return !!title && !!description;
@@ -102,7 +102,7 @@ export class CreateItineraryComponent {
 
   checkMandatoryItinerary(): boolean {
     if (this.newItinerary.content.length < 2) {
-      this._notificationsService.error('Erro!', 'Ao menos dois objetos devem compor um itinerário.');
+      this._notificationsService.error('Erro!', 'Ao menos dois objetos devem compor um itinerário.', 5000);
       return false;
     }
     return true;

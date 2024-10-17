@@ -74,7 +74,7 @@ export class ObjectsSelectionComponent implements OnInit {
 
   search() {
     if (this.filters.length == 0) {
-      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.');
+      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.', 5000);
     }
     else {
       let filters = this._processMetadataService.buildFiltersList(this.filters);

@@ -161,10 +161,10 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
 
     const observer = {
       next: (response: any) => {
-        this._notificationsService.success('Sucesso!', 'Objeto criado com sucesso.');
+        this._notificationsService.success('Sucesso!', 'Objeto criado com sucesso.', 5000);
       },
       error: (error: any) => {
-        this._notificationsService.error('Erro!', 'Erro ao criar objeto.');
+        this._notificationsService.error('Erro!', 'Erro ao criar objeto.', 5000);
       },
       complete: () => {
         this.resetCreation();
@@ -196,7 +196,7 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
 
   checkMandatoryObject(): boolean {
     if (this.newObject.length < 1) {
-      this._notificationsService.error('Erro!', 'O objeto deve conter ao menos um campo preenchido.');
+      this._notificationsService.error('Erro!', 'O objeto deve conter ao menos um campo preenchido.', 5000);
       return false;
     }
     return true;
@@ -204,7 +204,7 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
 
   checkMandatoryMetadata(): boolean {
     if (this.metadata.length < 1) {
-      this._notificationsService.error('Erro!', 'O objeto deve ter metadados associados.');
+      this._notificationsService.error('Erro!', 'O objeto deve ter metadados associados.', 5000);
       return false;
     }
     return true;

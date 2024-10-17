@@ -128,7 +128,7 @@ export class ConsumeComponent implements OnInit {
   shareItinerary(itinerary: Itineraries) {
     let link: URL = new URL(environment.clientUrl + '/consumir/' + itinerary._id);
     navigator.clipboard.writeText(link.toString());
-    this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
+    this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.", 5000);
   }
 
   downloadPdf(): void {
@@ -331,7 +331,7 @@ export class ConsumeComponent implements OnInit {
 
       this._emailSenderService.sendEmailWithAttachment(mailLoad).subscribe({
         next: response => {
-          this._notificationsService.success('Sucesso!', 'Email enviado com sucesso.', 5);
+          this._notificationsService.success('Sucesso!', 'Email enviado com sucesso.', 5000);
         },
         error: error => {
           console.error('Error sending email', error);

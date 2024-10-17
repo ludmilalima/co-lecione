@@ -14,7 +14,7 @@ export class ObjectsService {
   constructor(private _notificationsService: NotificationsService) { }
 
   private handleError(error: any): Observable<never> {
-    this._notificationsService.error('ObjectService error:', error['message']);
+    this._notificationsService.error('ObjectService error:', error['message'], 5000);
     console.error('ObjectService error: ', error);
     return throwError(() => error.error);
   }

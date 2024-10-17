@@ -174,7 +174,7 @@ export class ItinerariesComponent implements OnInit {
   shareItinerary(itinerary: Itineraries) {
     let link: URL = new URL(environment.clientUrl + '/consumir/' + itinerary._id);
     navigator.clipboard.writeText(link.toString());
-    this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.");
+    this._notificationsService.info("Link copiado!", "O link deste foi copiado para a área de transferência.", 5000);
   }
 
   openNewTab(itinerary: Itineraries) {
@@ -184,7 +184,7 @@ export class ItinerariesComponent implements OnInit {
 
   search() {
     if (this.metadata.length == 0) {
-      this._notificationsService.error("Erro!", "Nenhum filtro foi selecionado.");
+      this._notificationsService.error("Erro!", "Nenhum filtro foi selecionado.", 5000);
     } else {
       let filters = this._processMetadataService.buildFiltersList(this.metadata);
 

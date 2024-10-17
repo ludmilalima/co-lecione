@@ -14,7 +14,7 @@ export class ItinerariesService {
   constructor(private _notificationsService: NotificationsService) { }
 
   private handleError(error: any): Observable<never> {
-    this._notificationsService.error('ItinerariesService error:', error['message']);
+    this._notificationsService.error('ItinerariesService error:', error['message'], 5000);
     console.error('ItinerariesService error: ', error);
     return throwError(() => error.error);
   }
