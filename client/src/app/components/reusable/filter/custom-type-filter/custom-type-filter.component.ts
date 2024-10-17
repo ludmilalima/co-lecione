@@ -112,6 +112,7 @@ export class CustomTypeFilterComponent implements OnInit, OnChanges {
 
   clearFilter() {
     this.dataSource.data = [];
+    this.clearInput();
   }
 
 }
