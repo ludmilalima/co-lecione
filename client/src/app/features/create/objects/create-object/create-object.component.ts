@@ -67,7 +67,8 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
   editor: Editor;
   editorContent: Subscription;
 
-  touchedForm: boolean = false;
+  touchedForm: boolean;
+  doNotCreateObject: boolean = false;
 
   displayedColumns: string[] = ['chave', 'valor'];
 
@@ -102,6 +103,10 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
         }
       }
     });
+
+    this.touchedForm = false;
+
+    console.log('Create Object Component initialized');
   }
 
   ngAfterViewInit(): void {
@@ -148,50 +153,51 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
   }
 
   submit(): void {
-    for (const key in this.objForm.controls) {
-      if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
-        if (typeof this.objForm.get(key).value != 'string') {
-          var strContent = JSON.stringify(this.objForm.get(key).value);
-          this.newObject.push({ key: key, value: strContent });
-        } else {
-          this.newObject.push({ key: key, value: this.objForm.get(key).value });
-        }
+if (this.objForm.controls != undefined) {
+  for (const key in this.objForm.controls) {
+    if (this.objForm.get(key).value !== null && this.objForm.get(key).value !== '') {
+      if (typeof this.objForm.get(key).value != 'string') {
+        var strContent = JSON.stringify(this.objForm.get(key).value);
+        this.newObject.push({ key: key, value: strContent });
+      } else {
+        this.newObject.push({ key: key, value: this.objForm.get(key).value });
       }
-    }
-
-    const observer = {
-      next: (response: any) => {
-        this._notificationsService.success('Sucesso!', 'Objeto criado com sucesso.', 5000);
-      },
-      error: (error: any) => {
-        this._notificationsService.error('Erro!', 'Erro ao criar objeto.', 5000);
-      },
-      complete: () => {
-        this.resetCreation();
-      }
-    };
-
-    if (this.checkMandatoryObject() && this.checkMandatoryMetadata()) {
-
-      var obj = new Objects(
-        this.objectType,
-        this.newObject,
-        this.metadata
-      );
-
-      this._objectsService.createObject(obj).subscribe(observer);
     }
   }
 
+  const observer = {
+    next: (response: any) => {
+      this._notificationsService.success('Sucesso!', 'Objeto criado com sucesso.', 5000);
+    },
+    error: (error: any) => {
+      this._notificationsService.error('Erro!', 'Erro ao criar objeto.', 5000);
+    },
+    complete: () => {
+      this._confirmationDialogService.openDialog(`Deseja criar um novo objeto?`, () => this.resetCreation(), () => this.doNotResetCreation());
+    }
+  };
+
+  if (this.checkMandatoryObject() && this.checkMandatoryMetadata()) {
+
+    var obj = new Objects(
+      this.objectType,
+      this.newObject,
+      this.metadata
+    );
+
+    this._objectsService.createObject(obj).subscribe(observer);
+  }
+} else {
+  this._notificationsService.info('Atenção!', 'Ao menos um campo do objeto precisa ser preenchido.', 5000)
+}
+  }
+
   resetCreation(): void {
-    this.objForm.reset();
-    this.metadataForm.clearFilters();
-    this.newObject = [];
-    this.filters = [];
-    this.touchedForm = false;
-    this.updateMetadata();
-    this.objectType = undefined;
-    this.availableObjectsComponent.setObjectType(null);
+    window.location.reload();
+  }
+
+  doNotResetCreation(): void {
+    this.doNotCreateObject = true;
   }
 
   checkMandatoryObject(): boolean {
@@ -211,7 +217,11 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
   }
 
   isValid(): boolean {
-    return (this.metadata.length > 0) && this.objForm != undefined && this.objForm.controls != undefined;
+    let valid = (this.metadata.length > 0) && (this.objForm != null) && (!this.doNotCreateObject);
+    if (valid) {
+      valid = this.objForm.controls != undefined;
+    }
+    return valid
   }
 
   clearObject(): void {
