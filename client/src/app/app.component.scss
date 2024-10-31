@@ -1,3 +1,7 @@
+// Import the theme file
+@use '@angular/material' as mat;
+@use '../theme.scss' as *;
+
 .mat-sidenav {
   width: 200px;
 }
@@ -21,4 +25,9 @@
   flex: 1;
   overflow: auto;
   height: calc(100vh - 64px);
+}
+
+.active-link {
+  font-weight: bold; /* Bold text for active item */
+  background: mat.get-color-from-palette($theme-primary, 100);
 }
