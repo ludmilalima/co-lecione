@@ -6,21 +6,22 @@
 
     <div
       [ngSwitch]="node.object?.nodeInfo?.nodeType"
-      class="flex-container background-container"
+      class="flex-container"
     >
       <span *ngSwitchCase="'root'">
         {{
           _processStringService.convertString(node.object?.nodeInfo?.nodeType)
         }}
       </span>
-      <div *ngSwitchCase="'single-select'" class="flex-container">
-        <app-unit-select
+      <div *ngSwitchCase="'single-select'">
+        <button mat-button color="primary" (click)="openNodeDialog(node)">{{ _processStringService.convertString(node.name) }}</button>
+        <!-- <app-unit-select
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-unit-select>
+        ></app-unit-select> -->
       </div>
-      <div *ngSwitchCase="'multi-select'" class="flex-container">
+      <!-- <div *ngSwitchCase="'multi-select'" class="flex-container">
         <app-multiple-select
           class="flex-item"
           [object]="node.object"
@@ -33,11 +34,6 @@
           [object]="node.object"
           [filterComponent]="filters"
         ></app-generic-container>
-        <!-- <app-lang-string-type-filter
-          class="flex-item"
-          [object]="node.object"
-          [filterComponent]="filters"
-        ></app-lang-string-type-filter> -->
       </div>
       <div *ngSwitchCase="'characterString-type'" class="flex-container">
         <app-character-string-type-filter
@@ -53,7 +49,7 @@
           [filterComponent]="filters"
         >
         </app-boolean-type-filter>
-      </div>
+      </div> -->
       <div *ngSwitchDefault>
         <span>{{
           _processStringService.convertString(node.object?.nodeInfo?.nodeType)

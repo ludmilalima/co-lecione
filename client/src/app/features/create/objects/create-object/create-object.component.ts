@@ -105,8 +105,6 @@ export class CreateObjectComponent implements OnInit, AfterViewInit, DoCheck, On
     });
 
     this.touchedForm = false;
-
-    console.log('Create Object Component initialized');
   }
 
   ngAfterViewInit(): void {

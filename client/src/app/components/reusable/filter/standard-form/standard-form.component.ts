@@ -2,7 +2,6 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { MatTreeFlattener, MatTreeFlatDataSource, MatTreeModule } from '@angular/material/tree';
 import { Obaa } from 'src/app/core/models/metadata/obaa.model';
-import { ProcessMetadataService } from '../process-metadata.service';
 import { ProcessStringService } from '../process-string.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +14,7 @@ import { MultipleSelectComponent } from '../multiple-select/multiple-select.comp
 import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
 import { UnitSelectComponent } from '../unit-select/unit-select.component';
 import { GenericContainerComponent } from '../generic-container/generic-container.component';
+import { DialogService } from '../dialog.service';
 
 interface ObaaNode {
   name: string;
@@ -82,7 +82,7 @@ export class StandardFormComponent {
 
   constructor(
     public _processStringService: ProcessStringService,
-    private _processMetadataService: ProcessMetadataService,
+    private _dialogService: DialogService,
   ) {
     this._processStringService = new ProcessStringService();
 
@@ -135,6 +135,10 @@ export class StandardFormComponent {
     if (changes['clearFilters'] && changes['clearFilters'].currentValue) {
       this.clearFilter();
     }
+  }
+
+  openNodeDialog(node: any): void {
+    this._dialogService.openDialog(node, this.filters);
   }
 
   clearFilter() {
