@@ -1,18 +1,24 @@
-<div class="field-container">
-  <div class="flex-container">
-    <mat-form-field class="flex-item">
-      <mat-label>{{ _processStringService.getLastToken(object.nodeInfo.key) }}</mat-label>
-      <mat-select
-        (selectionChange)="onSelectionChange($event.value)"
-        [value]="result.value"
-        multiple
-      >
-        <mat-option
-          *ngFor="let item of object.nodeInfo.optionsList"
-          [value]="item"
-          >{{ item }}</mat-option
+<h1 mat-dialog-title>Selecione uma ou mais alternativas:</h1>
+<div mat-dialog-content>
+  <div class="field-container">
+    <div class="flex-container">
+      <mat-form-field class="flex-item">
+        <mat-label>{{ _processStringService.getLastToken(object.nodeInfo.key) }}</mat-label>
+        <mat-select
+          (selectionChange)="onSelectionChange($event.value)"
+          [value]="result.value"
+          multiple
         >
-      </mat-select>
-    </mat-form-field>
+          <mat-option
+            *ngFor="let item of object.nodeInfo.optionsList"
+            [value]="item"
+            >{{ item }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="primary" mat-dialog-close>Concluído</button>
 </div>

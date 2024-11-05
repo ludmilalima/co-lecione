@@ -4,52 +4,68 @@
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button disabled title="Button"></button>
 
-    <div
-      [ngSwitch]="node.object?.nodeInfo?.nodeType"
-      class="flex-container"
-    >
+    <div [ngSwitch]="node.object?.nodeInfo?.nodeType" class="flex-container">
       <span *ngSwitchCase="'root'">
         {{
           _processStringService.convertString(node.object?.nodeInfo?.nodeType)
         }}
       </span>
       <div *ngSwitchCase="'single-select'">
-        <button mat-button color="primary" (click)="openNodeDialog(node)">{{ _processStringService.convertString(node.name) }}</button>
+        <button mat-button color="primary" (click)="openNodeDialog(node)">
+          {{ _processStringService.convertString(node.name) }}
+        </button>
         <!-- <app-unit-select
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
         ></app-unit-select> -->
       </div>
-      <!-- <div *ngSwitchCase="'multi-select'" class="flex-container">
-        <app-multiple-select
+      <div *ngSwitchCase="'multi-select'" class="flex-container">
+        <button mat-button color="primary" (click)="openNodeDialog(node)">
+          {{ _processStringService.convertString(node.name) }}
+        </button>
+        <!-- <app-multiple-select
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-multiple-select>
+        ></app-multiple-select> -->
       </div>
       <div *ngSwitchCase="'langString-type'" class="flex-container">
-        <app-generic-container
+        <button
+          mat-button
+          color="primary"
+          (click)="openNodeDialog(node)"
+          [disabled]="checkIfDisabled(node)"
+        >
+          {{ _processStringService.convertString(node.name) }}
+        </button>
+        <!-- <app-generic-container
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-generic-container>
+        ></app-generic-container> -->
       </div>
       <div *ngSwitchCase="'characterString-type'" class="flex-container">
-        <app-character-string-type-filter
+        <button mat-button color="primary" (click)="openNodeDialog(node)">
+          {{ _processStringService.convertString(node.name) }}
+        </button>
+        <!-- <app-character-string-type-filter
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
-        ></app-character-string-type-filter>
+        ></app-character-string-type-filter> -->
       </div>
       <div *ngSwitchCase="'boolean-type'" class="flex-container">
-        <app-boolean-type-filter
+        <button mat-button color="primary" (click)="openNodeDialog(node)">
+          {{ _processStringService.convertString(node.name) }}
+        </button>
+        <!-- <app-boolean-type-filter
           class="flex-item"
           [object]="node.object"
           [filterComponent]="filters"
         >
-        </app-boolean-type-filter>
-      </div> -->
+        </app-boolean-type-filter> -->
+      </div>
       <div *ngSwitchDefault>
         <span>{{
           _processStringService.convertString(node.object?.nodeInfo?.nodeType)

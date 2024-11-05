@@ -1,59 +1,131 @@
-<div class="field-container">
-  <h4>
-    {{ _processStringService.getLastToken(object.nodeInfo.key) }}
-  </h4>
-  <div
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="10px"
-    *ngIf="result.content.length < result.nodeInfo.maxOccurs"
-  >
-    <div fxFlex>
-      <p>
-        <app-simple-text-input
-          [object]="object"
-          (valueChange)="onContentChange($event)"
-        ></app-simple-text-input>
-      </p>
-    </div>
-    <button
-      *ngIf="result.content.length < object.nodeInfo.maxOccurs"
-      type="submit"
-      color="primary"
-      mat-icon-button
-      (click)="addCharacterString()"
+<div *ngIf="object?.nodeInfo?.nodeType != 'characterString-type'">
+  <div class="field-container">
+    <h4>
+      {{ _processStringService.getLastToken(object.nodeInfo.key) }}
+    </h4>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="10px"
+      *ngIf="result.content.length < result.nodeInfo.maxOccurs"
     >
-      <mat-icon>add</mat-icon>
-    </button>
+      <div fxFlex>
+        <p>
+          <app-simple-text-input
+            [object]="object"
+            (valueChange)="onContentChange($event)"
+          ></app-simple-text-input>
+        </p>
+      </div>
+      <button
+        *ngIf="result.content.length < object.nodeInfo.maxOccurs"
+        type="submit"
+        color="primary"
+        mat-icon-button
+        (click)="addCharacterString()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div class="field-container" *ngIf="result.content.length > 0">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Content Column -->
+        <ng-container matColumnDef="content">
+          <th mat-header-cell *matHeaderCellDef>Content</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-button color="warn" (click)="removeCharacterString(i)">
+              Remove
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <h5 [align]="'end'">
+      N character strings, where {{ object.nodeInfo.minOccurs }} ≥ N ≤
+      {{ object.nodeInfo.maxOccurs }}.
+    </h5>
   </div>
+</div>
 
-  <div class="field-container" *ngIf="result.content.length > 0">
-    <table mat-table [dataSource]="dataSource">
-      <!-- Content Column -->
-      <ng-container matColumnDef="content">
-        <th mat-header-cell *matHeaderCellDef>Content</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element }}
-        </td>
-      </ng-container>
+<div *ngIf="object?.nodeInfo?.nodeType == 'characterString-type'">
+  <h1 mat-dialog-title>N entradas de texto, onde {{ object.nodeInfo.minOccurs }} ≥ N ≤
+    {{ object.nodeInfo.maxOccurs }}</h1>
+  <div mat-dialog-content>
+    <div class="field-container">
+      <!-- <h5 [align]="'end'">
+        N character strings, where {{ object.nodeInfo.minOccurs }} ≥ N ≤
+        {{ object.nodeInfo.maxOccurs }}.
+      </h5> -->
+      <div
+        class="background-container"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="10px"
+        *ngIf="result.content.length < result.nodeInfo.maxOccurs"
+      >
+        <div fxFlex>
+          <p>
+            <app-simple-text-input
+              [object]="object"
+              (valueChange)="onContentChange($event)"
+            ></app-simple-text-input>
+          </p>
+        </div>
+        <button
+          *ngIf="result.content.length < object.nodeInfo.maxOccurs"
+          type="submit"
+          color="primary"
+          mat-icon-button
+          (click)="addCharacterString()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element; let i = index">
-          <button mat-button color="warn" (click)="removeCharacterString(i)">
-            Remove
-          </button>
-        </td>
-      </ng-container>
+      <div class="field-container" *ngIf="result.content.length > 0">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Content Column -->
+          <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef>Content</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element }}
+            </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <button
+                mat-button
+                color="warn"
+                (click)="removeCharacterString(i)"
+              >
+                Remove
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
   </div>
-
-  <h5 [align]="'end'">
-    N character strings, where {{ object.nodeInfo.minOccurs }} ≥ N ≤
-    {{ object.nodeInfo.maxOccurs }}.
-  </h5>
+  <div mat-dialog-actions align="end">
+    <button mat-button color="primary" mat-dialog-close>Concluído</button>
+  </div>
 </div>

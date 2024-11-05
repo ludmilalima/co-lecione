@@ -50,6 +50,7 @@
           <app-metadata-form
             fxFlex
             [metadata]="filters"
+            (filtersCleaned)="handleFiltersCleaned($event)"
             #metadataForm
           ></app-metadata-form>
         </div>

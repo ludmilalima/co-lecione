@@ -1,8 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Inject, Input, ViewChild } from '@angular/core';
 import { CharacterStringType, NodeInfo } from 'src/app/core/models/metadata/util.model';
 import { SimpleTextInputComponent } from '../simple-text-input/simple-text-input.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { FilterComponent } from '../filter.component';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ProcessStringService } from '../process-string.service';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-character-string-type-filter',
@@ -25,7 +25,8 @@ import { ProcessStringService } from '../process-string.service';
     MatInputModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './character-string-type-filter.component.html',
   styleUrl: './character-string-type-filter.component.scss'
@@ -36,7 +37,10 @@ export class CharacterStringTypeFilterComponent {
 
   @ViewChild(SimpleTextInputComponent) simpleTextInputComponent: SimpleTextInputComponent;
 
-  constructor(public _processStringService: ProcessStringService) { }
+  constructor(
+    public _processStringService: ProcessStringService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
   result: CharacterStringType;
 
@@ -46,6 +50,9 @@ export class CharacterStringTypeFilterComponent {
   dataSource = new MatTableDataSource<any>();
 
   ngOnInit() {
+    this.object = this.data.object;
+    this.filterComponent = this.data.filterComponent;
+
     this.result = JSON.parse(JSON.stringify(this.object));
     this.retrieveData();
   }

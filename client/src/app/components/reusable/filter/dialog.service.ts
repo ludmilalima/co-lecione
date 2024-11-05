@@ -1,39 +1,41 @@
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { UnitSelectComponent } from './unit-select/unit-select.component';
-import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
-import { LangStringTypeFilterComponent } from './lang-string-type-filter/lang-string-type-filter.component';
-import { CharacterStringTypeFilterComponent } from './character-string-type-filter/character-string-type-filter.component';
-import { BooleanTypeFilterComponent } from './boolean-type-filter/boolean-type-filter.component';
+import { Injectable } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { UnitSelectComponent } from "./unit-select/unit-select.component";
+import { MultipleSelectComponent } from "./multiple-select/multiple-select.component";
+import { CharacterStringTypeFilterComponent } from "./character-string-type-filter/character-string-type-filter.component";
+import { BooleanTypeFilterComponent } from "./boolean-type-filter/boolean-type-filter.component";
+import { GenericContainerComponent } from "./generic-container/generic-container.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DialogService {
-  constructor(private dialog: MatDialog) {
-  }
+  constructor(private dialog: MatDialog) {}
 
-  openDialog(node: any, filters: any): void {
+  openDialog(node: any, filters: Array<any>): void {
     const nodeType = node.object?.nodeInfo?.nodeType;
-    const dialogConfig = { data: { object: node.object, filterComponent: filters } };
+    const dialogConfig = {
+      data: { object: node.object, filterComponent: filters },
+      width: '80%'
+    };
     switch (nodeType) {
-      case 'single-select':
+      case "single-select":
         this.dialog.open(UnitSelectComponent, dialogConfig);
         break;
-      case 'multi-select':
-        this.dialog.open(MultipleSelectComponent, { data: node });
+      case "multi-select":
+        this.dialog.open(MultipleSelectComponent, dialogConfig);
         break;
-      case 'langString-type':
-        this.dialog.open(LangStringTypeFilterComponent, { data: node });
+      case "langString-type":
+        this.dialog.open(GenericContainerComponent, dialogConfig);
         break;
-      case 'characterString-type':
-        this.dialog.open(CharacterStringTypeFilterComponent, { data: node });
+      case "characterString-type":
+        this.dialog.open(CharacterStringTypeFilterComponent, dialogConfig);
         break;
-      case 'boolean-type':
-        this.dialog.open(BooleanTypeFilterComponent, { data: node });
+      case "boolean-type":
+        this.dialog.open(BooleanTypeFilterComponent, dialogConfig);
         break;
       default:
-        console.warn('Tipo desconhecido:', nodeType);
+        console.warn("Tipo desconhecido:", nodeType);
     }
   }
 }

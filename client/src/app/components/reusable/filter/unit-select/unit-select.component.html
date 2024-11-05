@@ -1,10 +1,36 @@
-
-<h1 mat-dialog-title>Selecione uma alternativa:</h1>
-<div mat-dialog-content>
+<div *ngIf="object?.nodeInfo?.nodeType == 'single-select'">
+  <h1 mat-dialog-title>Selecione uma alternativa:</h1>
+  <div mat-dialog-content>
+    <div class="field-container">
+      <div class="flex-container">
+        <mat-form-field class="flex-item">
+          <mat-label>{{
+            _processStringService.getLastToken(object.nodeInfo.key)
+          }}</mat-label>
+          <mat-select
+            (selectionChange)="onSelectionChange($event.value)"
+            [value]="result.value"
+          >
+            @for (item of object.nodeInfo.optionsList; track
+            object.nodeInfo.optionsList) {
+            <mat-option [value]="item">{{ item }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button color="primary" mat-dialog-close>Concluído</button>
+  </div>
+</div>
+<div *ngIf="object?.nodeInfo?.nodeType != 'single-select'">
   <div class="field-container">
     <div class="flex-container">
       <mat-form-field class="flex-item">
-        <mat-label>{{ _processStringService.getLastToken(object.nodeInfo.key) }}</mat-label>
+        <mat-label>{{
+          _processStringService.getLastToken(object.nodeInfo.key)
+        }}</mat-label>
         <mat-select
           (selectionChange)="onSelectionChange($event.value)"
           [value]="result.value"
@@ -17,7 +43,4 @@
       </mat-form-field>
     </div>
   </div>
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-button color="primary" mat-dialog-close>Concluído</button>
 </div>

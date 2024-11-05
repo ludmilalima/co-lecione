@@ -1,3 +1,15 @@
-<div class="field-container">
-  <app-unit-checkbox [object]="object" (valueChange)="onElementChange($event)"> </app-unit-checkbox>
+<div>
+  <h1 mat-dialog-title>Assinale se verdadeiro</h1>
+  <div mat-dialog-content>
+    <div class="field-container">
+      <app-unit-checkbox
+        [object]="object"
+        (valueChange)="onElementChange($event)"
+      >
+      </app-unit-checkbox>
+    </div>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button color="primary" mat-dialog-close>Concluído</button>
+  </div>
 </div>

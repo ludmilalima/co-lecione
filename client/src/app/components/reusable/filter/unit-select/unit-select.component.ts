@@ -14,11 +14,13 @@ import { VocabularyType } from "src/app/core/models/metadata/util.model";
 import { ProcessStringService } from "../process-string.service";
 import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from "@angular/material/button";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-unit-select",
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
 
     MatFormFieldModule,
@@ -49,7 +51,12 @@ export class UnitSelectComponent implements OnInit {
     this.result = JSON.parse(JSON.stringify(this.object));
 
     if (this.object.nodeInfo.nodeType == "single-select") {
-      this.retrieveData();
+      if (
+        this.filterComponent != undefined &&
+        this.filterComponent.length > 0
+      ) {
+        this.retrieveData();
+      }
     }
   }
 

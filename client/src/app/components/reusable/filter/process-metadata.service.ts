@@ -40,6 +40,7 @@ export class ProcessMetadataService {
           break;
         case 'boolean-type':
           filterValue = item.content;
+          filtersList.push({ key: filterKey, value: filterValue });
           break;
       }
     });
