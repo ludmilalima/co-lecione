@@ -67,9 +67,12 @@
         </app-boolean-type-filter> -->
       </div>
       <div *ngSwitchDefault>
-        <span>{{
-          _processStringService.convertString(node.object?.nodeInfo?.nodeType)
-        }}</span>
+        <button mat-button color="primary" [disabled]="true">
+          {{ _processStringService.convertString(node.name) }} ({{
+            _processStringService.convertString(node.object?.nodeInfo?.nodeType)
+          }}
+          não implementado)
+        </button>
       </div>
     </div>
   </mat-tree-node>

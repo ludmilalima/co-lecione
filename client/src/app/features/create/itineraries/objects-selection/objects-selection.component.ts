@@ -13,6 +13,7 @@ import { SelectionTableComponent } from '../selection-table/selection-table.comp
 import { ItineraryTableComponent } from '../itinerary-table/itinerary-table.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SortableTableComponent } from '../sortable-table/sortable-table.component';
+import { MetadataFormComponent } from 'src/app/components/reusable/metadata-form/metadata-form.component';
 
 @Component({
   selector: 'app-objects-selection',
@@ -22,6 +23,7 @@ import { SortableTableComponent } from '../sortable-table/sortable-table.compone
     FlexLayoutModule,
 
     FilterComponent,
+    MetadataFormComponent,
     CardsComponent,
     QuestionComponent,
     SelectionTableComponent,
@@ -36,10 +38,12 @@ import { SortableTableComponent } from '../sortable-table/sortable-table.compone
 })
 export class ObjectsSelectionComponent implements OnInit {
   @Input() selectedObjects: Array<any> = [];
-  @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
+  //@ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
 
   filters: Array<any> = [];
   objects: Array<any> = [];
+
+  buttonAction = { label: "Buscar", action: this.search.bind(this) };
 
   constructor(
     private _objectsService: ObjectsService,
@@ -87,7 +91,8 @@ export class ObjectsSelectionComponent implements OnInit {
   }
 
   clearFilters() {
-    this.filter.clearFilters();
+    //this.filter.clearFilters();
+    this.filters = [];
     this.getAllObjects();
   }
 
