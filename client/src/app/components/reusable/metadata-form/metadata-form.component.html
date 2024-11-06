@@ -1,6 +1,42 @@
 <div class="container">
   <app-filter #filter [filters]="metadata"></app-filter>
 
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Chave Column -->
+    <ng-container matColumnDef="key">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Chave
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.key }} </mat-cell>
+    </ng-container>
+
+    <!-- Value Column -->
+    <ng-container matColumnDef="value">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Valor
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.value }} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Ação </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button color="warn" (click)="removeElement(element)">
+          Remover
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+
   <div class="button-container" [align]="'end'">
     <button mat-button (click)="clearFilters()" color="primary">Limpar</button>
     <button
