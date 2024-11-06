@@ -100,6 +100,7 @@ export class MetadataFormComponent implements OnInit, AfterViewInit, DoCheck {
 
   clearFilters() {
     this.filter.clearFilters();
+    this.metadata = [];
     this.filtersCleaned.emit();
   }
 }

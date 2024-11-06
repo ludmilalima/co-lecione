@@ -38,7 +38,7 @@ import { NotificationsService } from "src/app/shared/notifications/notifications
   styleUrl: "./custom-type-filter.component.scss",
 })
 export class CustomTypeFilterComponent implements OnInit, OnChanges {
-  @Input() filterComponent: Array<any>;
+  @Input() metadata: Array<any>;
   @Input() clearFilters: boolean;
 
   @ViewChild("keySimpleTextInputComponent", { read: SimpleTextInputComponent })
@@ -88,13 +88,13 @@ export class CustomTypeFilterComponent implements OnInit, OnChanges {
 
       //this.dataSource.data = [...this.dataSource.data, { key: this.key, value: this.value }];
 
-      let item = this.filterComponent.find(
+      let item = this.metadata.find(
         (item) => item.nodeInfo.key === result.nodeInfo.key
       );
       if (item == undefined) {
-        this.filterComponent.push(result);
+        this.metadata.push(result);
       } else {
-        this.filterComponent[this.filterComponent.indexOf(item)] = result;
+        this.metadata[this.metadata.indexOf(item)] = result;
       }
 
       this.clearInput();
@@ -126,7 +126,8 @@ export class CustomTypeFilterComponent implements OnInit, OnChanges {
   // };
 
   clearFilter() {
-    this.dataSource.data = [];
+    //this.dataSource.data = [];
+    //this.metadata = [];
     this.clearInput();
   }
 }

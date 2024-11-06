@@ -1,85 +1,95 @@
-import { Injectable } from '@angular/core';
-import { from, Observable, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Objects } from './objects.model';
-import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { Injectable } from "@angular/core";
+import { from, Observable, throwError } from "rxjs";
+import { environment } from "src/environments/environment";
+import { Objects } from "./objects.model";
+import { NotificationsService } from "src/app/shared/notifications/notifications.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ObjectsService {
-
   baseUrl = environment.baseUrl;
 
-  constructor(private _notificationsService: NotificationsService) { }
+  constructor(private _notificationsService: NotificationsService) {}
 
   private handleError(error: any): Observable<never> {
-    this._notificationsService.error('ObjectService error:', error['message'], 5000);
-    console.error('ObjectService error: ', error);
+    this._notificationsService.error(
+      "Erro na busca de objetos:",
+      error["message"],
+      5000
+    );
+    console.error("Erro na busca de objetos: ", error);
     return throwError(() => error.error);
   }
 
   createObject(object: Objects): Observable<any> {
-    return from(fetch(this.baseUrl + '/objects/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(object)
-    }).then(response => {
-      if (!response.ok) {
-        this.handleError(response);
-        throw new Error('Failed to create object');
-      }
-      return response.json();
-    }).catch(error => {
-      this.handleError(error);
-      throw error;
-    }));
+    return from(
+      fetch(this.baseUrl + "/objects/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(object),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            this.handleError(response);
+            throw new Error("Failed to create object");
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          this.handleError(error);
+          throw error;
+        })
+    );
   }
 
-
   getAllObjects(): Observable<any> {
-    return from(fetch(this.baseUrl + '/objects/read-all', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      if (!response.ok) {
-        this.handleError(response);
-        throw new Error('Failed to get objects');
-      }
-      return response.json();
-    }).catch(error => {
-      this.handleError(error);
-      throw error;
-    }));
+    return from(
+      fetch(this.baseUrl + "/objects/read-all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            this.handleError(response);
+            throw new Error("Failed to get objects");
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          this.handleError(error);
+          throw error;
+        })
+    );
   }
 
   getObjectById(id: string): Observable<any> {
     return from(
       fetch(`${this.baseUrl}/objects/search-id/${id}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            return response.json().then(err => {
-              throw new Error(err.message || 'Failed to get objects');
+            return response.json().then((err) => {
+              throw new Error(err.message || "Failed to get objects");
             });
           }
           return response.json();
         })
-        .then(data => {
+        .then((data) => {
           if (!data || !data._id) {
-            throw new Error('Invalid object data received');
+            throw new Error("Invalid object data received");
           }
           return data;
         })
-        .catch(error => {
+        .catch((error) => {
           this.handleError(error);
           throw error;
         })
@@ -89,21 +99,21 @@ export class ObjectsService {
   filterAny(filters: any): Observable<any> {
     return from(
       fetch(`${this.baseUrl}/objects/search-any`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(filters)
+        body: JSON.stringify(filters),
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            return response.json().then(err => {
-              throw new Error(err.message || 'Failed to get objects');
+            return response.json().then((err) => {
+              throw new Error(err.message || "Failed to get objects");
             });
           }
           return response.json();
         })
-        .catch(error => {
+        .catch((error) => {
           this.handleError(error);
           throw error;
         })

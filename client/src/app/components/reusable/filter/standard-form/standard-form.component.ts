@@ -1,5 +1,5 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, Input, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   MatTreeFlattener,
   MatTreeFlatDataSource,
@@ -55,7 +55,7 @@ interface ExampleFlatNode {
   templateUrl: "./standard-form.component.html",
   styleUrl: "./standard-form.component.scss",
 })
-export class StandardFormComponent {
+export class StandardFormComponent implements OnChanges {
   @Input() filters: Array<any>;
   @Input() clearFilters: boolean;
 

@@ -1,60 +1,67 @@
-import { Injectable } from '@angular/core';
-import { from, Observable, throwError } from 'rxjs';
-import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
-import { environment } from 'src/environments/environment';
-import { Itineraries } from './itineraries.model';
+import { Injectable } from "@angular/core";
+import { from, Observable, throwError } from "rxjs";
+import { NotificationsService } from "src/app/shared/notifications/notifications.service";
+import { environment } from "src/environments/environment";
+import { Itineraries } from "./itineraries.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ItinerariesService {
-
   baseUrl = environment.baseUrl;
 
-  constructor(private _notificationsService: NotificationsService) { }
+  constructor(private _notificationsService: NotificationsService) {}
 
   private handleError(error: any): Observable<never> {
-    this._notificationsService.error('ItinerariesService error:', error['message'], 5000);
-    console.error('ItinerariesService error: ', error);
+    this._notificationsService.error(
+      "Erro na busca de roteiros:",
+      error["message"],
+      5000
+    );
+    console.error("Erro na busca de roteiros: ", error);
     return throwError(() => error.error);
   }
 
   createItinerary(itinerary: Itineraries): Observable<any> {
-    return from(fetch(this.baseUrl + '/itineraries/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(itinerary)
-    }).then(response => {
-      if (!response.ok) {
-        this.handleError(response);
-        throw new Error('Failed to create itinerary');
-      }
-      return response.json();
-    }).catch(error => {
-      this.handleError(error);
-      throw error;
-    }));
+    return from(
+      fetch(this.baseUrl + "/itineraries/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(itinerary),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            this.handleError(response);
+            throw new Error("Failed to create itinerary");
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          this.handleError(error);
+          throw error;
+        })
+    );
   }
 
   getItineraryById(id: string): Observable<any> {
     return from(
       fetch(`${this.baseUrl}/itineraries/search-id/${id}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            return response.json().then(err => {
-              throw new Error(err.message || 'Failed to get itinerary');
+            return response.json().then((err) => {
+              throw new Error(err.message || "Failed to get itinerary");
             });
           }
           return response.json();
         })
-        .catch(error => {
+        .catch((error) => {
           this.handleError(error);
           throw error;
         })
@@ -62,41 +69,45 @@ export class ItinerariesService {
   }
 
   getAllItineraries(): Observable<any> {
-    return from(fetch(this.baseUrl + '/itineraries/read-all', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      if (!response.ok) {
-        this.handleError(response);
-        throw new Error('Failed to get itineraries');
-      }
-      return response.json();
-    }).catch(error => {
-      this.handleError(error);
-      throw error;
-    }));
+    return from(
+      fetch(this.baseUrl + "/itineraries/read-all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            this.handleError(response);
+            throw new Error("Failed to get itineraries");
+          }
+          return response.json();
+        })
+        .catch((error) => {
+          this.handleError(error);
+          throw error;
+        })
+    );
   }
 
   filterAny(filters: any): Observable<any> {
     return from(
       fetch(`${this.baseUrl}/itineraries/search-any`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(filters)
+        body: JSON.stringify(filters),
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            return response.json().then(err => {
-              throw new Error(err.message || 'Failed to get itineraries');
+            return response.json().then((err) => {
+              throw new Error(err.message || "Failed to get itineraries");
             });
           }
           return response.json();
         })
-        .catch(error => {
+        .catch((error) => {
           this.handleError(error);
           throw error;
         })

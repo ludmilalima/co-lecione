@@ -1,36 +1,40 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FilterComponent } from 'src/app/components/reusable/filter/filter.component';
-import { ProcessMetadataService } from 'src/app/components/reusable/filter/process-metadata.service';
-import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
-import { ConvertByTypeService } from 'src/app/shared/services/convert-by-type.service';
-import { ObjectsService } from '../../create/objects/objects.service';
-import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { QuestionComponent } from 'src/app/components/reusable/question/question.component';
-import { CardsComponent } from 'src/app/components/reusable/cards/cards.component';
-import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { FilterComponent } from "src/app/components/reusable/filter/filter.component";
+import { ProcessMetadataService } from "src/app/components/reusable/filter/process-metadata.service";
+import { NotificationsService } from "src/app/shared/notifications/notifications.service";
+import { ConvertByTypeService } from "src/app/shared/services/convert-by-type.service";
+import { ObjectsService } from "../../create/objects/objects.service";
+import { CommonModule } from "@angular/common";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { QuestionComponent } from "src/app/components/reusable/question/question.component";
+import { CardsComponent } from "src/app/components/reusable/cards/cards.component";
+import { MatButtonModule } from "@angular/material/button";
+import { MetadataFormComponent } from "src/app/components/reusable/metadata-form/metadata-form.component";
 
 @Component({
-  selector: 'app-objects',
+  selector: "app-objects",
   standalone: true,
   imports: [
     CommonModule,
     FlexLayoutModule,
 
+    MetadataFormComponent,
     FilterComponent,
     QuestionComponent,
     CardsComponent,
 
     MatButtonModule,
   ],
-  templateUrl: './objects.component.html',
-  styleUrl: './objects.component.scss'
+  templateUrl: "./objects.component.html",
+  styleUrl: "./objects.component.scss",
 })
 export class ObjectsComponent implements OnInit {
-  @ViewChild('filter', { read: FilterComponent }) filter: FilterComponent;
+  //@ViewChild("filter", { read: FilterComponent }) filter: FilterComponent;
 
   objects: Array<any> = [];
-  filters: Array<any> = [];
+  metadata: Array<any> = [];
+
+  buttonAction = { label: "Buscar", action: this.search.bind(this) };
 
   constructor(
     private _objectsService: ObjectsService,
@@ -38,10 +42,10 @@ export class ObjectsComponent implements OnInit {
     private _processMetadataService: ProcessMetadataService,
     public _notificationsService: NotificationsService,
     private changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this._objectsService.getAllObjects().subscribe(response => {
+    this._objectsService.getAllObjects().subscribe((response) => {
       this.objects = response.map((object: any) => {
         return {
           id: object._id,
@@ -64,12 +68,18 @@ export class ObjectsComponent implements OnInit {
   }
 
   search() {
-    if (this.filters.length == 0) {
-      this._notificationsService.error('Erro', 'Nenhum filtro selecionado.', 5000);
-    }
-    else {
-      let filters = this._processMetadataService.buildFiltersList(this.filters);
-      this._objectsService.filterAny(filters).subscribe(data => {
+    if (this.metadata.length == 0) {
+      this.getAllObjects();
+      this._notificationsService.error(
+        "Erro",
+        "Nenhum filtro selecionado.",
+        5000
+      );
+    } else {
+      let filters = this._processMetadataService.buildFiltersList(
+        this.metadata
+      );
+      this._objectsService.filterAny(filters).subscribe((data) => {
         this.objects = data;
         this.processObjects(this.objects);
         this.changeDetectorRef.detectChanges();
@@ -78,12 +88,12 @@ export class ObjectsComponent implements OnInit {
   }
 
   clearFilters() {
-    this.filter.clearFilters();
+    this.metadata = [];
     this.getAllObjects();
   }
 
   getAllObjects() {
-    this._objectsService.getAllObjects().subscribe(data => {
+    this._objectsService.getAllObjects().subscribe((data) => {
       this.objects = data;
       this.processObjects(this.objects);
     });

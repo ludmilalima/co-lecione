@@ -1,36 +1,42 @@
 <div class="container wrapper">
-    <app-filter #filter [filters]="filters"></app-filter>
+  <!-- <app-filter #filter [filters]="filters"></app-filter> -->
+  <app-metadata-form
+    #metadataForm
+    [metadata]="metadata"
+    [buttonAction]="buttonAction"
+    (filtersCleaned)="clearFilters()"
+  ></app-metadata-form>
 
-    <div class="button-container" [align]="'end'">
-      <button mat-button (click)="clearFilters()" color="primary">Limpar</button>
-      <button mat-button (click)="search()" color="primary">Buscar</button>
-    </div>
-  </div>
+  <!-- <div class="button-container" [align]="'end'">
+    <button mat-button (click)="clearFilters()" color="primary">Limpar</button>
+    <button mat-button (click)="search()" color="primary">Buscar</button>
+  </div> -->
+</div>
 
-  <div *ngFor="let item of objects">
-    <div *ngIf="item.type == 'card'">
-      <app-cards
-        class="object-container wrapper"
-        [avatarSrc]="item.content.avatarSrc"
-        [headerImageSrc]="item.content.headerImageSrc"
-        [title]="item.content.title"
-        [subtitle]="item.content.subtitle"
-        [content]="item.content.content"
-        [actionTitle]="item.content.actionTitle"
-        [actionLink]="item.content.actionLink"
-      >
-      </app-cards>
-    </div>
-    <div *ngIf="item.type == 'question'">
-      <question
-        class="object-container wrapper"
-        [topic]="item.content.topic"
-        [note]="item.content.note"
-        [figureSrc]="item.content.figureSrc"
-        [statement]="item.content.statement"
-        [alternatives]="item.content.alternatives"
-        [discursive]="item.content.discursive"
-      >
-      </question>
-    </div>
+<div *ngFor="let item of objects">
+  <div *ngIf="item.type == 'card'">
+    <app-cards
+      class="object-container wrapper"
+      [avatarSrc]="item.content.avatarSrc"
+      [headerImageSrc]="item.content.headerImageSrc"
+      [title]="item.content.title"
+      [subtitle]="item.content.subtitle"
+      [content]="item.content.content"
+      [actionTitle]="item.content.actionTitle"
+      [actionLink]="item.content.actionLink"
+    >
+    </app-cards>
   </div>
+  <div *ngIf="item.type == 'question'">
+    <question
+      class="object-container wrapper"
+      [topic]="item.content.topic"
+      [note]="item.content.note"
+      [figureSrc]="item.content.figureSrc"
+      [statement]="item.content.statement"
+      [alternatives]="item.content.alternatives"
+      [discursive]="item.content.discursive"
+    >
+    </question>
+  </div>
+</div>

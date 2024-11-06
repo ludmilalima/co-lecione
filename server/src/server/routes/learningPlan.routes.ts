@@ -285,7 +285,7 @@ learningPlanRouter.get('/search-all', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);
@@ -311,7 +311,7 @@ learningPlanRouter.post('/search-any', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);
@@ -335,7 +335,7 @@ learningPlanRouter.get('/search-by-keys', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);
@@ -359,7 +359,7 @@ learningPlanRouter.get('/search-by-values', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);
@@ -399,7 +399,7 @@ learningPlanRouter.get('/search-by-authors', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);
@@ -422,7 +422,7 @@ learningPlanRouter.get('/search-by-titles', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No itineraries found.' });
+            return res.status(404).json({ message: 'Nenhum itinerário encontrado.' });
         }
 
         return res.status(200).json(objects);

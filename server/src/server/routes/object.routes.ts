@@ -215,7 +215,7 @@ objectRouter.get('/read-all', async (req, res) => {
         const objects = await ObjectModel.find();
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No objects found.' });
+            return res.status(404).json({ message: 'Não foram encontrados objetos.' });
         }
 
         return res.status(200).json(objects);
@@ -286,7 +286,7 @@ objectRouter.get('/search-all', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No objects found.' });
+            return res.status(404).json({ message: 'Não foram encontrados objetos.' });
         }
 
         return res.status(200).json(objects);
@@ -312,7 +312,7 @@ objectRouter.post('/search-any', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No objects found.' });
+            return res.status(404).json({ message: 'Não foram encontrados objetos.' });
         }
 
         return res.status(200).json(objects);
@@ -336,7 +336,7 @@ objectRouter.get('/search-by-keys', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No objects found.' });
+            return res.status(404).json({ message: 'Não foram encontrados objetos.' });
         }
 
         return res.status(200).json(objects);
@@ -360,7 +360,7 @@ objectRouter.get('/search-by-values', async (req, res) => {
         });
 
         if (objects.length === 0) {
-            return res.status(404).json({ message: 'No objects found.' });
+            return res.status(404).json({ message: 'Não foram encontrados objetos.' });
         }
 
         return res.status(200).json(objects);
