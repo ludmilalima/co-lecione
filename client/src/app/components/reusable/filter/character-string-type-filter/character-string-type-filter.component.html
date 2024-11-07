@@ -54,14 +54,14 @@
     </div>
 
     <h5 [align]="'end'">
-      N character strings, where {{ object.nodeInfo.minOccurs }} ≥ N ≤
+      N character strings, where {{ object.nodeInfo.minOccurs }} ≤ N ≤
       {{ object.nodeInfo.maxOccurs }}.
     </h5>
   </div>
 </div>
 
 <div *ngIf="object?.nodeInfo?.nodeType == 'characterString-type'">
-  <h1 mat-dialog-title>N entradas de texto, onde {{ object.nodeInfo.minOccurs }} ≥ N ≤
+  <h1 mat-dialog-title>N entradas de texto, onde {{ object.nodeInfo.minOccurs }} ≤ N ≤
     {{ object.nodeInfo.maxOccurs }}</h1>
   <div mat-dialog-content>
     <div class="field-container">
