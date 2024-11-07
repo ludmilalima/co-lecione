@@ -19,6 +19,15 @@
 
       <mat-step>
         <ng-template matStepLabel>Associação de metadados</ng-template>
+        <p>
+          * Os metadados
+          <button mat-button color="warn" (click)="onLinkClick(titleNode)">Title</button>
+          e
+          <button mat-button color="warn" (click)="onLinkClick(descriptionNode)">
+            Description
+          </button>
+          são mandatórios.
+        </p>
         <app-metadata-form
           [metadata]="metadata"
           #metadataForm
