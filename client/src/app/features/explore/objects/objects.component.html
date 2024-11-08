@@ -5,6 +5,7 @@
     [metadata]="metadata"
     [buttonAction]="buttonAction"
     (filtersCleaned)="clearFilters()"
+    [metadataPurpose]="'Buscar objetos através dos metadados:'"
   ></app-metadata-form>
 
   <!-- <div class="button-container" [align]="'end'">
@@ -13,30 +14,33 @@
   </div> -->
 </div>
 
-<div *ngFor="let item of objects">
-  <div *ngIf="item.type == 'card'">
-    <app-cards
-      class="object-container wrapper"
-      [avatarSrc]="item.content.avatarSrc"
-      [headerImageSrc]="item.content.headerImageSrc"
-      [title]="item.content.title"
-      [subtitle]="item.content.subtitle"
-      [content]="item.content.content"
-      [actionTitle]="item.content.actionTitle"
-      [actionLink]="item.content.actionLink"
-    >
-    </app-cards>
-  </div>
-  <div *ngIf="item.type == 'question'">
-    <question
-      class="object-container wrapper"
-      [topic]="item.content.topic"
-      [note]="item.content.note"
-      [figureSrc]="item.content.figureSrc"
-      [statement]="item.content.statement"
-      [alternatives]="item.content.alternatives"
-      [discursive]="item.content.discursive"
-    >
-    </question>
+<div class="container wrapper">
+  <h3>Lista de objetos encontrados:</h3>
+  <div *ngFor="let item of objects">
+    <div *ngIf="item.type == 'card'">
+      <app-cards
+        class="object-container wrapper"
+        [avatarSrc]="item.content.avatarSrc"
+        [headerImageSrc]="item.content.headerImageSrc"
+        [title]="item.content.title"
+        [subtitle]="item.content.subtitle"
+        [content]="item.content.content"
+        [actionTitle]="item.content.actionTitle"
+        [actionLink]="item.content.actionLink"
+      >
+      </app-cards>
+    </div>
+    <div *ngIf="item.type == 'question'">
+      <question
+        class="object-container wrapper"
+        [topic]="item.content.topic"
+        [note]="item.content.note"
+        [figureSrc]="item.content.figureSrc"
+        [statement]="item.content.statement"
+        [alternatives]="item.content.alternatives"
+        [discursive]="item.content.discursive"
+      >
+      </question>
+    </div>
   </div>
 </div>

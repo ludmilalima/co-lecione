@@ -5,12 +5,13 @@
       [metadata]="metadata"
       [buttonAction]="buttonAction"
       (filtersCleaned)="handleClearFilters()"
+      [metadataPurpose]="'Buscar roteiros através dos metadados:'"
     ></app-metadata-form>
   </div>
 </ng-container>
 <ng-container>
   <div class="container wrapper">
-    <h2>Lista de roteiros encontrados:</h2>
+    <h3>Lista de roteiros encontrados:</h3>
     <mat-accordion>
       <mat-expansion-panel
         *ngFor="let itinerary of itineraries"

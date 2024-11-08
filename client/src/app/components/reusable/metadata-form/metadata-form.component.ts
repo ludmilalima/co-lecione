@@ -19,9 +19,7 @@ import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
-import { CardsComponent } from "src/app/components/reusable/cards/cards.component";
 import { FilterComponent } from "src/app/components/reusable/filter/filter.component";
-import { QuestionComponent } from "src/app/components/reusable/question/question.component";
 import { ProcessMetadataService } from "../filter/process-metadata.service";
 
 @Component({
@@ -31,8 +29,6 @@ import { ProcessMetadataService } from "../filter/process-metadata.service";
     CommonModule,
     FlexLayoutModule,
 
-    CardsComponent,
-    QuestionComponent,
     FilterComponent,
 
     MatTabsModule,
@@ -48,6 +44,7 @@ import { ProcessMetadataService } from "../filter/process-metadata.service";
 export class MetadataFormComponent implements OnInit, AfterViewInit, DoCheck {
   @Input() metadata: Array<any>;
   @Input() buttonAction: { label: string; action: Function };
+  @Input() metadataPurpose: string;
   @Output() filtersCleaned: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild("filter", { read: FilterComponent }) filter: FilterComponent;
