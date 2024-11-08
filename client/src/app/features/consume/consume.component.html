@@ -3,30 +3,30 @@
     <div fxLayout="row" fxLayoutAlign="end center">
       <button
         type="button"
-        mat-icon-button
+        mat-button
         color="primary"
         (click)="shareItinerary(itinerary)"
         matTooltip="Compartilhar roteiro"
       >
-        <mat-icon>share</mat-icon>
+        <mat-icon>share</mat-icon> Compartilhar
       </button>
       <button
         type="button"
-        mat-icon-button
+        mat-button
         color="primary"
         (click)="downloadPdf()"
         matTooltip="Baixar respostas"
       >
-        <mat-icon>download</mat-icon>
+        <mat-icon>download</mat-icon> Baixar
       </button>
       <button
         type="button"
-        mat-icon-button
+        mat-button
         color="primary"
         (click)="sendPdfByEmail()"
         matTooltip="Enviar respostas"
       >
-        <mat-icon>check</mat-icon>
+        <mat-icon>check</mat-icon> Enviar
       </button>
     </div>
   </div>
@@ -59,6 +59,37 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div fxFlex>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button
+        type="button"
+        mat-button
+        color="primary"
+        (click)="shareItinerary(itinerary)"
+        matTooltip="Compartilhar roteiro"
+      >
+        <mat-icon>share</mat-icon> Compartilhar
+      </button>
+      <button
+        type="button"
+        mat-button
+        color="primary"
+        (click)="downloadPdf()"
+        matTooltip="Baixar respostas"
+      >
+        <mat-icon>download</mat-icon> Baixar
+      </button>
+      <button
+        type="button"
+        mat-button
+        color="primary"
+        (click)="sendPdfByEmail()"
+        matTooltip="Enviar respostas"
+      >
+        <mat-icon>check</mat-icon> Enviar
+      </button>
     </div>
   </div>
 </div>
