@@ -127,7 +127,6 @@ export class ObjectsComponent implements OnInit {
   }
 
   openDialog(node: any) {
-    console.log(node);
     const dialogConfig = {
       data: { metadata: node.metadata },
       width: "80%",
