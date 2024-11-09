@@ -14,33 +14,41 @@
   </div> -->
 </div>
 
-<div class="container wrapper">
-  <h3>Lista de objetos encontrados:</h3>
-  <div *ngFor="let item of objects">
-    <div *ngIf="item.type == 'card'">
-      <app-cards
-        class="object-container wrapper"
-        [avatarSrc]="item.content.avatarSrc"
-        [headerImageSrc]="item.content.headerImageSrc"
-        [title]="item.content.title"
-        [subtitle]="item.content.subtitle"
-        [content]="item.content.content"
-        [actionTitle]="item.content.actionTitle"
-        [actionLink]="item.content.actionLink"
-      >
-      </app-cards>
-    </div>
-    <div *ngIf="item.type == 'question'">
-      <question
-        class="object-container wrapper"
-        [topic]="item.content.topic"
-        [note]="item.content.note"
-        [figureSrc]="item.content.figureSrc"
-        [statement]="item.content.statement"
-        [alternatives]="item.content.alternatives"
-        [discursive]="item.content.discursive"
-      >
-      </question>
-    </div>
+<h3>Lista de objetos encontrados:</h3>
+<div *ngFor="let item of objects" class="hover-container">
+  <div *ngIf="item.type == 'card'">
+    <app-cards
+      class="object-container wrapper"
+      [avatarSrc]="item.content.avatarSrc"
+      [headerImageSrc]="item.content.headerImageSrc"
+      [title]="item.content.title"
+      [subtitle]="item.content.subtitle"
+      [content]="item.content.content"
+      [actionTitle]="item.content.actionTitle"
+      [actionLink]="item.content.actionLink"
+    >
+    </app-cards>
   </div>
+  <div *ngIf="item.type == 'question'">
+    <question
+      class="object-container wrapper"
+      [topic]="item.content.topic"
+      [note]="item.content.note"
+      [figureSrc]="item.content.figureSrc"
+      [statement]="item.content.statement"
+      [alternatives]="item.content.alternatives"
+      [discursive]="item.content.discursive"
+    >
+    </question>
+  </div>
+  <button
+    mat-icon-button
+    color="primary"
+    class="hover-icon"
+    matTooltip="Clique para ver os metadados deste elemento"
+    matTooltipClass="tooltip-center"
+    (click)="openDialog(item)"
+  >
+    <mat-icon>info</mat-icon>
+  </button>
 </div>

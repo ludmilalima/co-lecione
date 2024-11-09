@@ -87,7 +87,12 @@
     </mat-stepper>
   </div>
 
-  <div fxFlex class="container" *ngIf="touchedForm || metadata.length > 0" class="wrapper">
+  <div
+    fxFlex
+    class="container"
+    *ngIf="touchedForm || metadata.length > 0"
+    class="wrapper"
+  >
     <ng-container *ngIf="touchedForm">
       <h3>Objeto criado:</h3>
       <question
