@@ -18,7 +18,7 @@ export class Obaa {
     metaMetadata: MetaMetadata = new MetaMetadata();
     technical: Technical = new Technical();
     educational: Educational = new Educational();
-    // rights: Rights = new Rights();
+    rights: Rights = new Rights();
     // relation: Relation = new Relation();
     // annotation: Annotation = new Annotation();
     // classification: Classification = new Classification();
