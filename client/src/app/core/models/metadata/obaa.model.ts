@@ -17,7 +17,7 @@ export class Obaa {
     lifeCycle: LifeCycle = new LifeCycle();
     metaMetadata: MetaMetadata = new MetaMetadata();
     technical: Technical = new Technical();
-    // educational: Educational = new Educational();
+    educational: Educational = new Educational();
     // rights: Rights = new Rights();
     // relation: Relation = new Relation();
     // annotation: Annotation = new Annotation();
