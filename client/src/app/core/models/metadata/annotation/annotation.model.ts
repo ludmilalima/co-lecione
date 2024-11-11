@@ -9,8 +9,6 @@ import {
 
 export class Annotation {
   nodeInfo: NodeInfo;
-  minOccurs: number = 0;
-  maxOccurs: number = 30;
   entity: CharacterStringType = new CharacterStringType(0, 1);
   date: DateTimeType = new DateTimeType();
   description: LangStringType = new LangStringType(0, 1);
