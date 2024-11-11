@@ -19,7 +19,7 @@ export class Obaa {
     technical: Technical = new Technical();
     educational: Educational = new Educational();
     rights: Rights = new Rights();
-    // relation: Relation = new Relation();
+    relation: Relation = new Relation();
     // annotation: Annotation = new Annotation();
     // classification: Classification = new Classification();
     // accessibility: Accessibility = new Accessibility();
