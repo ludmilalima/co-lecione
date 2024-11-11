@@ -2,7 +2,7 @@
   <!-- This is the tree node template for leaf nodes -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <!-- use a disabled button to provide padding for tree leaf -->
-    <button mat-icon-button disabled title="Button"></button>
+    <button type="button" mat-icon-button disabled title="Button"></button>
 
     <div [ngSwitch]="node.object?.nodeInfo?.nodeType" class="flex-container">
       <span *ngSwitchCase="'root'">
@@ -11,7 +11,13 @@
         }}
       </span>
       <div *ngSwitchCase="'single-select'">
-        <button mat-button color="primary" (click)="openNodeDialog(node)">
+        <button
+          mat-button
+          color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
+          (click)="openNodeDialog(node)"
+        >
           {{ _processStringService.convertString(node.name) }}
         </button>
         <!-- <app-unit-select
@@ -21,7 +27,13 @@
         ></app-unit-select> -->
       </div>
       <div *ngSwitchCase="'multi-select'" class="flex-container">
-        <button mat-button color="primary" (click)="openNodeDialog(node)">
+        <button
+          mat-button
+          color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
+          (click)="openNodeDialog(node)"
+        >
           {{ _processStringService.convertString(node.name) }}
         </button>
         <!-- <app-multiple-select
@@ -34,6 +46,8 @@
         <button
           mat-button
           color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
           (click)="openNodeDialog(node)"
           [disabled]="checkIfDisabled(node)"
         >
@@ -46,7 +60,13 @@
         ></app-generic-container> -->
       </div>
       <div *ngSwitchCase="'characterString-type'" class="flex-container">
-        <button mat-button color="primary" (click)="openNodeDialog(node)">
+        <button
+          mat-button
+          color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
+          (click)="openNodeDialog(node)"
+        >
           {{ _processStringService.convertString(node.name) }}
         </button>
         <!-- <app-character-string-type-filter
@@ -56,7 +76,13 @@
         ></app-character-string-type-filter> -->
       </div>
       <div *ngSwitchCase="'boolean-type'" class="flex-container">
-        <button mat-button color="primary" (click)="openNodeDialog(node)">
+        <button
+          mat-button
+          color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
+          (click)="openNodeDialog(node)"
+        >
           {{ _processStringService.convertString(node.name) }}
         </button>
         <!-- <app-boolean-type-filter
@@ -67,7 +93,13 @@
         </app-boolean-type-filter> -->
       </div>
       <div *ngSwitchDefault>
-        <button mat-button color="primary" [disabled]="true">
+        <button
+          mat-button
+          color="primary"
+          [matTooltip]="node.object?.nodeInfo?.description"
+          matTooltipPosition="after"
+          [disabled]="true"
+        >
           {{ _processStringService.convertString(node.name) }} ({{
             _processStringService.convertString(node.object?.nodeInfo?.nodeType)
           }}
@@ -88,6 +120,8 @@
       extended
       matTreeNodeToggle
       [attr.aria-label]="'Toggle ' + node.name"
+      [matTooltip]="node.object?.nodeInfo?.description"
+      matTooltipPosition="after"
     >
       <mat-icon class="mat-icon-rtl-mirror">
         {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}

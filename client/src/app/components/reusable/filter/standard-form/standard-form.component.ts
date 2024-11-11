@@ -19,6 +19,7 @@ import { SimpleTextInputComponent } from "../simple-text-input/simple-text-input
 import { UnitSelectComponent } from "../unit-select/unit-select.component";
 import { GenericContainerComponent } from "../generic-container/generic-container.component";
 import { DialogService } from "../dialog.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 interface ObaaNode {
   name: string;
@@ -51,6 +52,7 @@ interface ExampleFlatNode {
     MatTreeModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: "./standard-form.component.html",
   styleUrl: "./standard-form.component.scss",
@@ -169,6 +171,7 @@ export class StandardFormComponent implements OnChanges {
   }
 
   openNodeDialog(node: any): void {
+    console.log(node);
     this._dialogService.openDialog(node, this.filters);
   }
 
