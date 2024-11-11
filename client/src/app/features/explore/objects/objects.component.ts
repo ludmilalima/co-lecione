@@ -28,7 +28,6 @@ import { MetadataTableComponent } from "src/app/components/reusable/metadata-tab
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatDialogModule,
   ],
   templateUrl: "./objects.component.html",
   styleUrl: "./objects.component.scss",
@@ -127,8 +126,12 @@ export class ObjectsComponent implements OnInit {
   }
 
   openDialog(node: any) {
+    let localMetadata = Object.entries(node.metadata).map(([key, value]) => ({
+      key,
+      value,
+    }));
     const dialogConfig = {
-      data: { metadata: node.metadata },
+      data: { metadata: localMetadata },
       width: "80%",
     };
     this._dialog.open(MetadataTableComponent, dialogConfig);

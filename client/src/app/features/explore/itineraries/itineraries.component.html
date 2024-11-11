@@ -34,7 +34,7 @@
                 mat-icon-button
                 color="primary"
                 (click)="shareItinerary(itinerary)"
-                matTooltip="Compartilhar roteiro"
+                matTooltip="Clique para compartilhar este roteiro"
               >
                 <mat-icon>share</mat-icon>
               </button>
@@ -43,9 +43,19 @@
                 mat-icon-button
                 color="primary"
                 (click)="openNewTab(itinerary)"
-                matTooltip="Abrir em nova aba"
+                matTooltip="Clique para abrir este roteiro em uma em nova aba"
               >
                 <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                matTooltip="Clique para ver os metadados deste elemento"
+                matTooltipClass="tooltip-center"
+                (click)="openDialog(itinerary)"
+              >
+                <mat-icon>info</mat-icon>
               </button>
             </div>
             <div>

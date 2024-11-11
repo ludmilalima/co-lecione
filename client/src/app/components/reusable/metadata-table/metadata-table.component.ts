@@ -27,10 +27,7 @@ export class MetadataTableComponent implements OnInit {
   displayedColumns: string[] = ["chave", "valor"];
 
   ngOnInit(): void {
-    this.metadata = Object.entries(this.data.metadata).map(([key, value]) => ({
-      key,
-      value,
-    }));
+    this.metadata = this.data.metadata;
     this.dataSource = new MatTableDataSource(this.metadata);
   }
 }

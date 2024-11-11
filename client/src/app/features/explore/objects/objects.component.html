@@ -14,7 +14,8 @@
   </div> -->
 </div>
 
-<h3>Lista de objetos encontrados:</h3>
+<div class="wrapper"><h3>Lista de objetos encontrados:</h3></div>
+
 <div *ngFor="let item of objects" class="hover-container">
   <div *ngIf="item.type == 'card'">
     <app-cards
