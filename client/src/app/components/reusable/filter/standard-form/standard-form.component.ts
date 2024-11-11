@@ -20,6 +20,10 @@ import { UnitSelectComponent } from "../unit-select/unit-select.component";
 import { GenericContainerComponent } from "../generic-container/generic-container.component";
 import { DialogService } from "../dialog.service";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { Meta } from "@angular/platform-browser";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { NodeInfo } from "src/app/core/models/metadata/util.model";
+import { MetadataEntryDetailedDialogComponent } from "../../metadata-entry-detailed-dialog/metadata-entry-detailed-dialog.component";
 
 interface ObaaNode {
   name: string;
@@ -42,8 +46,6 @@ interface ExampleFlatNode {
     MatFormFieldModule,
 
     UnitSelectComponent,
-    SimpleTextInputComponent,
-    LangStringTypeFilterComponent,
     CharacterStringTypeFilterComponent,
     GenericContainerComponent,
     BooleanTypeFilterComponent,
@@ -88,7 +90,8 @@ export class StandardFormComponent implements OnChanges {
 
   constructor(
     public _processStringService: ProcessStringService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    public dialog: MatDialog
   ) {
     this._processStringService = new ProcessStringService();
 
@@ -184,5 +187,15 @@ export class StandardFormComponent implements OnChanges {
 
   clearFilter() {
     this.initTree();
+  }
+
+  openMetadataEntrySchemaDialog(node: NodeInfo): void {
+    console.log(node);
+    if (node.metadataEntrySchema != undefined) {
+      let dialogConfig = {
+        data: { metadataEntrySchema: node.metadataEntrySchema },
+      };
+      this.dialog.open(MetadataEntryDetailedDialogComponent, dialogConfig);
+    }
   }
 }

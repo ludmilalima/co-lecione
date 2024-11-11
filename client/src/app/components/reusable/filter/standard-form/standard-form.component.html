@@ -4,13 +4,29 @@
     <!-- use a disabled button to provide padding for tree leaf -->
     <button type="button" mat-icon-button disabled title="Button"></button>
 
-    <div [ngSwitch]="node.object?.nodeInfo?.nodeType" class="flex-container">
+    <div
+      [ngSwitch]="node.object?.nodeInfo?.nodeType"
+      class="flex-container hover-container"
+    >
       <span *ngSwitchCase="'root'">
         {{
           _processStringService.convertString(node.object?.nodeInfo?.nodeType)
         }}
       </span>
-      <div *ngSwitchCase="'single-select'">
+      <div
+        *ngSwitchCase="'single-select'"
+        class="flex-container hover-container"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -26,7 +42,20 @@
           [filterComponent]="filters"
         ></app-unit-select> -->
       </div>
-      <div *ngSwitchCase="'multi-select'" class="flex-container">
+      <div
+        *ngSwitchCase="'multi-select'"
+        class="flex-container hover-container"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -42,7 +71,20 @@
           [filterComponent]="filters"
         ></app-multiple-select> -->
       </div>
-      <div *ngSwitchCase="'langString-type'" class="flex-container">
+      <div
+        *ngSwitchCase="'langString-type'"
+        class="flex-container hover-container"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -59,7 +101,20 @@
           [filterComponent]="filters"
         ></app-generic-container> -->
       </div>
-      <div *ngSwitchCase="'characterString-type'" class="flex-container">
+      <div
+        *ngSwitchCase="'characterString-type'"
+        class="flex-container hover-container"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -75,7 +130,20 @@
           [filterComponent]="filters"
         ></app-character-string-type-filter> -->
       </div>
-      <div *ngSwitchCase="'boolean-type'" class="flex-container">
+      <div
+        *ngSwitchCase="'boolean-type'"
+        class="flex-container hover-container"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -92,7 +160,17 @@
         >
         </app-boolean-type-filter> -->
       </div>
-      <div *ngSwitchDefault>
+      <div *ngSwitchDefault class="flex-container hover-container">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+          class="hover-button"
+          matTooltip="Clique para ver detalhes do metadado"
+          matTooltipPosition="before"
+        >
+          <mat-icon>info</mat-icon>
+        </button>
         <button
           mat-button
           color="primary"
@@ -113,7 +191,18 @@
     *matTreeNodeDef="let node; when: hasChild"
     matTreeNodePadding
     matTreeNodeToggle
+    class="hover-container"
   >
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="openMetadataEntrySchemaDialog(node.object.nodeInfo)"
+      class="hover-button"
+      matTooltip="Clique para ver detalhes do metadado"
+      matTooltipPosition="before"
+    >
+      <mat-icon>info</mat-icon>
+    </button>
     <button
       class="mat-h3"
       mat-button

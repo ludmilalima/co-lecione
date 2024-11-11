@@ -1,1 +1,17 @@
 @import "../filter.component.scss";
+
+.hover-container {
+  position: relative;
+}
+
+.hover-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hover-container:hover .hover-button {
+  opacity: 1;
+}
