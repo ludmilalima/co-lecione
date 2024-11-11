@@ -52,7 +52,7 @@ interface ExampleFlatNode {
     MatTreeModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   templateUrl: "./standard-form.component.html",
   styleUrl: "./standard-form.component.scss",
@@ -171,7 +171,6 @@ export class StandardFormComponent implements OnChanges {
   }
 
   openNodeDialog(node: any): void {
-    console.log(node);
     this._dialogService.openDialog(node, this.filters);
   }
 
