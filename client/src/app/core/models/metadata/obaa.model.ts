@@ -22,8 +22,8 @@ export class Obaa {
     relation: Relation = new Relation();
     annotation: Annotation = new Annotation();
     classification: Classification = new Classification();
-    // accessibility: Accessibility = new Accessibility();
-    // segmentInformationTable: SegmentInformationTable = new SegmentInformationTable();
+    accessibility: Accessibility = new Accessibility();
+    segmentInformationTable: SegmentInformationTable = new SegmentInformationTable();
 
     constructor() {
         this.nodeInfo = new NodeInfo(
