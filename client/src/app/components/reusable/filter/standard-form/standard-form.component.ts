@@ -190,10 +190,10 @@ export class StandardFormComponent implements OnChanges {
   }
 
   openMetadataEntrySchemaDialog(node: NodeInfo): void {
-    console.log(node);
     if (node.metadataEntrySchema != undefined) {
       let dialogConfig = {
         data: { metadataEntrySchema: node.metadataEntrySchema },
+        width: "80%",
       };
       this.dialog.open(MetadataEntryDetailedDialogComponent, dialogConfig);
     }

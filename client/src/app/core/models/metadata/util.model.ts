@@ -5,13 +5,36 @@ export class LangStringType {
     language: IsoLanguageCodeEnum;
   }>;
 
-  constructor(minOccurs: number, maxOccurs: number) {
-    this.nodeInfo = new NodeInfo(
-      minOccurs,
-      maxOccurs,
-      "A string of characters in one or more languages.",
-      "langString-type"
-    );
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo = new NodeInfo(
+        minOccurs,
+        maxOccurs,
+        "A string of characters in one or more languages.",
+        "langString-type"
+      );
+    } else {
+      this.nodeInfo = new NodeInfo(
+        localMetadataSchema.minCardinality,
+        localMetadataSchema.maxCardinality,
+        localMetadataSchema.description,
+        "langString-type"
+      );
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
+
     this.nodeInfo.optionsList = this.getIsoLanguageCodes();
     this.langString = [];
   }
@@ -25,13 +48,35 @@ export class CharacterStringType {
   nodeInfo: NodeInfo;
   content: Array<string>;
 
-  constructor(minOccurs: number, maxOccurs: number) {
-    this.nodeInfo = new NodeInfo(
-      minOccurs,
-      maxOccurs,
-      "A string of characters.",
-      "characterString-type"
-    );
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo = new NodeInfo(
+        minOccurs,
+        maxOccurs,
+        "A string of characters.",
+        "characterString-type"
+      );
+    } else {
+      this.nodeInfo = new NodeInfo(
+        localMetadataSchema.minCardinality,
+        localMetadataSchema.maxCardinality,
+        localMetadataSchema.description,
+        "characterString-type"
+      );
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
     this.content = [];
   }
 }
@@ -40,8 +85,35 @@ export class BooleanType {
   nodeInfo: NodeInfo;
   content: boolean;
 
-  constructor() {
-    this.nodeInfo = new NodeInfo(1, 1, "A boolean value.", "boolean-type");
+  constructor(
+    minOccurs?: number,
+    maxOccurs?: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo = new NodeInfo(
+        minOccurs,
+        maxOccurs,
+        "A string of characters.",
+        "boolean-type"
+      );
+    } else {
+      this.nodeInfo = new NodeInfo(
+        localMetadataSchema.minCardinality,
+        localMetadataSchema.maxCardinality,
+        localMetadataSchema.description,
+        "boolean-type"
+      );
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
   }
 }
 
@@ -60,8 +132,23 @@ export class DurationType {
   duration: string;
   description: LangStringType = new LangStringType(0, 1);
 
-  constructor() {
-    this.nodeInfo = new NodeInfo(0, 1, "A duration of time.", "duration-type");
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name: string,
+    metadataSchema: MetadataEntrySchema
+  ) {
+    let scheme = metadataSchema.subElements.find((item) => item.name == name);
+
+    this.nodeInfo = new NodeInfo(
+      minOccurs,
+      maxOccurs,
+      scheme.description,
+      "duration-type"
+    );
+
+    this.nodeInfo.metadataEntrySchema = scheme;
+    this.nodeInfo.description = scheme.description;
   }
 }
 
@@ -70,12 +157,33 @@ export abstract class VocabularyType {
   source: string = "LOMv1.0";
   value: any;
 
-  constructor(minOccurs: number, maxOccurs: number) {
-    this.nodeInfo = new NodeInfo(
-      minOccurs,
-      maxOccurs,
-      "A value from a controlled vocabulary."
-    );
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo = new NodeInfo(
+        minOccurs,
+        maxOccurs,
+        "A value from a controlled vocabulary."
+      );
+    } else {
+      this.nodeInfo = new NodeInfo(
+        localMetadataSchema.minCardinality,
+        localMetadataSchema.maxCardinality,
+        localMetadataSchema.description
+      );
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
 
     this.setType();
     this.nodeInfo.optionsList = this.getValueOptions();
@@ -99,13 +207,36 @@ export class IdentifierType {
     entry: string;
   }>;
 
-  constructor(minOccurs: number, maxOccurs: number) {
-    this.nodeInfo = new NodeInfo(
-      minOccurs,
-      maxOccurs,
-      "A unique identifier for the resource.",
-      "identifier-type"
-    );
+  constructor(
+    minOccurs?: number,
+    maxOccurs?: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo = new NodeInfo(
+        minOccurs,
+        maxOccurs,
+        "A unique identifier for the resource.",
+        "identifier-type"
+      );
+    } else {
+      this.nodeInfo = new NodeInfo(
+        localMetadataSchema.minCardinality,
+        localMetadataSchema.maxCardinality,
+        localMetadataSchema.description,
+        "identifier-type"
+      );
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
+
     this.identifier = [];
   }
 }
@@ -135,10 +266,29 @@ export class ContributeType {
 export class LanguageType extends CharacterStringType {
   override content: Array<IsoLanguageCodeEnum>;
 
-  constructor(minOccurs: number, maxOccurs: number) {
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name?: string,
+    metadataSchema?: MetadataEntrySchema
+  ) {
     super(minOccurs, maxOccurs);
-    this.nodeInfo.nodeType = "language-type";
-    this.nodeInfo.description = "A language used in the resource.";
+
+    let localMetadataSchema = undefined;
+    if (name != undefined && metadataSchema != undefined) {
+      localMetadataSchema = metadataSchema.subElements.find(
+        (item) => item.name == name
+      );
+    }
+
+    if (localMetadataSchema == undefined) {
+      this.nodeInfo.nodeType = "language-type";
+      this.nodeInfo.description = "A language used in the resource.";
+    } else {
+      this.nodeInfo.nodeType = "language-type";
+      this.nodeInfo.description = localMetadataSchema.description;
+      this.nodeInfo.metadataEntrySchema = localMetadataSchema;
+    }
   }
 
   getIsoLanguageCodes(): Array<string> {
@@ -367,6 +517,7 @@ export class MetadataEntrySchema {
   valueSpace?: string;
   dataType?: string;
   examples?: Array<string>;
+  subElements?: Array<MetadataEntrySchema>;
 }
 
 export abstract class ArrayInfo {

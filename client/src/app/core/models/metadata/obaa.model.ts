@@ -29,7 +29,7 @@ export class Obaa {
         this.nodeInfo = new NodeInfo(
             0,
             1,
-            'The root element of the OBAA model.',
+            'Elemento raiz do esquema OBAA de metadados',
             'root'
         );
     }

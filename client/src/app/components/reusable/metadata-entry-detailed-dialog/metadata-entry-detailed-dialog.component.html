@@ -1,37 +1,29 @@
-<h1 mat-dialog-title>Detalhes do metadado</h1>
+<h1 mat-dialog-title>Metadado em detalhes</h1>
 <div mat-dialog-content>
   <p><b>Nome:</b><br />{{ metadataEntrySchema.name }}</p>
   <p><b>Descrição:</b><br />{{ metadataEntrySchema.description }}</p>
-  <p *ngIf="metadataEntrySchema.minCardinality != undefined"
-    ><b>Cardinalidade mínima:</b><br />{{
-      metadataEntrySchema.minCardinality
-    }}</p
-  >
-  <p *ngIf="metadataEntrySchema.minCardinality != undefined"
-    ><b>Cardinalidade máxima:</b><br />{{
-      metadataEntrySchema.maxCardinality
-    }}</p
-  >
-  <p *ngIf="metadataEntrySchema.order != undefined"
-    ><b>Ordenação:</b><br />{{ metadataEntrySchema.order }}</p
-  >
-  <p *ngIf="metadataEntrySchema.valueSpace != undefined"
-    ><b>Origem:</b><br />{{ metadataEntrySchema.valueSpace }}</p
-  >
-  <p *ngIf="metadataEntrySchema.dataType != undefined"
-    ><b>Tipo de dado:</b><br />{{ metadataEntrySchema.dataType }}</p
-  >
+  <p *ngIf="metadataEntrySchema.minCardinality != undefined">
+    <b>Cardinalidade mínima:</b><br />{{ metadataEntrySchema.minCardinality }}
+  </p>
+  <p *ngIf="metadataEntrySchema.minCardinality != undefined">
+    <b>Cardinalidade máxima:</b><br />{{ metadataEntrySchema.maxCardinality }}
+  </p>
+  <p *ngIf="metadataEntrySchema.order != undefined">
+    <b>Ordenação:</b><br />{{ metadataEntrySchema.order }}
+  </p>
+  <p *ngIf="metadataEntrySchema.valueSpace != undefined">
+    <b>Espaço de valores:</b><br />{{ metadataEntrySchema.valueSpace }}
+  </p>
+  <p *ngIf="metadataEntrySchema.dataType != undefined">
+    <b>Tipo de dado:</b><br />{{ metadataEntrySchema.dataType }}
+  </p>
   <div
     *ngIf="
       metadataEntrySchema.examples != undefined &&
       metadataEntrySchema.examples.length > 0
     "
   >
-    <p
-      ><b>Cardinalidade mínima:</b><br />{{
-        metadataEntrySchema.minCardinality
-      }}</p
-    >
+    <p><b>Exemplos:</b></p>
     <mat-list>
       <mat-list-item *ngFor="let item of metadataEntrySchema.examples">
         {{ item }}
