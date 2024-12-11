@@ -190,10 +190,10 @@ export abstract class VocabularyType {
   }
 
   setType() {
-    if (this.nodeInfo.minOccurs >= 0 && this.nodeInfo.maxOccurs <= 1) {
-      this.nodeInfo.nodeType = "single-select";
-    } else {
+    if (this.nodeInfo.maxOccurs > 1) {
       this.nodeInfo.nodeType = "multi-select";
+    } else {
+      this.nodeInfo.nodeType = "single-select";
     }
   }
 
