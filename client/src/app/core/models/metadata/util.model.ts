@@ -119,11 +119,65 @@ export class BooleanType {
 
 export class DateTimeType {
   nodeInfo: NodeInfo;
-  dateTime: string;
-  description: LangStringType = new LangStringType(0, 1);
+  dateTime: CharacterStringType = new CharacterStringType(0, 1, "DateTime", {
+    name: "DateTime",
+    description: "A point in time with an accuracy of at least one second.",
+    subElements: [
+      {
+        name: "DateTime",
+        description: "Um ponto no tempo com precisão de pelo menos um segundo.",
+        minCardinality: 1,
+        maxCardinality: 1,
+        order: "unspecified",
+        valueSpace:
+          "YYYY[-MM[-DD[Thh[:mm[:ss[.s[TZD]]]]]]] where:\n" +
+          "YYYY = four-digit year (>= 0001)\n" +
+          "MM = two-digit month (01 through 12 where 01 = January, etc.)\n" +
+          "DD = two-digit day of month (01 through 31, depending on value of month and year)\n" +
+          "hh = two digits of hour (00 through 23) (am/pm NOT allowed)\n" +
+          "mm = two digits of minute (00 through 59)\n" +
+          "ss = two digits of second (00 through 59)\n" +
+          "s = one or more digits representing a decimal fraction of a second\n" +
+          "TZD = time zone designator ('Z' for UTC or ±hh:mm or ±hhmm)\n" +
+          "At least the four-digit year must be present. If additional parts of the DateTime are included, the character lexical representation must follow the specified format.",
+        dataType: "CharacterString",
+        examples: [
+          `"1999-01-11" (January 11th, 1999)`,
+          `"1979-07-16T19:20+01:00" (July 16th, 1979, at 7:20 p.m. with a time offset of 1 h with respect to UTC)`,
+        ],
+      },
+    ],
+  });
+  description: LangStringType = new LangStringType(0, 1, "Description", {
+    name: "Description",
+    description: "A description of the date.",
+    subElements: [
+      {
+        name: "Description",
+        description: "Descrição da data.",
+        minCardinality: 1,
+        maxCardinality: 1,
+        order: "unspecified",
+        dataType: "LangString",
+        examples: [`"en", "circa 1300 BCE"`],
+      },
+    ],
+  });
 
-  constructor() {
-    this.nodeInfo = new NodeInfo(0, 1, "A point in time.", "dateTime-type");
+  constructor(
+    minOccurs: number,
+    maxOccurs: number,
+    name: string,
+    metadataSchema: MetadataEntrySchema
+  ) {
+    let scheme = metadataSchema.subElements.find((item) => item.name == name);
+    this.nodeInfo = new NodeInfo(
+      scheme.minCardinality,
+      scheme.maxCardinality,
+      scheme.description,
+      "dateTime-type"
+    );
+    this.nodeInfo.metadataEntrySchema = scheme;
   }
 }
 
