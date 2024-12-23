@@ -1,49 +1,200 @@
-import { LangStringType, NodeInfo } from "../util.model";
+import {
+  CharacterStringType,
+  LangStringType,
+  MetadataEntrySchema,
+  NodeInfo,
+} from "../util.model";
 import { Purpose } from "./enums/purpose.enum";
 
 export class Classification {
   nodeInfo: NodeInfo;
-  purpose: Purpose = new Purpose(0, 1);
+  purpose: Purpose = new Purpose(0, 1, "Purpose", LOMBaseSchema);
   taxonPath: TaxonPath = new TaxonPath();
-  description: LangStringType = new LangStringType(0, 1);
-  keyword: LangStringType = new LangStringType(0, 40);
+  description: LangStringType = new LangStringType(
+    0,
+    1,
+    "Description",
+    LOMBaseSchema
+  );
+  keyword: LangStringType = new LangStringType(0, 40, "Keyword", LOMBaseSchema);
 
   constructor() {
-    this.nodeInfo = new NodeInfo(
-      0,
-      40,
-      "Esta categoria descreve onde este objeto de aprendizagem se enquadra dentro de um sistema de classificação específico.\n Para definir múltiplas classificações, pode haver várias instâncias desta categoria.",
-      "root"
-    );
+    this.nodeInfo = new NodeInfo(0, 40, LOMBaseSchema.description, "root");
+    this.nodeInfo.metadataEntrySchema = LOMBaseSchema;
   }
 }
 
 class TaxonPath {
   nodeInfo: NodeInfo;
-  source: LangStringType = new LangStringType(0, 1);
+  source: LangStringType = new LangStringType(0, 1, "Source", {
+    name: "Taxon Path",
+    description:
+      "Um caminho taxonômico em um sistema de classificação específico.",
+    subElements: [
+      {
+        name: "Source",
+        description: "O nome do sistema de classificação.",
+        minCardinality: 1,
+        maxCardinality: 1,
+        order: "unspecified",
+        valueSpace: "Repertoire of ISO/IEC 10646-1:2000",
+        dataType: "LangString (smallest permitted maximum: 1000 char)",
+      },
+    ],
+  });
   taxon: Taxon = new Taxon();
 
   constructor() {
+    const scheme: MetadataEntrySchema = {
+      name: "Taxon Path",
+      description:
+        "Um caminho taxonômico em um sistema de classificação específico.",
+      minCardinality: 1,
+      maxCardinality: 15,
+      order: "unordered",
+    };
+
     this.nodeInfo = new NodeInfo(
-      0,
-      15,
-      "Um caminho taxonômico em um sistema de classificação específico.\nCada nível sucessivo é um refinamento na definição do nível precedente.\nCaminhos diferentes, na mesma ou em diferentes classificações, que descrevem a mesma característica, são permitidos.",
+      scheme.minCardinality,
+      scheme.maxCardinality,
+      scheme.description,
       "root"
     );
+    this.nodeInfo.metadataEntrySchema = scheme;
   }
 }
 
 class Taxon {
   nodeInfo: NodeInfo;
-  id: string;
-  entry: LangStringType = new LangStringType(0, 1);
+  id: CharacterStringType = new CharacterStringType(0, 1, "Id", {
+    name: "Taxon",
+    description: "Um termo particular dentro de uma taxonomia.",
+    subElements: [
+      {
+        name: "Id",
+        description:
+          "O identificador do táxon, como um número ou outra combinação fornecida pela fonte da taxonomia.",
+        minCardinality: 1,
+        maxCardinality: 1,
+        order: "unspecified",
+        valueSpace: "Repertoire of ISO/IEC 10646-1:2000",
+        dataType: "CharacterString (smallest permitted maximum: 100 char)",
+      },
+    ],
+  });
+  entry: LangStringType = new LangStringType(0, 1, "Entry", {
+    name: "Taxon",
+    description: "Um termo particular dentro de uma taxonomia.",
+    subElements: [
+      {
+        name: "Entry",
+        description: "O rótulo textual do táxon.",
+        minCardinality: 1,
+        maxCardinality: 1,
+        order: "unspecified",
+        dataType: "LangString (smallest permitted maximum: 500 char)",
+      },
+    ],
+  });
 
   constructor() {
+    const scheme: MetadataEntrySchema = {
+      name: "Taxon",
+      description: "Um termo particular dentro de uma taxonomia.",
+      minCardinality: 1,
+      maxCardinality: 15,
+      order: "ordered",
+    };
     this.nodeInfo = new NodeInfo(
-      0,
-      15,
-      "Um termo específico dentro de uma taxonomia.\nUm táxon é um nó que tem um rótulo ou termo definido.\nUm táxon também pode ter uma designação alfanumérica ou identificador para referência padronizada.\nO rótulo e/ou a entrada podem ser usados para designar um táxon específico.\nUma lista ordenada de táxons cria um caminho taxonômico, ou seja, “escada taxonômica”: este é um caminho de uma entrada mais geral para uma mais específica em uma classificação.",
+      scheme.minCardinality,
+      scheme.maxCardinality,
+      scheme.description,
       "root"
     );
   }
 }
+
+const LOMBaseSchema: MetadataEntrySchema = {
+  name: "Classification",
+  description:
+    "Esta categoria descreve onde este objeto de aprendizagem se encaixa dentro de um sistema de classificação específico.",
+  minCardinality: 1,
+  maxCardinality: 40,
+  order: "unordered",
+  subElements: [
+    {
+      name: "Purpose",
+      description: "O propósito de classificar este objeto de aprendizagem.",
+      minCardinality: 1,
+      maxCardinality: 1,
+      order: "unspecified",
+      valueSpace:
+        "discipline, idea, prerequisite, educational objective, accessibility restrictions, educational level, skill level, security level, competency",
+      dataType: "Vocabulary (State)",
+    },
+    {
+      name: "Taxon Path",
+      description:
+        "Um caminho taxonômico em um sistema de classificação específico.",
+      minCardinality: 1,
+      maxCardinality: 15,
+      order: "unordered",
+      subElements: [
+        {
+          name: "Source",
+          description: "O nome do sistema de classificação.",
+          minCardinality: 1,
+          maxCardinality: 1,
+          order: "unspecified",
+          valueSpace: "Repertoire of ISO/IEC 10646-1:2000",
+          dataType: "LangString (smallest permitted maximum: 1000 char)",
+        },
+        {
+          name: "Taxon",
+          description: "Um termo particular dentro de uma taxonomia.",
+          minCardinality: 1,
+          maxCardinality: 15,
+          order: "ordered",
+          subElements: [
+            {
+              name: "Id",
+              description:
+                "O identificador do táxon, como um número ou outra combinação fornecida pela fonte da taxonomia.",
+              minCardinality: 1,
+              maxCardinality: 1,
+              order: "unspecified",
+              valueSpace: "Repertoire of ISO/IEC 10646-1:2000",
+              dataType:
+                "CharacterString (smallest permitted maximum: 100 char)",
+            },
+            {
+              name: "Entry",
+              description: "O rótulo textual do táxon.",
+              minCardinality: 1,
+              maxCardinality: 1,
+              order: "unspecified",
+              dataType: "LangString (smallest permitted maximum: 500 char)",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Description",
+      description: "O conteúdo textual que descreve esta classificação.",
+      minCardinality: 1,
+      maxCardinality: 1,
+      order: "unspecified",
+      dataType: "LangString (smallest permitted maximum: 1000 char)",
+    },
+    {
+      name: "Keyword",
+      description:
+        "Palavras-chave associadas à classificação deste objeto de aprendizagem.",
+      minCardinality: 1,
+      maxCardinality: 10,
+      order: "unspecified",
+      dataType: "LangString (smallest permitted maximum: 1000 char)",
+    },
+  ],
+};
