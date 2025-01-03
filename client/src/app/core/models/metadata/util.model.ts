@@ -336,8 +336,15 @@ export class LanguageType extends CharacterStringType {
     }
 
     if (localMetadataSchema == undefined) {
+      const scheme: MetadataEntrySchema = {
+        name: "language",
+        description: "Linguagem utilizada na legenda.",
+        dataType: "CharacterString",
+        examples: ["en"],
+      };
       this.nodeInfo.nodeType = "language-type";
-      this.nodeInfo.description = "A language used in the resource.";
+      this.nodeInfo.description = scheme.description;
+      this.nodeInfo.metadataEntrySchema = scheme;
     } else {
       this.nodeInfo.nodeType = "language-type";
       this.nodeInfo.description = localMetadataSchema.description;
