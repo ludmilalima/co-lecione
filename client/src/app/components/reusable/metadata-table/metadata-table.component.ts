@@ -29,5 +29,6 @@ export class MetadataTableComponent implements OnInit {
   ngOnInit(): void {
     this.metadata = this.data.metadata;
     this.dataSource = new MatTableDataSource(this.metadata);
+    console.log(this.metadata);
   }
 }

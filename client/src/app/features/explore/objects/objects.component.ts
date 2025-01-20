@@ -61,12 +61,7 @@ export class ObjectsComponent implements OnInit {
               [curr.key]: this._convertByType.convertType(curr.value),
             };
           }, {}),
-          metadata: object.metadata.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: curr.value,
-            };
-          }, {}),
+          metadata: object.metadata,
         };
       });
     });
@@ -126,12 +121,8 @@ export class ObjectsComponent implements OnInit {
   }
 
   openDialog(node: any) {
-    let localMetadata = Object.entries(node.metadata).map(([key, value]) => ({
-      key,
-      value,
-    }));
     const dialogConfig = {
-      data: { metadata: localMetadata },
+      data: { metadata: node.metadata },
       width: "80%",
     };
     this._dialog.open(MetadataTableComponent, dialogConfig);
