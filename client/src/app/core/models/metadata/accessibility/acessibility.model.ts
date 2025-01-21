@@ -26,12 +26,21 @@ export class Accessibility {
   equivalentResource: EquivalentResourceType = new EquivalentResourceType();
 
   constructor() {
+    const scheme: MetadataEntrySchema = {
+      name: "Accessibility",
+      description:
+        "Acessibilidade é a habilidade do ambiente de aprendizagem de se adaptar às necessidades de cada usuário/estudante. Ela é determinada pela flexibilidade de um ambiente educacional (no que diz respeito à apresentação, métodos de controle, modalidade de acesso e suporte para os estudantes e a disponibilidade de conteúdos e atividades alternativas mas equivalentes.",
+      minCardinality: 0,
+      maxCardinality: 1,
+    };
+
     this.nodeInfo = new NodeInfo(
-      0,
-      1,
-      "Platform specific features of the learning object.",
+      scheme.minCardinality,
+      scheme.maxCardinality,
+      scheme.description,
       "root"
     );
+    this.nodeInfo.metadataEntrySchema = scheme;
   }
 }
 
