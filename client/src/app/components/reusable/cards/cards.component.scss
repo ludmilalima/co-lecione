@@ -17,7 +17,7 @@
 }
 
 .image-wrapper {
-  max-width: 90%; /* Garante que a imagem não ultrapasse a largura do card */
+  max-width: 100%; /* Garante que a imagem não ultrapasse a largura do card */
   overflow: hidden; /* Esconde qualquer parte da imagem que ultrapasse a largura do card */
   padding-inline: 8px;
   display: flex;
