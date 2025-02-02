@@ -1,30 +1,52 @@
 <mat-grid-list cols="4" [rowHeight]="'17.75vh'">
-    <mat-grid-tile
-        [colspan]="tiles[0].cols"
-        [rowspan]="tiles[0].rows"
-        [style.background]="tiles[0].color"
-    >
-        <img src="https://i.gifer.com/7VE.gif" alt="Description of the gif" style="width: auto; height: 100%;" />
-    </mat-grid-tile>
-    <mat-grid-tile
-        [colspan]="tiles[1].cols"
-        [rowspan]="tiles[1].rows"
-        [style.background]="tiles[1].color"
-    >
-        {{ tiles[1].text }}
-    </mat-grid-tile>
-    <mat-grid-tile
-        [colspan]="tiles[2].cols"
-        [rowspan]="tiles[2].rows"
-        [style.background]="tiles[2].color"
-    >
-        {{ tiles[2].text }}
-    </mat-grid-tile>
-    <mat-grid-tile
-        [colspan]="tiles[3].cols"
-        [rowspan]="tiles[3].rows"
-        [style.background]="tiles[3].color"
-    >
-        {{ tiles[3].text }}
-    </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="tiles[0].cols"
+    [rowspan]="tiles[0].rows"
+    [style.background]="tiles[0].color"
+  >
+    <img
+      src="https://i.gifer.com/7VE.gif"
+      alt="gif do jonh travolta perdido"
+      style="width: auto; height: 100%"
+    />
+    <span align="center">Ei, você! <br />Agradeço pela contribuição 💙</span>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="tiles[1].cols"
+    [rowspan]="tiles[1].rows"
+    [style.background]="tiles[1].color"
+  >
+    <span align="center">
+      Gostaria de saber mais sobre este projeto? <br />
+      Prof. Dr. Tiago Oliveira -
+      <a href="mailto:tiago.oliveira@example.com"
+        >tiago.oliveira&#64;unifesp.br</a
+      >
+      <br />
+      Talita Ludmila de Lima -
+      <a href="mailto:ludmila.lima@unifesp.br">ludmila.lima&#64;unifesp.br</a>
+      <br />
+    </span>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="tiles[2].cols"
+    [rowspan]="tiles[2].rows"
+    [style.background]="tiles[2].color"
+  >
+    <span align="center">
+      'Mas afinal, para que serve essa ferramenta?'
+      <a href="https://example.com">Resumi aqui para você.</a>
+      <br />
+      'O lance dos metadados ainda é um mistério para mim.'
+      <a href="https://example.com"
+        >Essa parte é confusa mesmo, mas clica aqui para eu tentar te ajudar.</a
+      >
+      <br />
+      'Quero criar um objeto, como eu faço?'
+      <a href="https://example.com">Veja como é simples!</a>
+      <br />
+      'E como criar um roteiro?'
+      <a href="https://example.com">Finalmente chegou nessa parte, né?</a>
+    </span>
+  </mat-grid-tile>
 </mat-grid-list>
