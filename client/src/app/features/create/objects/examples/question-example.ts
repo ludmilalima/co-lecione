@@ -416,9 +416,11 @@ export class QuestionExample {
       this.questionExample["content"].find((item) => item.key === "statement")
         .value
     ),
-    alternatives: this.questionExample["content"].find(
-      (item) => item.key === "alternatives"
-    ).value,
+    alternatives: JSON.parse(
+      this.questionExample["content"].find(
+        (item) => item.key === "alternatives"
+      ).value
+    ),
     selectedAlternatives: new FormArray([]),
     discursive: this.questionExample["content"].find(
       (item) => item.key === "discursive"
