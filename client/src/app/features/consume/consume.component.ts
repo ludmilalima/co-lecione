@@ -21,6 +21,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { EmailDialogComponent } from "./email-destination-dialog/email-dialog.component";
 import { FormGroup } from "@angular/forms";
 import { ConfirmationDialogService } from "src/app/shared/confirmation-dialog/confirmation-dialog.service";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -36,6 +37,7 @@ import { environment } from "src/environments/environment";
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: "./consume.component.html",
   styleUrl: "./consume.component.scss",
@@ -45,6 +47,7 @@ export class ConsumeComponent implements OnInit {
   loadedObjects: Array<Objects> = [];
   emailForm: FormGroup;
   pdf: jsPDF;
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -214,7 +217,11 @@ export class ConsumeComponent implements OnInit {
     objects: Array<any>,
     operation: string
   ) {
+    this.isLoading = true;
+    console.log("Generating PDF...");
     await this.generatePdf(itinerary, objects, operation);
+    this.isLoading = false;
+    console.log("PDF generated.");
   }
 
   async generatePdf(
