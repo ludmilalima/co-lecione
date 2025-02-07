@@ -4,62 +4,61 @@ import { Question } from "src/app/components/reusable/question/question.model";
 export class QuestionExample {
   questionExample: Object = {
     _id: {
-      $oid: "679eb1804d35f579adf28bb4",
+      $oid: "67a1f41d62f96dae36fb513d",
     },
     type: "question",
     content: [
       {
         key: "topic",
-        value: "Este é um exemplo de questão",
+        value: "Este exemplo de questão pode conter um título",
         _id: {
-          $oid: "679eb1804d35f579adf28bb5",
+          $oid: "67a1f41d62f96dae36fb513e",
         },
       },
       {
         key: "note",
-        value: "Será que este é o tipo ideal de objeto para você?",
+        value: "E também um subtítulo",
         _id: {
-          $oid: "679eb1804d35f579adf28bb6",
+          $oid: "67a1f41d62f96dae36fb513f",
         },
       },
       {
         key: "figureSrc",
         value:
-          "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/791514f9-b282-4c75-830a-e1164ef7736f/da57koc-e174b044-460c-437c-8a03-72d77457d83c.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzc5MTUxNGY5LWIyODItNGM3NS04MzBhLWUxMTY0ZWY3NzM2ZlwvZGE1N2tvYy1lMTc0YjA0NC00NjBjLTQzN2MtOGEwMy03MmQ3NzQ1N2Q4M2MuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ztmlvzcfbz1swOrhceOwkaCpIbFxeA_BQBVptOwZG0g",
+          "https://i.ibb.co/bgvFftmM/Exemplos-de-objetos-de-aprendizagem-14.png",
         _id: {
-          $oid: "679eb1804d35f579adf28bb7",
+          $oid: "67a1f41d62f96dae36fb5140",
         },
       },
       {
         key: "statement",
         value:
-          '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"Se o mago "},{"type":"text","marks":[{"type":"strong"}],"text":"Editor, o Riquenriquecedor"},{"type":"text","text":", tivesse que criar um feitiço para impedir que os escribas procrastinassem, qual seria o encantamento?"}]},{"type":"paragraph","attrs":{"align":"center","indent":null},"content":[{"type":"image","attrs":{"src":"https://upload.wikimedia.org/wikipedia/commons/8/8d/StaffWand.gif","alt":"","title":"","width":"178px"}}]},{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"Compartilhe outros remédios com potencial de cura para este mal que os afeta."}]}]}',
+          '{"type":"doc","content":[{"type":"blockquote","attrs":{"indent":null},"content":[{"type":"heading","attrs":{"level":2,"align":null,"indent":null},"content":[{"type":"text","text":"— É só isso?"}]}]},{"type":"bullet_list","content":[{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"também tem um editor de texto para criar aquele enunciado bacana,"}]},{"type":"ordered_list","attrs":{"order":1},"content":[{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"dá pra criar listas,"}]}]},{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"colocar mais imagens,"}]}]},{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null,"indent":null},"content":[{"type":"text","text":"pedir justificativa!"}]}]}]}]}]}]}',
         _id: {
-          $oid: "679eb1804d35f579adf28bb8",
+          $oid: "67a1f41d62f96dae36fb5141",
         },
       },
       {
         key: "alternatives",
-        value:
-          '["\\"Digitus Rápidus!\\" – Para escrever na velocidade da luz","\\"Sem-Scrollium!\\" – Para impedir que rolem a timeline ao invés de trabalhar","\\"AutoSalvatus!\\" – Para salvar automaticamente antes que a inspiração fuja","\\"Café Infinitus!\\" – Para manter todos acordados até terminarem o texto"]',
+        value: '["também","tem","alternativas"]',
         _id: {
-          $oid: "679eb1804d35f579adf28bb9",
+          $oid: "67a1f41d62f96dae36fb5142",
         },
       },
       {
         key: "discursive",
         value: "true",
         _id: {
-          $oid: "679eb1804d35f579adf28bba",
+          $oid: "67a1f41d62f96dae36fb5143",
         },
       },
     ],
     metadata: [
       {
-        key: "Propósito",
-        value: "Exemplo questão",
+        key: "Tópico",
+        value: "Questão exemplo",
         _id: {
-          $oid: "679eb1804d35f579adf28bbb",
+          $oid: "67a1f41d62f96dae36fb5144",
         },
       },
     ],
