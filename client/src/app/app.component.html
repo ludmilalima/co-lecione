@@ -6,15 +6,21 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-toolbar class="nav-toolbar">
-      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <span fxFlex><img [src]="iconPath" alt="Ícone" /></span>
+      <button (click)="navigateToUrl()" mat-button fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+        <img [src]="iconPath" alt="Ícone"/>
+        <span>&nbsp;</span>
+        <!-- <span fxFlex><img [src]="iconPath" alt="Ícone" /></span> -->
         <span fxFlex class="project-title">co-lecione</span>
-      </div>
+      </button>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/" style="height: 0;"></a>
-      <a mat-list-item routerLink="/criar" routerLinkActive="active-link">Criar</a>
-      <a mat-list-item routerLink="/explorar" routerLinkActive="active-link">Explorar</a>
+      <a mat-list-item routerLink="/" style="height: 0"></a>
+      <a mat-list-item routerLink="/criar" routerLinkActive="active-link"
+        >Criar</a
+      >
+      <a mat-list-item routerLink="/explorar" routerLinkActive="active-link"
+        >Explorar</a
+      >
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
