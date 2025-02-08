@@ -13,6 +13,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { MetadataTableComponent } from "src/app/components/reusable/metadata-table/metadata-table.component";
+import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 
 @Component({
   selector: "app-objects",
@@ -94,8 +95,7 @@ export class ObjectsComponent implements OnInit {
 
   getAllObjects() {
     this._objectsService.getAllObjects().subscribe((data) => {
-      this.objects = data;
-      this.processObjects(this.objects);
+      this.processObjects(data);
     });
   }
 
@@ -110,12 +110,13 @@ export class ObjectsComponent implements OnInit {
             [curr.key]: this._convertByType.convertType(curr.value),
           };
         }, {}),
-        metadata: object.metadata.reduce((acc: any, curr: any) => {
-          return {
-            ...acc,
-            [curr.key]: curr.value,
-          };
-        }, {}),
+        // metadata: object.metadata.reduce((acc: any, curr: any) => {
+        //   return {
+        //     ...acc,
+        //     [curr.key]: curr.value,
+        //   };
+        // }, {}),
+        metadata: object.metadata,
       };
     });
   }
