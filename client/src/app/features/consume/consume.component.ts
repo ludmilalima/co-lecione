@@ -23,6 +23,7 @@ import { FormGroup } from "@angular/forms";
 import { ConfirmationDialogService } from "src/app/shared/confirmation-dialog/confirmation-dialog.service";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { environment } from "src/environments/environment";
+import { ConsumeDialogComponent } from "./consume-dialog/consume-dialog.component";
 
 @Component({
   selector: "app-consume",
@@ -33,6 +34,7 @@ import { environment } from "src/environments/environment";
 
     CardsComponent,
     QuestionComponent,
+    ConsumeDialogComponent,    
 
     MatIconModule,
     MatButtonModule,
@@ -458,6 +460,22 @@ export class ConsumeComponent implements OnInit {
       .join("");
 
     return paragraphs;
+  }
+
+  openConsumeDialog(): void {
+    const dialogRef = this.dialog.open(ConsumeDialogComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'fullscreen-dialog',
+      data: {
+      itinerary: this.itinerary,
+      objects: this.loadedObjects,
+      downloadPdf: () => this.downloadPdf(),
+      sendPdfByEmail: () => this.sendPdfByEmail(),
+      }
+    });
   }
 }
 

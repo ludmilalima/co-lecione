@@ -5,6 +5,15 @@
         type="button"
         mat-button
         color="primary"
+        (click)="openConsumeDialog()"
+        matTooltip="Abrir diálogo"
+      >
+        <mat-icon>fullscreen</mat-icon> Apresentar
+      </button>
+      <button
+        type="button"
+        mat-button
+        color="primary"
         (click)="shareItinerary(itinerary)"
         matTooltip="Compartilhar roteiro"
       >
@@ -63,6 +72,15 @@
   </div>
   <div fxFlex>
     <div fxLayout="row" fxLayoutAlign="end center">
+      <button
+        type="button"
+        mat-button
+        color="primary"
+        (click)="openConsumeDialog()"
+        matTooltip="Abrir diálogo"
+      >
+        <mat-icon>fullscreen</mat-icon> Apresentar
+      </button>
       <button
         type="button"
         mat-button
