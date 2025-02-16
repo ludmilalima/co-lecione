@@ -37,6 +37,9 @@ import { ProcessMetadataService } from "src/app/components/reusable/filter/proce
 import { AvailableObjectsComponent } from "../available-objects/available-objects.component";
 import { ConfirmationDialogService } from "src/app/shared/confirmation-dialog/confirmation-dialog.service";
 import { NotificationsService } from "src/app/shared/notifications/notifications.service";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatDialog } from "@angular/material/dialog";
+import { FullscreenViewComponent } from "../fullscreen-view/fullscreen-view.component";
 
 @Component({
   selector: "app-create-object",
@@ -63,6 +66,7 @@ import { NotificationsService } from "src/app/shared/notifications/notifications
     MatInputModule,
     MatIconModule,
     MatTableModule,
+    MatTooltipModule,
   ],
 })
 export class CreateObjectComponent
@@ -101,7 +105,8 @@ export class CreateObjectComponent
     private _formService: SharedFormService,
     private _processMetadataService: ProcessMetadataService,
     private _notificationsService: NotificationsService,
-    private differs: KeyValueDiffers
+    private differs: KeyValueDiffers,
+    private _dialog: MatDialog
   ) {
     this.editor = new Editor();
     this.filtersDiffer = this.differs.find(this.filters).create();
@@ -276,5 +281,19 @@ export class CreateObjectComponent
   handleFiltersCleaned(event: any): void {
     this.filters = [];
     this.updateMetadata();
+  }
+
+  openFullscreenDialog(): void {
+    const dialogRef = this._dialog.open(FullscreenViewComponent, {
+      width: '100%',
+      height: '100%',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'fullscreen-dialog',
+      data: {
+        objectType: this.objectType,
+        objForm: this.objForm
+      }
+    });
   }
 }

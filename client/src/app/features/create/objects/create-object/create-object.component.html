@@ -94,7 +94,10 @@
     class="wrapper"
   >
     <ng-container *ngIf="touchedForm">
-      <h3>Objeto criado:</h3>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h3>Objeto criado:</h3>
+        <button mat-icon-button matTooltip="Visualizar objeto em tela cheia" (click)="openFullscreenDialog()"><mat-icon>fullscreen</mat-icon></button>
+      </div>
       <question
         *ngIf="objectType == 'question'"
         [topic]="objForm.value.topic"
