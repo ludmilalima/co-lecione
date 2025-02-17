@@ -361,11 +361,13 @@ export class ConsumeComponent implements OnInit {
           let title = `Objeto ${result.index + 1}`;
           switch (objects[result.index].type) {
             case "question":
-              title += ` - ${objects[result.index].content.topic}`;
+              if(objects[result.index].content.topic != undefined)
+                title += ` - ${objects[result.index].content.topic}`;
               break;
 
             case "card":
-              title += ` - ${objects[result.index].content.title}`;
+              if(objects[result.index].content.title != undefined)
+                title += ` - ${objects[result.index].content.title}`;
               break;
           }
 
