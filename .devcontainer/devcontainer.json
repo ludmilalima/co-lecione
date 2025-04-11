@@ -1,0 +1,8 @@
+{
+  "name": "co-lecione-dev-container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "settings": {},
+  "extensions": []
+}
