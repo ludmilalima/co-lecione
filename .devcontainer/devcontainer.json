@@ -4,11 +4,14 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": []
+    }
   },
   "forwardPorts": [4200, 5200],
-  "postCreateCommand": "npm install --prefix server && npm install --prefix client",
-  "remoteUser": "vscode",
-  "extensions": []
+  "postCreateCommand": "npm install --prefix server && npm install --prefix client"
 }
