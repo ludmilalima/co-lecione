@@ -1,8 +1,7 @@
 {
   "name": "co-lecione-dev-container",
   "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
+    "dockerfile": "Dockerfile"
   },
   "customizations": {
     "vscode": {
@@ -13,5 +12,6 @@
     }
   },
   "forwardPorts": [4200, 5200],
-  "postCreateCommand": "npm install --prefix server && npm install --prefix client"
+  "postCreateCommand": "npm install --prefix server && npm install --prefix client",
+  "remoteUser": "vscode"
 }
