@@ -1,11 +1,14 @@
-# Use a Node base image (can specify version as needed)
+# Use Dev Container Node base image
 FROM mcr.microsoft.com/devcontainers/javascript-node:20
 
 # Set working directory
 WORKDIR /workspace
 
 # Install Angular CLI globally
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli && npm cache clean --force
 
-# Optional: expose ports for frontend (4200), backend (3000)
+# Switch to vscode user for safer dev experience
+USER vscode
+
+# Expose ports
 EXPOSE 4200 5200
