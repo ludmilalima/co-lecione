@@ -7,8 +7,6 @@ WORKDIR /workspace
 # Install Angular CLI globally
 RUN npm install -g @angular/cli && npm cache clean --force
 
-# Switch to vscode user for safer dev experience
-USER vscode
 
 # Expose ports
 EXPOSE 4200 5200

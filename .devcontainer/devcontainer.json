@@ -3,6 +3,5 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "forwardPorts": [4200, 5200],
-  "remoteUser": "vscode"
+  "forwardPorts": [4200, 5200]
 }
