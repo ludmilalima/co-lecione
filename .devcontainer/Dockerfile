@@ -1,5 +1,5 @@
 # Use Dev Container Node base image
-FROM mcr.microsoft.com/devcontainers/javascript-node:20
+FROM mcr.microsoft.com/devcontainers/javascript-node
 
 # Set working directory
 WORKDIR /workspace
