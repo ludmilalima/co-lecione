@@ -3,14 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      },
-      "extensions": []
-    }
-  },
   "forwardPorts": [4200, 5200],
   "remoteUser": "vscode"
 }
