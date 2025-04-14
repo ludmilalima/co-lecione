@@ -13,9 +13,5 @@
     }
   },
   "forwardPorts": [4200, 5200],
-  "postCreateCommand": "npm install --prefix server && npm install --prefix client",
-  "mounts": [
-    "source=${localWorkspaceFolder}/server,target=/workspace/server,type=bind",
-    "source=${localWorkspaceFolder}/client,target=/workspace/client,type=bind"
-  ]
+  "postCreateCommand": "npm install --prefix server && npm install --prefix client"
 }
