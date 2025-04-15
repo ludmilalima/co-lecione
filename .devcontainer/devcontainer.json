@@ -7,11 +7,6 @@
     4200,
     5200
   ],
-  "features": {
-    "dotenv": {
-      "path": "/workspaces/co-lecione/server/src/.env"
-    }
-  },
   "mounts": [
     "source=${localWorkspaceFolder}/server/src,target=/workspaces/co-lecione/server/src,type=bind"
   ]
