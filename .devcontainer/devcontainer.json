@@ -1,6 +1,13 @@
 {
   "name": "co-lecione-dev-container",
   "image": "ghcr.io/ludmilalima/co-lecione:devcontainer",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    }
+  },
   "forwardPorts": [
     4200,
     5200
