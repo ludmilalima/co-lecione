@@ -13,7 +13,7 @@ import { emailRouter } from "../server/routes/email.routes";
 import { sendGridRouter } from "../server/routes/nodemailer.routes";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
-dotenv.config();
+dotenv.config({ path: "/workspaces/co-lecione/server/src/.env" });
 
 if (!process.env.ATLAS_URI) {
   throw new Error('ATLAS_URI não definido no arquivo .env');
