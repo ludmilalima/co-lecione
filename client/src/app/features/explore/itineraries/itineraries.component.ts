@@ -17,6 +17,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ProcessMetadataService } from "src/app/components/reusable/filter/process-metadata.service";
 import { environment } from "src/environments/environment";
+import { MatDialog } from "@angular/material/dialog";
+import { MetadataTableComponent } from "src/app/components/reusable/metadata-table/metadata-table.component";
 
 @Component({
   selector: "app-itineraries",
@@ -52,7 +54,8 @@ export class ItinerariesComponent implements OnInit {
     private _objectsService: ObjectsService,
     private _convertByType: ConvertByTypeService,
     private _processMetadataService: ProcessMetadataService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -216,5 +219,13 @@ export class ItinerariesComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
       });
     }
+  }
+
+  openDialog(node: any) {
+    const dialogConfig = {
+      data: { metadata: node.metadata },
+      width: "80%",
+    };
+    this._dialog.open(MetadataTableComponent, dialogConfig);
   }
 }

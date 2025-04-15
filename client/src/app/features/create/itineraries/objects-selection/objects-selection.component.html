@@ -1,8 +1,12 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center stretch">
+  <h3>
+    Buscar, selecionar e ordenar <b>dois ou mais</b> objetos que comporão o
+    roteiro:
+  </h3>
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title> Filtrar </mat-panel-title>
+        <mat-panel-title> Buscar </mat-panel-title>
       </mat-expansion-panel-header>
       <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100">
         <!-- <app-filter #filter [filters]="filters" fxFlex="100"></app-filter> -->
@@ -11,6 +15,7 @@
           [metadata]="filters"
           [buttonAction]="buttonAction"
           (filtersCleaned)="clearFilters()"
+          [metadataPurpose]="'Buscar objetos através dos metadados:'"
         ></app-metadata-form>
         <!-- <div class="button-container" fxLayoutAlign="end center" fxFlex="100">
           <button mat-button (click)="clearFilters()" color="primary">
@@ -38,7 +43,7 @@
     </mat-expansion-panel>
     <mat-expansion-panel *ngIf="selectedObjects.length > 0">
       <mat-expansion-panel-header>
-        <mat-panel-title> Organizar </mat-panel-title>
+        <mat-panel-title> Ordenar </mat-panel-title>
       </mat-expansion-panel-header>
       <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100">
         <div

@@ -17,19 +17,19 @@ export class Obaa {
     lifeCycle: LifeCycle = new LifeCycle();
     metaMetadata: MetaMetadata = new MetaMetadata();
     technical: Technical = new Technical();
-    // educational: Educational = new Educational();
-    // rights: Rights = new Rights();
-    // relation: Relation = new Relation();
-    // annotation: Annotation = new Annotation();
-    // classification: Classification = new Classification();
-    // accessibility: Accessibility = new Accessibility();
-    // segmentInformationTable: SegmentInformationTable = new SegmentInformationTable();
+    educational: Educational = new Educational();
+    rights: Rights = new Rights();
+    relation: Relation = new Relation();
+    annotation: Annotation = new Annotation();
+    classification: Classification = new Classification();
+    accessibility: Accessibility = new Accessibility();
+    segmentInformationTable: SegmentInformationTable = new SegmentInformationTable();
 
     constructor() {
         this.nodeInfo = new NodeInfo(
             0,
             1,
-            'The root element of the OBAA model.',
+            'Elemento raiz do esquema OBAA de metadados',
             'root'
         );
     }

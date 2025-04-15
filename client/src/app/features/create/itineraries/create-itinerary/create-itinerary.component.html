@@ -37,6 +37,7 @@
         <app-metadata-form
           [metadata]="metadata"
           #metadataForm
+          [metadataPurpose]="'Associar metadados ao roteiro:'"
         ></app-metadata-form>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <button type="button" mat-button matStepperPrevious>Voltar</button>
@@ -48,8 +49,7 @@
         <form>
           <ng-template matStepLabel>Revisar e salvar</ng-template>
           <p>
-            Verifique se o objeto criado e os metadados associados atendem aos
-            requisitos.
+            Verifique, nas etapas anteriores, se o roteiro criado e os metadados associados atendem aos requisitos.
           </p>
           <div fxLayout="row" fxLayoutAlign="start center">
             <button type="button" mat-button matStepperPrevious>Voltar</button>

@@ -1,16 +1,9 @@
 {
   "name": "co-lecione-dev-container",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      },
-      "extensions": []
-    }
-  },
-  "forwardPorts": [4200, 5200],
-  "remoteUser": "vscode"
+  "image": "ghcr.io/ludmilalima/co-lecione:devcontainer",
+  "forwardPorts": [
+    4200,
+    5200
+  ],
+  "postStartCommand": "cd client && npm install && npm run start:dev-container & (cd server && npm install && npm run start:dev)"
 }

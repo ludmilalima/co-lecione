@@ -1,27 +1,28 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
-import { LoginComponent } from './components/admin-user/login/login.component';
-import { LogoutComponent } from './components/admin-user/logout/logout.component';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
-import { environment } from 'src/environments/environment';
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { Component, Inject, OnInit } from "@angular/core";
+import { LoginComponent } from "./components/admin-user/login/login.component";
+import { LogoutComponent } from "./components/admin-user/logout/logout.component";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { Observable } from "rxjs";
+import { map, shareReplay } from "rxjs/operators";
+import { UserDetailsComponent } from "./components/user-details/user-details.component";
+import { WINDOW } from "./shared/services/window.service";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
-  title: string = 'co-lecione';
+  title: string = "co-lecione";
   iconPath: SafeResourceUrl;
   dialogLoginRef: MatDialogRef<LoginComponent, boolean>;
   dialogLogoutRef: MatDialogRef<LogoutComponent, boolean>;
   dialogUserDetailsRef: MatDialogRef<UserDetailsComponent>;
   isLoggedIn: boolean = false;
-  loggedUser: string = '';
+  loggedUser: string = "";
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -29,12 +30,15 @@ export class AppComponent implements OnInit {
     private dialogLogout: MatDialog,
     private dialogUserDetails: MatDialog,
     private breakpointObserver: BreakpointObserver,
-  ) { };
+    @Inject(WINDOW) private window: Window
+  ) {}
 
   ngOnInit(): void {
-    this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl('../assets/logo-title.png');
-    this.isLoggedIn = Boolean(localStorage.getItem('token'));
-    this.loggedUser = localStorage.getItem('name') || '';
+    this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl(
+      "../assets/logo-title.png"
+    );
+    this.isLoggedIn = Boolean(localStorage.getItem("token"));
+    this.loggedUser = localStorage.getItem("name") || "";
   }
 
   openLoginDialog(): void {
@@ -51,22 +55,30 @@ export class AppComponent implements OnInit {
     this.dialogUserDetails.open(UserDetailsComponent);
   }
 
-  handleDialogClose(dialogRef: MatDialogRef<any, boolean>, closeResult: boolean): void {
+  handleDialogClose(
+    dialogRef: MatDialogRef<any, boolean>,
+    closeResult: boolean
+  ): void {
     dialogRef.backdropClick().subscribe(() => {
       dialogRef.close(closeResult);
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.isLoggedIn = result;
       if (result) {
-        this.loggedUser = localStorage.getItem('name') || '';
+        this.loggedUser = localStorage.getItem("name") || "";
       }
     });
   }
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
+
+  navigateToUrl() {
+    this.window.location.href = environment.clientUrl;
+  }
 }

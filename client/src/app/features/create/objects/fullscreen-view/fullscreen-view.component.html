@@ -1,0 +1,32 @@
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>{{ defineItem(data.objectType) }}</mat-icon>
+      {{ 1 }}
+    </ng-template>
+    <ng-container>
+      <question
+        *ngIf="data.objectType == 'question'"
+        [topic]="data.objForm.value.topic"
+        [note]="data.objForm.value.note"
+        [figureSrc]="data.objForm.value.figureSrc"
+        [statement]="data.objForm.value.statement"
+        [alternatives]="data.objForm.value.alternatives"
+        [discursive]="data.objForm.value.discursive"
+      >
+      </question>
+
+      <app-cards
+        *ngIf="data.objectType == 'card'"
+        [avatarSrc]="data.objForm.value.avatarSrc"
+        [headerImageSrc]="data.objForm.value.headerImageSrc"
+        [title]="data.objForm.value.title"
+        [subtitle]="data.objForm.value.subtitle"
+        [content]="data.objForm.value.content"
+        [actionTitle]="data.objForm.value.actionTitle"
+        [actionLink]="data.objForm.value.actionLink"
+      >
+      </app-cards>
+    </ng-container>
+  </mat-tab>
+</mat-tab-group>

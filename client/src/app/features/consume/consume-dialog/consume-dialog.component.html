@@ -1,0 +1,36 @@
+
+  <mat-tab-group>
+    <mat-tab *ngFor="let item of data.itinerary.content; let i = index">
+      <ng-template mat-tab-label>
+        <mat-icon>{{ defineItem(item.objectId) }}</mat-icon>
+        {{ i + 1 }}
+      </ng-template>
+      <ng-container>
+        <div *ngIf="getObjectType(item.objectId) == 'card'">
+          <app-cards
+            class="object-container wrapper"
+            [avatarSrc]="getObjectContent(item.objectId)?.avatarSrc"
+            [headerImageSrc]="getObjectContent(item.objectId)?.headerImageSrc"
+            [title]="getObjectContent(item.objectId)?.title"
+            [subtitle]="getObjectContent(item.objectId)?.subtitle"
+            [content]="getObjectContent(item.objectId)?.content"
+            [actionTitle]="getObjectContent(item.objectId)?.actionTitle"
+            [actionLink]="getObjectContent(item.objectId)?.actionLink"
+          >
+          </app-cards>
+        </div>
+        <div *ngIf="getObjectType(item.objectId) == 'question'">
+          <question
+            class="object-container wrapper"
+            [topic]="getObjectContent(item.objectId)?.topic"
+            [note]="getObjectContent(item.objectId)?.note"
+            [figureSrc]="getObjectContent(item.objectId)?.figureSrc"
+            [statement]="getObjectContent(item.objectId)?.statement"
+            [alternatives]="getObjectContent(item.objectId)?.alternatives"
+            [discursive]="getObjectContent(item.objectId)?.discursive"
+          >
+          </question>
+        </div>
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>

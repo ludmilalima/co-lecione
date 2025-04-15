@@ -5,91 +5,109 @@
       [metadata]="metadata"
       [buttonAction]="buttonAction"
       (filtersCleaned)="handleClearFilters()"
+      [metadataPurpose]="'Buscar roteiros através dos metadados:'"
     ></app-metadata-form>
   </div>
 </ng-container>
 <ng-container>
-  <mat-accordion>
-    <mat-expansion-panel
-      *ngFor="let itinerary of itineraries"
-      [expanded]="false"
-      (opened)="getItineraryContent(itinerary)"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ getMetadataValue(itinerary, "general.title") }}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ getMetadataValue(itinerary, "general.description") }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <ng-container>
-        <div class="container wrapper">
-          <div fxLayout="row" fxLayoutAlign="end center">
-            <button
-              type="button"
-              mat-icon-button
-              color="primary"
-              (click)="shareItinerary(itinerary)"
-              matTooltip="Compartilhar roteiro"
-            >
-              <mat-icon>share</mat-icon>
-            </button>
-            <button
-              type="button"
-              mat-icon-button
-              color="primary"
-              (click)="openNewTab(itinerary)"
-              matTooltip="Abrir em nova aba"
-            >
-              <mat-icon>open_in_new</mat-icon>
-            </button>
+  <div class="container wrapper">
+    <h3>Lista de roteiros encontrados:</h3>
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let itinerary of itineraries"
+        [expanded]="false"
+        (opened)="getItineraryContent(itinerary)"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ getMetadataValue(itinerary, "general.title") }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ getMetadataValue(itinerary, "general.description") }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-container>
+          <div class="container wrapper">
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                (click)="shareItinerary(itinerary)"
+                matTooltip="Clique para compartilhar este roteiro"
+              >
+                <mat-icon>share</mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                (click)="openNewTab(itinerary)"
+                matTooltip="Clique para abrir este roteiro em uma em nova aba"
+              >
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                matTooltip="Clique para ver os metadados deste elemento"
+                matTooltipClass="tooltip-center"
+                (click)="openDialog(itinerary)"
+              >
+                <mat-icon>info</mat-icon>
+              </button>
+            </div>
+            <div>
+              <mat-tab-group>
+                <mat-tab *ngFor="let item of itinerary.content; let i = index">
+                  <ng-template mat-tab-label>
+                    <mat-icon>{{ defineItem(item.objectId) }}</mat-icon>
+                    {{ i + 1 }}
+                  </ng-template>
+                  <ng-container>
+                    <div *ngIf="getObjectType(item.objectId) == 'card'">
+                      <app-cards
+                        class="object-container wrapper"
+                        [avatarSrc]="getObjectContent(item.objectId)?.avatarSrc"
+                        [headerImageSrc]="
+                          getObjectContent(item.objectId)?.headerImageSrc
+                        "
+                        [title]="getObjectContent(item.objectId)?.title"
+                        [subtitle]="getObjectContent(item.objectId)?.subtitle"
+                        [content]="getObjectContent(item.objectId)?.content"
+                        [actionTitle]="
+                          getObjectContent(item.objectId)?.actionTitle
+                        "
+                        [actionLink]="
+                          getObjectContent(item.objectId)?.actionLink
+                        "
+                      >
+                      </app-cards>
+                    </div>
+                    <div *ngIf="getObjectType(item.objectId) == 'question'">
+                      <question
+                        class="object-container wrapper"
+                        [topic]="getObjectContent(item.objectId)?.topic"
+                        [note]="getObjectContent(item.objectId)?.note"
+                        [figureSrc]="getObjectContent(item.objectId)?.figureSrc"
+                        [statement]="getObjectContent(item.objectId)?.statement"
+                        [alternatives]="
+                          getObjectContent(item.objectId)?.alternatives
+                        "
+                        [discursive]="
+                          getObjectContent(item.objectId)?.discursive
+                        "
+                      >
+                      </question>
+                    </div>
+                  </ng-container>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
           </div>
-          <div>
-            <mat-tab-group>
-              <mat-tab *ngFor="let item of itinerary.content; let i = index">
-                <ng-template mat-tab-label>
-                  <mat-icon>{{ defineItem(item.objectId) }}</mat-icon>
-                  {{ i + 1 }}
-                </ng-template>
-                <ng-container>
-                  <div *ngIf="getObjectType(item.objectId) == 'card'">
-                    <app-cards
-                      class="object-container wrapper"
-                      [avatarSrc]="getObjectContent(item.objectId)?.avatarSrc"
-                      [headerImageSrc]="
-                        getObjectContent(item.objectId)?.headerImageSrc
-                      "
-                      [title]="getObjectContent(item.objectId)?.title"
-                      [subtitle]="getObjectContent(item.objectId)?.subtitle"
-                      [content]="getObjectContent(item.objectId)?.content"
-                      [actionTitle]="
-                        getObjectContent(item.objectId)?.actionTitle
-                      "
-                      [actionLink]="getObjectContent(item.objectId)?.actionLink"
-                    >
-                    </app-cards>
-                  </div>
-                  <div *ngIf="getObjectType(item.objectId) == 'question'">
-                    <question
-                      class="object-container wrapper"
-                      [topic]="getObjectContent(item.objectId)?.topic"
-                      [note]="getObjectContent(item.objectId)?.note"
-                      [figureSrc]="getObjectContent(item.objectId)?.figureSrc"
-                      [statement]="getObjectContent(item.objectId)?.statement"
-                      [alternatives]="
-                        getObjectContent(item.objectId)?.alternatives
-                      "
-                      [discursive]="getObjectContent(item.objectId)?.discursive"
-                    >
-                    </question>
-                  </div>
-                </ng-container>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
-        </div>
-      </ng-container>
-    </mat-expansion-panel>
-  </mat-accordion>
+        </ng-container>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </ng-container>

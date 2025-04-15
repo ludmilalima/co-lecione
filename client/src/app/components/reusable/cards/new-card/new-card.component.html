@@ -15,15 +15,23 @@
 
   <p>
     <mat-form-field appearance="outline">
-      <mat-label>Avatar</mat-label>
-      <input matInput placeholder="Avatar" formControlName="avatarSrc" />
+      <mat-label>Link para o avatar</mat-label>
+      <input
+        matInput
+        placeholder="Link para o avatar"
+        formControlName="avatarSrc"
+      />
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field appearance="outline">
-      <mat-label>Imagem</mat-label>
-      <input matInput placeholder="Imagem" formControlName="headerImageSrc" />
+      <mat-label>Link para a imagem</mat-label>
+      <input
+        matInput
+        placeholder="Link para a imagem"
+        formControlName="headerImageSrc"
+      />
     </mat-form-field>
   </p>
 
@@ -31,7 +39,7 @@
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
     <ngx-editor
       [editor]="editor"
-      [placeholder]="'Conteúdo'"
+      [placeholder]="'Editor de texto enriquecido'"
       formControlName="content"
     >
     </ngx-editor>
@@ -59,4 +67,5 @@
         formControlName="actionLink"
       />
     </mat-form-field>
+  </p>
 </form>

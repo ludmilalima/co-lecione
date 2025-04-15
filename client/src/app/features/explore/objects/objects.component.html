@@ -5,6 +5,7 @@
     [metadata]="metadata"
     [buttonAction]="buttonAction"
     (filtersCleaned)="clearFilters()"
+    [metadataPurpose]="'Buscar objetos através dos metadados:'"
   ></app-metadata-form>
 
   <!-- <div class="button-container" [align]="'end'">
@@ -13,7 +14,9 @@
   </div> -->
 </div>
 
-<div *ngFor="let item of objects">
+<div class="wrapper"><h3>Lista de objetos encontrados:</h3></div>
+
+<div *ngFor="let item of objects" class="hover-container">
   <div *ngIf="item.type == 'card'">
     <app-cards
       class="object-container wrapper"
@@ -39,4 +42,14 @@
     >
     </question>
   </div>
+  <button
+    mat-icon-button
+    color="primary"
+    class="hover-icon"
+    matTooltip="Clique para ver os metadados deste elemento"
+    matTooltipClass="tooltip-center"
+    (click)="openDialog(item)"
+  >
+    <mat-icon>info</mat-icon>
+  </button>
 </div>

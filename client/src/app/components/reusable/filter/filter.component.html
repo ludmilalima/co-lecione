@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
   <section class="container">
     <h3>Metadados padronizados:</h3>
     <app-standard-form
@@ -14,4 +14,28 @@
       [clearFilters]="clearFiltersEvent | async"
     ></app-custom-type-filter>
   </section>
-</div>
+</div> -->
+<ng-container>
+  <h3>{{ metadataPurpose }}</h3>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Metadados padronizados </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-standard-form
+        [filters]="filters"
+        [clearFilters]="clearFiltersEvent | async"
+      ></app-standard-form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Metadados livres </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-custom-type-filter
+        [metadata]="filters"
+        [clearFilters]="clearFiltersEvent | async"
+      ></app-custom-type-filter>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>

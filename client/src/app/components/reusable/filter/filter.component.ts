@@ -1,14 +1,20 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { CustomTypeFilterComponent } from './custom-type-filter/custom-type-filter.component';
-import { Observable } from 'rxjs';
-import { StandardFormComponent } from './standard-form/standard-form.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { CustomTypeFilterComponent } from "./custom-type-filter/custom-type-filter.component";
+import { Observable } from "rxjs";
+import { StandardFormComponent } from "./standard-form/standard-form.component";
+import { MatAccordion, MatExpansionModule } from "@angular/material/expansion";
 
 @Component({
-  selector: 'app-filter',
+  selector: "app-filter",
   standalone: true,
   imports: [
     CommonModule,
@@ -19,15 +25,18 @@ import { StandardFormComponent } from './standard-form/standard-form.component';
 
     MatButtonModule,
     MatIconModule,
+    MatExpansionModule,
+    MatAccordion,
   ],
-  templateUrl: './filter.component.html',
-  styleUrl: './filter.component.scss',
+  templateUrl: "./filter.component.html",
+  styleUrl: "./filter.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
   @Input() filters: Array<any>;
-  clearFiltersEvent = new EventEmitter<boolean>();
+  @Input() metadataPurpose: string;
 
+  clearFiltersEvent = new EventEmitter<boolean>();
 
   clearFilters() {
     this.filters = [];
@@ -38,7 +47,7 @@ export class FilterComponent {
 
   emitClearFilters(): Observable<any> {
     this.clearFiltersEvent.emit(true);
-    return new Observable(observer => {
+    return new Observable((observer) => {
       setTimeout(() => {
         observer.next();
         observer.complete();

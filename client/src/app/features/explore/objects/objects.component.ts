@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
-import { FilterComponent } from "src/app/components/reusable/filter/filter.component";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ProcessMetadataService } from "src/app/components/reusable/filter/process-metadata.service";
 import { NotificationsService } from "src/app/shared/notifications/notifications.service";
 import { ConvertByTypeService } from "src/app/shared/services/convert-by-type.service";
@@ -10,6 +9,11 @@ import { QuestionComponent } from "src/app/components/reusable/question/question
 import { CardsComponent } from "src/app/components/reusable/cards/cards.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MetadataFormComponent } from "src/app/components/reusable/metadata-form/metadata-form.component";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MetadataTableComponent } from "src/app/components/reusable/metadata-table/metadata-table.component";
+import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 
 @Component({
   selector: "app-objects",
@@ -19,11 +23,12 @@ import { MetadataFormComponent } from "src/app/components/reusable/metadata-form
     FlexLayoutModule,
 
     MetadataFormComponent,
-    FilterComponent,
     QuestionComponent,
     CardsComponent,
 
     MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
   templateUrl: "./objects.component.html",
   styleUrl: "./objects.component.scss",
@@ -41,7 +46,8 @@ export class ObjectsComponent implements OnInit {
     private _convertByType: ConvertByTypeService,
     private _processMetadataService: ProcessMetadataService,
     public _notificationsService: NotificationsService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -56,12 +62,7 @@ export class ObjectsComponent implements OnInit {
               [curr.key]: this._convertByType.convertType(curr.value),
             };
           }, {}),
-          metadata: object.metadata.reduce((acc: any, curr: any) => {
-            return {
-              ...acc,
-              [curr.key]: curr.value,
-            };
-          }, {}),
+          metadata: object.metadata,
         };
       });
     });
@@ -94,8 +95,7 @@ export class ObjectsComponent implements OnInit {
 
   getAllObjects() {
     this._objectsService.getAllObjects().subscribe((data) => {
-      this.objects = data;
-      this.processObjects(this.objects);
+      this.processObjects(data);
     });
   }
 
@@ -110,13 +110,22 @@ export class ObjectsComponent implements OnInit {
             [curr.key]: this._convertByType.convertType(curr.value),
           };
         }, {}),
-        metadata: object.metadata.reduce((acc: any, curr: any) => {
-          return {
-            ...acc,
-            [curr.key]: curr.value,
-          };
-        }, {}),
+        // metadata: object.metadata.reduce((acc: any, curr: any) => {
+        //   return {
+        //     ...acc,
+        //     [curr.key]: curr.value,
+        //   };
+        // }, {}),
+        metadata: object.metadata,
       };
     });
+  }
+
+  openDialog(node: any) {
+    const dialogConfig = {
+      data: { metadata: node.metadata },
+      width: "80%",
+    };
+    this._dialog.open(MetadataTableComponent, dialogConfig);
   }
 }

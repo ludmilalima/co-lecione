@@ -1,0 +1,15 @@
+.hover-container {
+  position: relative;
+  // display: inline-block;
+}
+
+.hover-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: none;
+}
+
+.hover-container:hover .hover-icon {
+  display: block;
+}
