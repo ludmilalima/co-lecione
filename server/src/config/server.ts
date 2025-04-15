@@ -15,6 +15,10 @@ import { sendGridRouter } from "../server/routes/nodemailer.routes";
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 dotenv.config();
 
+if (!process.env.ATLAS_URI) {
+  throw new Error('ATLAS_URI não definido no arquivo .env');
+}
+
 const { ATLAS_URI, PORT } = process.env;
 
 if (!ATLAS_URI) {
