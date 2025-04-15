@@ -14,6 +14,7 @@ import { sendGridRouter } from "../server/routes/nodemailer.routes";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
 import path from "path";
+console.log(path);
 dotenv.config({ path: path.resolve(__dirname, "../../src/.env") });
 
 if (!process.env.ATLAS_URI) {

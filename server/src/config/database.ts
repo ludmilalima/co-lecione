@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 // Carregar variáveis de ambiente do arquivo .env
 import path from "path";
+console.log(path);
 dotenv.config({ path: path.resolve(__dirname, "../../src/.env") });
 
 const { ATLAS_URI } = process.env;
