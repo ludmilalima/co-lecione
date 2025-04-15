@@ -16,8 +16,8 @@ import { sendGridRouter } from "../server/routes/nodemailer.routes";
 import path from "path";
 //console.log(path);
 //dotenv.config({ path: path.resolve(__dirname, "../../src/.env") });
-//dotenv.config({ path: "./server/src/.env"});
-dotenv.config({ path: "/workspaces/co-lecione/server/src/.env" });
+dotenv.config({ path: "./server/src/.env"});
+//dotenv.config({ path: "/workspaces/co-lecione/server/src/.env" }); doesnt work
 
 
 if (!process.env.ATLAS_URI) {
