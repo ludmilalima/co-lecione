@@ -1,37 +1,109 @@
-# Ignorar diretório node_modules
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Node.js
+node_modules/
 **/node_modules/
+npm-debug.log
+yarn-error.log
 
-# Ignorar diretório dist do Angular
+# Compiled output
+dist/
 **/dist/
+tmp/
+out-tsc/
+bazel-out/
 
-# Ignorar diretório data do MongoDB
-# **/data/
+# Certificates
+**/*.pem
 
-# Ignorar arquivos de configuração
+# Environment files
+*.env
 **/*.env
+*.env.*
 **/*.env.*
+.env.local
 **/.env.local
+.env.development
 **/.env.development
+.env.test
 **/.env.test
+.env.prod
 **/.env.prod
 
-# Ignorar arquivos de log
+# Logs
+*.log
 **/*.log
 
-# Ignorar arquivos de cache
+# Cache files
+*.cache
 **/*.cache
+.angular/cache
+**/.angular/cache
+.sass-cache/
+**/.sass-cache/
 
-# Ignorar arquivos temporários
+# Temporary files
+*.tmp
 **/*.tmp
+*.swp
 **/*.swp
+*~
 **/*~
+connect.lock
+**/connect.lock
 
-# Ignorar arquivos gerados pelo IDE ou editor de código
+# Coverage
+coverage/
+**/coverage/
+
+# Miscellaneous
+libpeerconnection.log
+**/libpeerconnection.log
+testem.log
+**/testem.log
+typings/
+**/typings/
+
+# IDEs and editors
+.idea/
 **/.idea/
+.project
+**/.project
+.classpath
+**/.classpath
+.c9/
+**/.c9/
+*.launch
+**/*.launch
+.settings/
+**/.settings/
+*.sublime-workspace
+**/*.sublime-workspace
+.vscode/
 **/.vscode/
+.vscode/*
+**/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+**/.history/
+*.sublime-*
 **/*.sublime-*
+*.suo
 **/*.suo
+*.ntvs*
 **/*.ntvs*
+*.njsproj
 **/*.njsproj
+*.sln
 **/*.sln
+*.sw?
 **/*.sw?
+
+# System files
+.DS_Store
+**/.DS_Store
+Thumbs.db
+**/Thumbs.db

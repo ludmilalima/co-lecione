@@ -3,5 +3,10 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "forwardPorts": [4200, 5200]
+  "forwardPorts": [4200, 5200],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/co-lecione,type=bind",
+  "workspaceFolder": "/workspaces/co-lecione",
+  "mounts": [
+    "source=${localWorkspaceFolder}/server/src/X509-cert-1563872823717958735.pem,target=/workspaces/co-lecione/server/src/X509-cert-1563872823717958735.pem,type=bind"
+  ]
 }
