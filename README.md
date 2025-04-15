@@ -126,7 +126,7 @@ This guide explains how to create a SendGrid API key to use in your project for 
 
 2. **Add .env and X.509 certificate files**
 
-   Add .env and X.509 files inside: server/src folder using the following names:
+   Add .env and X.509 files inside server/src folder using the following names:
       - server/src/.env
       - server/src/X509-cert.pem
   
@@ -147,8 +147,8 @@ The first time you open the project in a DevContainer, VS Code will build the co
 
 6. **Access the Application**
 
-   - The application will be available at the URL specified in your .env file (e.g., http://localhost:3000).
-   - If you're using Swagger for API documentation, you can access it at /api-docs (e.g., http://localhost:3000/api-docs).
+   - The application will be available at the URL specified in your .env file (e.g., http://localhost:4200).
+   - If you're using Swagger for API documentation, you can access it at /api-docs (e.g., http://localhost:5200/api-docs).
     
 **Additional Notes**
 
