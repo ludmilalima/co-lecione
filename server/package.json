@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "check-files": "ts-node src/scripts/check-files.ts",
+    "start:prod": "npm run build && node dist/config/server.js",
     "start:dev": "npm run check-files && nodemon -x ts-node src/config/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
