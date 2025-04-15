@@ -128,20 +128,20 @@ This guide explains how to create a SendGrid API key to use in your project for 
 
 2. **Add .env and X.509 certificate files**
 
-  Add .env and X.509 files inside: server/src folder using the following names:
-    - server/src/.env
-    - server/src/X509-cert.pem
+   Add .env and X.509 files inside: server/src folder using the following names:
+      - server/src/.env
+      - server/src/X509-cert.pem
   
 3. **Open the Project in VS Code**
 
-  Open the project folder in Visual Studio Code:
-  ```bash
-  code .
-  ```
+   Open the project folder in Visual Studio Code:
+     ```bash
+     code .
+     ```
 4. **Reopen in DevContainer**
 
-    - Once the project is open in VS Code, you should see a prompt asking if you want to reopen the project in a DevContainer. Click "Reopen in Container".
-    - If you don’t see the prompt, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and select "Dev Containers: Reopen in Container".
+   - Once the project is open in VS Code, you should see a prompt asking if you want to reopen the project in a DevContainer. Click "Reopen in Container".
+   - If you don’t see the prompt, open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS) and select "Dev Containers: Reopen in Container".
       
 5. **Wait for the Container to Build**
 
