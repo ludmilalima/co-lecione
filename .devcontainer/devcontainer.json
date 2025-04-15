@@ -6,8 +6,5 @@
   "forwardPorts": [
     4200,
     5200
-  ],
-  "mounts": [
-    "source=${localWorkspaceFolder}/server/src,target=/workspaces/co-lecione/server/src,type=bind"
   ]
 }
