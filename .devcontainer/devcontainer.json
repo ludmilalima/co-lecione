@@ -3,10 +3,16 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "forwardPorts": [4200, 5200],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/co-lecione,type=bind",
-  "workspaceFolder": "/workspaces/co-lecione",
+  "forwardPorts": [
+    4200,
+    5200
+  ],
+  "features": {
+    "dotenv": {
+      "path": "/workspaces/co-lecione/server/src/.env"
+    }
+  },
   "mounts": [
-    "source=${localWorkspaceFolder}/server/src/X509-cert-1563872823717958735.pem,target=/workspaces/co-lecione/server/src/X509-cert-1563872823717958735.pem,type=bind"
+    "source=${localWorkspaceFolder}/server/src,target=/workspaces/co-lecione/server/src,type=bind"
   ]
 }
