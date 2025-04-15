@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // Carregar variáveis de ambiente do arquivo .env
-dotenv.config({ path: "./server/src/.env" });
+const envPath = path.resolve(__dirname, "../.env");
+dotenv.config({ path: envPath });
 
 const { ATLAS_URI } = process.env;
 

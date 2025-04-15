@@ -9,11 +9,12 @@ import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { objectRouter } from "../server/routes/object.routes";
 import { learningPlanRouter } from "../server/routes/learningPlan.routes";
-import { emailRouter } from "../server/routes/email.routes";
 import { sendGridRouter } from "../server/routes/nodemailer.routes";
+import path from "path";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
-dotenv.config({ path: "./server/src/.env" });
+const envPath = path.resolve(__dirname, "../.env");
+dotenv.config({ path: envPath });
 
 
 if (!process.env.ATLAS_URI) {
