@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import os from 'os';
 
 // Carregar variáveis de ambiente do arquivo .env
-dotenv.config({ path: "/workspaces/co-lecione/server/src/.env" });
+dotenv.config({ path: "./server/src/.env" });
 
 const { ATLAS_URI } = process.env;
 
