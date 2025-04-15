@@ -13,8 +13,6 @@ Before you begin, ensure you have the following installed on your machine:
 3. The **Dev Containers** extension for VS Code:
    - Install it from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
   
-   - 
-  
 ## Development .env file template:
 ```bash
 # Environment configuration file template (.env)
@@ -149,11 +147,11 @@ The first time you open the project in a DevContainer, VS Code will build the co
 
 6. **Access the Application**
 
-  - The application will be available at the URL specified in your .env file (e.g., http://localhost:3000).
-  - If you're using Swagger for API documentation, you can access it at /api-docs (e.g., http://localhost:3000/api-docs).
+   - The application will be available at the URL specified in your .env file (e.g., http://localhost:3000).
+   - If you're using Swagger for API documentation, you can access it at /api-docs (e.g., http://localhost:3000/api-docs).
     
 **Additional Notes**
 
-  - File Persistence: Any changes made to the files in the DevContainer will persist on your local machine.
-  - Environment Variables: Ensure your .env file is correctly configured before running the project. The .env file is not included in the repository for security reasons, so you may need to create it manually.
+   - File Persistence: Any changes made to the files in the DevContainer will persist on your local machine.
+   - Environment Variables: Ensure your .env file is correctly configured before running the project. The .env file is not included in the repository for security reasons, so you may need to create it manually.
    
