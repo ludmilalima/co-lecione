@@ -1,8 +1,6 @@
 {
   "name": "co-lecione-dev-container",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "ghcr.io/ludmilalima/co-lecione:devcontainer",
   "forwardPorts": [
     4200,
     5200
