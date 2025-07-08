@@ -107,3 +107,4 @@ typings/
 **/.DS_Store
 Thumbs.db
 **/Thumbs.db
+server/src/env
