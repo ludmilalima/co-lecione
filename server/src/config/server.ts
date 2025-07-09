@@ -31,9 +31,11 @@ if (!ATLAS_URI) {
 
 const devUrl = process.env.DEV_URL;
 const prodUrl = process.env.PROD_URL;
+const client_port = process.env.CLIENT_PORT;
 const currentEnv = process.env.NODE_ENV;
 
 const url = currentEnv === "prod" ? prodUrl : devUrl;
+const client_url = currentEnv === "prod" ? prodUrl : `${devUrl}:${client_port}`;
 
 connectToDatabase()
   .then(() => {
@@ -41,7 +43,20 @@ connectToDatabase()
     const app = express();
 
     // Middleware do CORS
-    app.use(cors());
+    app.use(cors({
+      origin: (origin, callback) => {
+        console.log(origin);
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        // Allow only the devUrl or prodUrl from environment variables
+        if ([client_url].includes(origin)) {
+          return callback(null, true);
+        }
+        // Otherwise, block it
+        callback(new Error('Not allowed by CORS'));
+      },
+      credentials: true
+    }));
 
     // Middleware para parsing do corpo das requisições
     app.use(
@@ -80,10 +95,6 @@ connectToDatabase()
     };
     const swaggerSpec = swaggerJsdoc(swaggerOptions);
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-    // Use the email router
-    //app.use('/api', emailRouter);
-    //app.use("/api", sendGridRouter);
 
     // Rotas
     app.use("/users", userRouter);
