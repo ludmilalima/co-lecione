@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NotificationsService } from './shared/notifications/notifications.service';
 import { SharedFormService } from './shared/services/shared-form.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         provideAnimations(),
         provideHttpClient(),
         importProvidersFrom(MatNativeDateModule),
+        CookieService,
         UserService,
         NotificationsService,
         SharedFormService,
