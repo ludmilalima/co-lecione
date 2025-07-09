@@ -3,7 +3,7 @@ import path from "path";
 
 // Define the paths to the required files
 const envFilePath = path.resolve(__dirname, "../.env");
-const x509CertPath = path.resolve(__dirname, "../X509-cert.pem");
+const x509CertPath = path.resolve(__dirname, "../X509-cert-1563872823717958735.pem");
 
 // Function to check if a file exists
 function checkFileExists(filePath: string, fileName: string) {
