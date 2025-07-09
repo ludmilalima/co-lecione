@@ -9,7 +9,6 @@ import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
 import { objectRouter } from "../server/routes/object.routes";
 import { learningPlanRouter } from "../server/routes/learningPlan.routes";
-import { sendGridRouter } from "../server/routes/nodemailer.routes";
 import path from "path";
 
 // Load environment variables from the .env file, where the ATLAS_URI is configured
@@ -84,7 +83,7 @@ connectToDatabase()
 
     // Use the email router
     //app.use('/api', emailRouter);
-    app.use("/api", sendGridRouter);
+    //app.use("/api", sendGridRouter);
 
     // Rotas
     app.use("/users", userRouter);
