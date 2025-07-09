@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 import { environment } from 'src/environments/environment';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ export class UserService {
   private apiUrl = `${environment.baseUrl}/users`;
   private users$: Subject<User[]> = new Subject();
   private token: string | null = null;
+  private auth_token: string | null;
 
   constructor
     (
       private httpClient: HttpClient,
       private _notificationsService: NotificationsService,
+      private _cookieService: CookieService
     ) { }
 
 
@@ -123,6 +126,23 @@ export class UserService {
         }
       })
     );
+  }
+
+  setCookieToken(token) {
+    this._cookieService.set('auth_token', token, {
+      path: '/',
+      expires: new Date(Date.now(), + 350 * 1000),
+      secure: true,
+      sameSite: 'Strict'
+    })
+  }
+
+  getCookieToken() {
+    this.auth_token = this._cookieService.get('auth_token');
+  }
+
+  deleteCookieToken() {
+        this._cookieService.delete('auth_token', '/');
   }
 
   logout() {
