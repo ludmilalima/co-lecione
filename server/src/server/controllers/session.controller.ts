@@ -24,7 +24,6 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         try {
             const decoded = jwt.verify(cookieToken, process.env.AUTH_SECRET_KEY);
             req.body = {email: (decoded as JwtPayload).email}
-            res.status(200).json({ message: `Usuário ${(decoded as JwtPayload).email} logou com sucesso.` });
         } catch {
             res.status(401).json({ message: 'Cookie token inválido ou expirado' });
         }
