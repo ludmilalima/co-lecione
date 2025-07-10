@@ -24,18 +24,10 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         try {
             const decoded = jwt.verify(cookieToken, process.env.AUTH_SECRET_KEY);
             req.body = {email: (decoded as JwtPayload).email}
-            res.json({ message: `Usuário ${(decoded as JwtPayload).email} logou com sucesso.` });
+            res.status(200).json({ message: `Usuário ${(decoded as JwtPayload).email} logou com sucesso.` });
         } catch {
             res.status(401).json({ message: 'Cookie token inválido ou expirado' });
         }
     }
     next();
-};
-
-// Função para realizar o logout do usuário (limpar token)
-export const logout = (_req: Request, res: Response) => {
-    // Limpe o token armazenado no cliente (por exemplo, no localStorage)
-    // Realize outras ações de logout necessárias
-
-    res.status(200).send('Logout realizado com sucesso.');
 };
