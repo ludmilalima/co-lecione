@@ -1,8 +1,9 @@
 import express from 'express';
 import UserModel, { User } from '../models/user';
 import bcrypt from 'bcrypt';
-import { logout, verifyToken } from '../controllers/session.controller';
+import { verifyToken } from '../controllers/session.controller';
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
 export const userRouter = express.Router();
 userRouter.use(express.json());
@@ -195,7 +196,23 @@ userRouter.post('/login', async (req, res) => {
  *         description: Successfully logged out.
  */
 // Rota para logout de usuário
-userRouter.post('/logout', logout);
+userRouter.post('/logout', async (req, res) => {
+
+    // Realize outras ações de logout necessárias
+    /*
+     * No backend, JWT tokens are stateless and cannot be invalidated server-side unless you implement a token blacklist.
+     * To "cancel" a token, you can:
+     * 1. Store invalidated tokens in a blacklist (e.g., in-memory, Redis, or database) and check this list on each request.
+     * 2. Change a secret key (invalidates all tokens, not just one).
+     */
+    const cookieToken = req.cookies.auth_token;
+    if (cookieToken) {
+      res.clearCookie('auth_token');
+      res.status(200).send('Cookie logout realizado com sucesso.');
+    }
+    
+    res.status(200).send('Logout realizado com sucesso.');
+});
 
 /**
  * @swagger
@@ -299,5 +316,90 @@ userRouter.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).send(error);
+  }
+});
+
+userRouter.post('cookie-login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Encontre o usuário com o e-mail fornecido
+    const user = await UserModel.findOne({ email });
+    const auth_secret_key = process.env.AUTH_SECRET_KEY;
+
+    if (email == 'admin@email.com') {
+      const admin_password = process.env.ADMIN_PASSWORD;
+      const admin_session = Number(process.env.ADMIN_SESSION);
+      // const isPasswordValid = await bcrypt.compare(admin_password, password);
+      const isPasswordValid = admin_password == password;
+
+      if (isPasswordValid) {
+        // expiresIn sets token expiration
+        const token = jwt.sign({ email: email }, auth_secret_key, { expiresIn: admin_session });
+
+        res.cookie('auth_token', token, {
+          httpOnly: true,
+          secure: false, // true se usar HTTPS
+          sameSite: 'lax',
+          maxAge: admin_session * 1000 //sets cookie expiration
+        });
+
+        return res.status(200).json({ message: 'Login admin bem-sucedido' });
+      }
+      return res.status(401).send('Senha admin inválida.');
+    }
+
+    if (email == 'operator@email.com') {
+      const operator_password = process.env.OPERATOR_PASSWORD;
+      const operator_session = Number(process.env.OPERATOR_SESSION);
+      // const isPasswordValid = await bcrypt.compare(operator_password, password);
+      const isPasswordValid = operator_password == password;
+
+      if (isPasswordValid) {
+        const token = jwt.sign({ email: email }, auth_secret_key, { expiresIn: operator_session });
+
+        res.cookie('auth_token', token, {
+          httpOnly: true,
+          secure: false, // true se usar HTTPS
+          sameSite: 'lax',
+          maxAge: operator_session * 1000
+        });
+
+        return res.status(200).json({ message: 'Login operator bem-sucedido' });
+      }
+      return res.status(401).send('Senha operator inválida.');
+    }
+
+    if (!user) {
+      // Usuário não encontrado
+      return res.status(404).send('Usuário não encontrado.');
+    }
+
+    // Verifique se a senha fornecida corresponde à senha armazenada no banco de dados
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      // Senha inválida
+      return res.status(401).send('Senha inválida.');
+    }
+
+    if (user && isPasswordValid) {
+      const token = jwt.sign({ email: user.email }, auth_secret_key, { expiresIn: '120' });
+
+      res.cookie('auth_token', token, {
+        httpOnly: true,
+        secure: false, // true se usar HTTPS
+        sameSite: 'lax',
+        maxAge: 2 * 60 * 1000
+      });
+
+      return res.status(200).json({ message: 'Login bem-sucedido' });
+    }
+
+    res.status(401).json({ message: 'Credenciais inválidas' });
+
+  } catch (error) {
+    console.error('Erro na autenticação:', error);
+    res.status(500).send(error);
   }
 });
