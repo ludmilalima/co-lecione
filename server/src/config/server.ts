@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import cookieParser from "cookie-parser"
 import { connectToDatabase } from "./database";
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
@@ -41,6 +42,8 @@ connectToDatabase()
   .then(() => {
     // Criar instância do servidor Express
     const app = express();
+    
+    app.use(cookieParser());
 
     // Middleware do CORS
     app.use(cors({
