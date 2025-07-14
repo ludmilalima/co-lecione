@@ -2,7 +2,7 @@ import express from 'express';
 import UserModel, { User } from '../models/user';
 import bcrypt from 'bcrypt';
 import { verifyToken } from '../controllers/session.controller';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 
 export const userRouter = express.Router();
@@ -195,23 +195,23 @@ userRouter.post('/login', async (req, res) => {
  *       200:
  *         description: Successfully logged out.
  */
-// Rota para logout de usuário
+
 userRouter.post('/logout', async (req, res) => {
 
-    // Realize outras ações de logout necessárias
-    /*
-     * No backend, JWT tokens are stateless and cannot be invalidated server-side unless you implement a token blacklist.
-     * To "cancel" a token, you can:
-     * 1. Store invalidated tokens in a blacklist (e.g., in-memory, Redis, or database) and check this list on each request.
-     * 2. Change a secret key (invalidates all tokens, not just one).
-     */
-    const cookieToken = req.cookies.auth_token;
-    if (cookieToken) {
-      res.clearCookie('auth_token');
-      res.status(200).send('Cookie logout realizado com sucesso.');
-    }
-    
-    res.status(200).send('Logout realizado com sucesso.');
+  // Realize outras ações de logout necessárias
+  /*
+   * No backend, JWT tokens are stateless and cannot be invalidated server-side unless you implement a token blacklist.
+   * To "cancel" a token, you can:
+   * 1. Store invalidated tokens in a blacklist (e.g., in-memory, Redis, or database) and check this list on each request.
+   * 2. Change a secret key (invalidates all tokens, not just one).
+   */
+  const cookieToken = req.cookies.auth_token;
+  if (cookieToken) {
+    res.clearCookie('auth_token');
+    return res.status(200).send('Cookie logout realizado com sucesso.');
+  }
+
+  res.status(200).send('Logout realizado com sucesso.');
 });
 
 /**
@@ -223,16 +223,17 @@ userRouter.post('/logout', async (req, res) => {
  *       200:
  *         description: A user object.
  */
-// Rota protegida para obter informações do usuário
 userRouter.get('/currentUser', verifyToken, async (req, res) => {
-  // Acessar o ID do usuário autenticado através de req.userId
   const userId = req.body.userId; // Obtenha o ID do usuário autenticado
   try {
-
-    // Consulte o banco de dados ou faça qualquer outra lógica necessária para obter as informações do usuário com o ID fornecido
-    const user: User = await UserModel.findById(userId);
-    if (user) {
-      // Realizar a lógica necessária para retornar as informações do usuário
+    let user = null;
+    if (userId == 'CookieOnly') {
+      user = { email: 'cookie-only@email.com', name: 'CookieOnly' };
+    } else {
+      const userDoc = await UserModel.findById(userId).select('name email');
+      user = userDoc ? { name: userDoc.name, email: userDoc.email } : null;
+    }
+    if (user != null) {
       res.status(200).json(user);
     } else {
       res.status(404).send('Usuário não encontrado.');
@@ -319,11 +320,10 @@ userRouter.delete('/:id', async (req, res) => {
   }
 });
 
-userRouter.post('cookie-login', async (req, res) => {
+userRouter.post('/cookie-login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Encontre o usuário com o e-mail fornecido
     const user = await UserModel.findOne({ email });
     const auth_secret_key = process.env.AUTH_SECRET_KEY;
 
@@ -340,7 +340,7 @@ userRouter.post('cookie-login', async (req, res) => {
         res.cookie('auth_token', token, {
           httpOnly: true,
           secure: false, // true se usar HTTPS
-          sameSite: 'lax',
+          sameSite: 'none',
           maxAge: admin_session * 1000 //sets cookie expiration
         });
 
@@ -401,5 +401,17 @@ userRouter.post('cookie-login', async (req, res) => {
   } catch (error) {
     console.error('Erro na autenticação:', error);
     res.status(500).send(error);
+  }
+});
+
+userRouter.get('/cookie-user', async (req, res) => {
+  const cookieToken = req.cookies.auth_token;
+
+  try {
+    const decoded = jwt.verify(cookieToken, process.env.AUTH_SECRET_KEY);
+    req.body = { email: (decoded as JwtPayload).email }
+    res.status(200).json({ message: `Usuário ${(decoded as JwtPayload).email} logou com sucesso.` });
+  } catch {
+    res.status(401).json({ message: 'Cookie token inválido ou expirado' });
   }
 });
