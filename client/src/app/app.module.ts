@@ -20,6 +20,7 @@ import { NotificationsService } from './shared/notifications/notifications.servi
 import { SharedFormService } from './shared/services/shared-form.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CookieService } from 'ngx-cookie-service';
+import { SessionControllerService } from './components/admin-user/session-controller.service';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { CookieService } from 'ngx-cookie-service';
         UserService,
         NotificationsService,
         SharedFormService,
+        SessionControllerService,
     ],
     bootstrap: [AppComponent],
     imports: [
