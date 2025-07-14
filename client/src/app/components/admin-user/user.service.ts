@@ -6,6 +6,7 @@ import { User } from './user.model';
 import { environment } from 'src/environments/environment';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { CookieService } from 'ngx-cookie-service';
+import { SessionControllerService } from './session-controller.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,13 @@ export class UserService {
   private apiUrl = `${environment.baseUrl}/users`;
   private users$: Subject<User[]> = new Subject();
   private token: string | null = null;
-  private auth_token: string | null;
 
   constructor
     (
       private httpClient: HttpClient,
       private _notificationsService: NotificationsService,
-      private _cookieService: CookieService
+      private _sessionControllerService: SessionControllerService,
     ) { }
-
 
   private handleError(error: any): Observable<never> {
     console.error('UserService error: ', error);
@@ -35,6 +34,7 @@ export class UserService {
   }
 
   getToken(): string | null {
+    this.loadToken();
     return this.token;
   }
 
@@ -87,17 +87,30 @@ export class UserService {
     );
   }
 
-  login(email: string, password: string): Observable<string> {
-    return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
-      tap({
-        next: (token: any) => {
-          this.saveToken(token);
-        },
-        error: (error: any) => {
-          this.handleError(error.error);
-        }
-      })
-    );
+  login(email: string, password: string): Observable<any> {
+    if (email == 'admin@email.com' || email == 'operator@email.com') {
+      return this._sessionControllerService.cookieLogin(email, password).pipe(
+        tap({
+          next: (res: any) => {
+            this.saveToken('CookieOnly');
+          },
+          error: (error: any) => {
+            this.handleError(error.error);
+          }
+        })
+      );
+    } else {
+      return this.httpClient.post(`${this.apiUrl}/login`, { email, password }, { responseType: 'text' }).pipe(
+        tap({
+          next: (token: any) => {
+            this.saveToken(token);
+          },
+          error: (error: any) => {
+            this.handleError(error.error);
+          }
+        })
+      );
+    }
   }
 
   getUserInfo(): Observable<User> {
@@ -128,29 +141,33 @@ export class UserService {
     );
   }
 
-  setCookieToken(token) {
-    this._cookieService.set('auth_token', token, {
-      path: '/',
-      expires: new Date(Date.now(), + 350 * 1000),
-      secure: true,
-      sameSite: 'Strict'
-    })
-  }
+  logout(): Observable<any> {
+    const token = this.getToken();
 
-  getCookieToken() {
-    this.auth_token = this._cookieService.get('auth_token');
-  }
-
-  deleteCookieToken() {
-        this._cookieService.delete('auth_token', '/');
-  }
-
-  logout() {
-    // Remova o token armazenado no cliente (por exemplo, localStorage)
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    this.setToken(null);
+    if (token === 'CookieOnly') {
+      return this._sessionControllerService.cookieLogout().pipe(
+        tap({
+          next: () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('name');
+            localStorage.removeItem('email');
+            this.setToken(null);
+          },
+          error: (error: any) => {
+            this.handleError(error.error);
+          }
+        })
+      );
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      this.setToken(null);
+      return new Observable(observer => {
+        observer.next(null);
+        observer.complete();
+      });
+    }
   }
 
   updateUser(id: string, user: User): Observable<string> {
