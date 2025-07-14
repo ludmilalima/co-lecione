@@ -24,13 +24,12 @@ export class LogoutComponent {
   ) { };
 
   sair() {
-    // Lógica para sair
-    this.userService.logout();
-
-    if (localStorage.getItem('token') != null) {
+    this.userService.logout().subscribe(() => {
+      if (localStorage.getItem('token') != null) {
       this.dialogLogoutRef.close(true);
-    } else {
+      } else {
       this.dialogLogoutRef.close(false);
-    }
+      }
+    });
   }
 }
