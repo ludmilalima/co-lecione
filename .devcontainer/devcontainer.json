@@ -11,6 +11,5 @@
   "forwardPorts": [
     4200,
     5200
-  ],
-  "postStartCommand": "cd client && npm install && npm run start:dev-container & (cd server && npm install && npm run start:dev)"
+  ]
 }
