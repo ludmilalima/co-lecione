@@ -42,13 +42,12 @@ connectToDatabase()
   .then(() => {
     // Criar instância do servidor Express
     const app = express();
-    
+
     app.use(cookieParser());
 
     // Middleware do CORS
     app.use(cors({
       origin: (origin, callback) => {
-        console.log(origin);
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         // Allow only the devUrl or prodUrl from environment variables
@@ -69,7 +68,6 @@ connectToDatabase()
         type: "application/json", // Aceita apenas requisições com MIME type application/json
         verify: (req, res, buf, encoding) => {
           try {
-            // Tenta analisar o buffer da requisição como JSON
             JSON.parse(buf.toString(encoding as BufferEncoding));
           } catch (error) {
             // Lança um erro se o corpo da requisição não for JSON válido
