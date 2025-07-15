@@ -1,5 +1,6 @@
 import express from "express";
 import ObjectModel from "../models/object";
+import { verifyToken } from "../controllers/session.controller";
 
 export const objectRouter = express.Router();
 objectRouter.use(express.json());
@@ -191,7 +192,7 @@ objectRouter.use(express.json());
  *         description: Error message.
  */
 
-objectRouter.post('/create', async (req, res) => {
+objectRouter.post('/create', verifyToken, async (req, res) => {
     try {
         const objectData = req.body;
 

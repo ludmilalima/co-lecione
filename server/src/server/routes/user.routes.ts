@@ -111,7 +111,7 @@ userRouter.get('/check-email/:email', async (req, res) => {
  *       201:
  *         description: The ID of the created user.
  */
-userRouter.post('/register', async (req, res) => {
+userRouter.post('/register', verifyToken, async (req, res) => {
   try {
     const userData = req.body;
     // Criptografe a senha do usuário usando o bcrypt
@@ -154,7 +154,7 @@ userRouter.post('/register', async (req, res) => {
  *       200:
  *         description: A JWT token.
  */
-userRouter.post('/login', async (req, res) => {
+userRouter.post('/login', verifyToken, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -196,7 +196,7 @@ userRouter.post('/login', async (req, res) => {
  *         description: Successfully logged out.
  */
 
-userRouter.post('/logout', async (req, res) => {
+userRouter.post('/logout', verifyToken, async (req, res) => {
 
   // Realize outras ações de logout necessárias
   /*
@@ -272,7 +272,7 @@ userRouter.get('/currentUser', verifyToken, async (req, res) => {
  *       200:
  *         description: Successfully updated the user.
  */
-userRouter.put('/:id', async (req, res) => {
+userRouter.put('/:id', verifyToken, async (req, res) => {
   try {
     const id = req.params.id;
     const userData = req.body;
@@ -304,7 +304,7 @@ userRouter.put('/:id', async (req, res) => {
  *       202:
  *         description: Successfully deleted the user.
  */
-userRouter.delete('/:id', async (req, res) => {
+userRouter.delete('/:id', verifyToken, async (req, res) => {
   try {
     const id = req.params.id;
     const result = await UserModel.findByIdAndDelete(id);
@@ -340,7 +340,7 @@ userRouter.post('/cookie-login', async (req, res) => {
         res.cookie('auth_token', token, {
           httpOnly: true,
           secure: false, // true se usar HTTPS
-          sameSite: 'none',
+          sameSite: 'lax',
           maxAge: admin_session * 1000 //sets cookie expiration
         });
 

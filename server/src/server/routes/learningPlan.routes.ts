@@ -1,5 +1,6 @@
 import express from "express";
 import LearningPlanModel from "../models/learningPlan";
+import { verifyToken } from "../controllers/session.controller";
 
 export const learningPlanRouter = express.Router();
 learningPlanRouter.use(express.json());
@@ -191,7 +192,7 @@ learningPlanRouter.use(express.json());
  *         description: Internal server error.
  */
 
-learningPlanRouter.post('/create', async (req, res) => {
+learningPlanRouter.post('/create', verifyToken, async (req, res) => {
     try {
         const learningPlanData = req.body;
 
