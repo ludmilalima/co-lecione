@@ -28,7 +28,7 @@ export class CardsService {
       'Content-Type': 'application/json',
     });
   
-    return this.httpClient.post(url, cardData, { headers })
+    return this.httpClient.post(url, cardData, { headers, withCredentials: true })
       .pipe(
         catchError(this.handleError)
       );

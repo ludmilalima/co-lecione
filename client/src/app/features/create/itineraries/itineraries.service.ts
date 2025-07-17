@@ -30,6 +30,7 @@ export class ItinerariesService {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(itinerary),
+        credentials: "include"
       })
         .then((response) => {
           if (!response.ok) {

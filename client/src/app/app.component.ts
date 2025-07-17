@@ -9,6 +9,7 @@ import { map, shareReplay } from "rxjs/operators";
 import { UserDetailsComponent } from "./components/user-details/user-details.component";
 import { WINDOW } from "./shared/services/window.service";
 import { environment } from "src/environments/environment";
+import { UserService } from "./components/admin-user/user.service";
 
 @Component({
   selector: "app-root",
@@ -30,15 +31,18 @@ export class AppComponent implements OnInit {
     private dialogLogout: MatDialog,
     private dialogUserDetails: MatDialog,
     private breakpointObserver: BreakpointObserver,
+    private _userService: UserService,
     @Inject(WINDOW) private window: Window
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.iconPath = this.sanitizer.bypassSecurityTrustResourceUrl(
       "../assets/logo-title.png"
     );
-    this.isLoggedIn = Boolean(localStorage.getItem("token"));
-    this.loggedUser = localStorage.getItem("name") || "";
+    this._userService.checkAuthentication().subscribe(() => {
+      this.isLoggedIn = Boolean(localStorage.getItem("token"));
+      this.loggedUser = localStorage.getItem("name") || "";
+    });
   }
 
   openLoginDialog(): void {

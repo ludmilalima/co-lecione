@@ -30,6 +30,7 @@ export class ObjectsService {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(object),
+        credentials: "include", // This ensures cookies like auth_token are sent
       })
         .then((response) => {
           if (!response.ok) {
