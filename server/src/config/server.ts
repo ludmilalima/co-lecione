@@ -4,7 +4,9 @@ import express from "express";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
+import fs from "fs";
+import https from "https";
 import { connectToDatabase } from "./database";
 import { userRouter } from "../server/routes/user.routes";
 import { tablesRouter } from "../server/routes/table.routes";
@@ -42,20 +44,24 @@ connectToDatabase()
   .then(() => {
     // Criar instância do servidor Express
     const app = express();
+    // Load SSL certificate and key
+    const sslOptions = {
+      key: fs.readFileSync(path.resolve(__dirname, "../certs/server.key")),
+      cert: fs.readFileSync(path.resolve(__dirname, "../certs/server.cert")),
+    };
 
     app.use(cookieParser());
 
     // Middleware do CORS
     app.use(cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
+        console.log(`Origin: ${origin}`);
         if (!origin) return callback(null, true);
-        // Allow only the devUrl or prodUrl from environment variables
         if ([client_url].includes(origin)) {
           return callback(null, true);
         }
-        // Otherwise, block it
-        callback(new Error('Not allowed by CORS'));
+        // Return the error to the caller
+        callback(new Error('Not allowed by CORS'), false);
       },
       credentials: true
     }));
@@ -104,8 +110,8 @@ connectToDatabase()
     app.use("/itineraries", learningPlanRouter);
 
     // start the Express server
-    app.listen(PORT, () => {
-      console.info(`Server running at ${url}:${PORT}...`);
+    https.createServer(sslOptions, app).listen(PORT, () => {
+      console.info(`HTTPS Server running at ${url}: ${PORT}...`);
     });
 
     // Capture o sinal de interrupção e desconecte-se do banco de dados antes de encerrar o servidor

@@ -154,7 +154,7 @@ userRouter.post('/register', verifyToken, async (req, res) => {
  *       200:
  *         description: A JWT token.
  */
-userRouter.post('/login', verifyToken, async (req, res) => {
+userRouter.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -196,7 +196,7 @@ userRouter.post('/login', verifyToken, async (req, res) => {
  *         description: Successfully logged out.
  */
 
-userRouter.post('/logout', verifyToken, async (req, res) => {
+userRouter.post('/logout', async (req, res) => {
 
   // Realize outras ações de logout necessárias
   /*
@@ -205,13 +205,13 @@ userRouter.post('/logout', verifyToken, async (req, res) => {
    * 1. Store invalidated tokens in a blacklist (e.g., in-memory, Redis, or database) and check this list on each request.
    * 2. Change a secret key (invalidates all tokens, not just one).
    */
-  const cookieToken = req.cookies.auth_token;
-  if (cookieToken) {
-    res.clearCookie('auth_token');
-    return res.status(200).send('Cookie logout realizado com sucesso.');
-  }
 
-  res.status(200).send('Logout realizado com sucesso.');
+  return res.clearCookie('auth_token', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    path: '/',
+  }).status(200).send('Cookie logout realizado com sucesso.');
 });
 
 /**
@@ -339,9 +339,9 @@ userRouter.post('/cookie-login', async (req, res) => {
 
         res.cookie('auth_token', token, {
           httpOnly: true,
-          secure: false, // true se usar HTTPS
-          sameSite: 'lax',
-          maxAge: admin_session * 1000 //sets cookie expiration
+          secure: true, // true se usar HTTPS
+          sameSite: 'none',
+          maxAge: admin_session * 1000, //sets cookie expiration
         });
 
         return res.status(200).json({ message: 'Login admin bem-sucedido' });
@@ -360,9 +360,9 @@ userRouter.post('/cookie-login', async (req, res) => {
 
         res.cookie('auth_token', token, {
           httpOnly: true,
-          secure: false, // true se usar HTTPS
-          sameSite: 'lax',
-          maxAge: operator_session * 1000
+          secure: true, // true se usar HTTPS
+          sameSite: 'none',
+          maxAge: operator_session * 1000,
         });
 
         return res.status(200).json({ message: 'Login operator bem-sucedido' });
@@ -388,8 +388,8 @@ userRouter.post('/cookie-login', async (req, res) => {
 
       res.cookie('auth_token', token, {
         httpOnly: true,
-        secure: false, // true se usar HTTPS
-        sameSite: 'lax',
+        secure: true, // true se usar HTTPS
+        sameSite: 'none',
         maxAge: 2 * 60 * 1000
       });
 

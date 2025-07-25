@@ -63,6 +63,35 @@ export class UserService {
       .subscribe();
   }
 
+  checkAuthentication(): Observable<any> {
+    const token = this.getToken();
+
+    if (token == 'CookieOnly') {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${this.getToken()}`
+      });
+      return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { withCredentials: true, headers }).pipe(
+        tap({
+          next: (user: any) => {
+            // Optionally handle user
+          },
+          error: (error: any) => {
+            this.logout().subscribe(() => { });
+          }
+        }),
+        catchError((error: any) => {
+          // Optionally handle error
+          return throwError(() => error);
+        })
+      );
+    } else {
+      // Return an empty observable if not CookieOnly
+      return new Observable(observer => {
+        observer.complete();
+      });
+    }
+  }
+
   getUsers(): Subject<User[]> {
     this.refreshUsers();
     return this.users$;
@@ -129,7 +158,7 @@ export class UserService {
       Authorization: `Bearer ${token}`
     };
 
-    return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { headers }).pipe(
+    return this.httpClient.get<User>(`${this.apiUrl}/currentUser`, { headers, withCredentials: true }).pipe(
       tap({
         next: (user: any) => {
           this.setUser(user);
@@ -142,32 +171,19 @@ export class UserService {
   }
 
   logout(): Observable<any> {
-    const token = this.getToken();
-
-    if (token === 'CookieOnly') {
-      return this._sessionControllerService.cookieLogout().pipe(
-        tap({
-          next: () => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('name');
-            localStorage.removeItem('email');
-            this.setToken(null);
-          },
-          error: (error: any) => {
-            this.handleError(error.error);
-          }
-        })
-      );
-    } else {
-      localStorage.removeItem('token');
-      localStorage.removeItem('name');
-      localStorage.removeItem('email');
-      this.setToken(null);
-      return new Observable(observer => {
-        observer.next(null);
-        observer.complete();
-      });
-    }
+    return this._sessionControllerService.cookieLogout().pipe(
+      tap({
+        next: (res: any) => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('name');
+          localStorage.removeItem('email');
+          this.setToken(null);
+        },
+        error: (error: any) => {
+          this.handleError(error.error);
+        }
+      })
+    );
   }
 
   updateUser(id: string, user: User): Observable<string> {

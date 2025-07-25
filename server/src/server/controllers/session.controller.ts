@@ -8,6 +8,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     const cookieToken = req.cookies.auth_token;
 
     if (!token && !cookieToken) {
+        res.clearCookie('auth_token');
         return res.status(401).send('Token de autenticação não fornecido.');
     }
 
@@ -24,10 +25,14 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     if (cookieToken) {
         try {
             const decoded = jwt.verify(cookieToken, process.env.AUTH_SECRET_KEY);
-            req.body = { email: (decoded as JwtPayload).email }
+            req.body = { ...req.body, email: (decoded as JwtPayload).email }
         } catch {
-            return res.status(401).json({ message: 'Cookie token inválido ou expirado' });
+            return res.status(401).json({ message: 'Cookie token inválido' });
         }
+    }
+
+    if (token == 'CookieOnly' && !cookieToken) {
+        return res.status(401).json({ message: 'Cookie token expirado' });
     }
     next();
 };
